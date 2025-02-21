@@ -1,11 +1,11 @@
 NAME = minishell
-CC = cc
+CC = cc -g
 CCFLAGS = -Wall -Wextra -Werror
 
 LIBFT = libft.a
 LIBFT_DIR = libft
 
-SRC =	srcs/main.c
+SRC =	srcs/main.c srcs/tokenizer/tokenizer.c
 
 OBJ = $(SRC:.c=.o)
 

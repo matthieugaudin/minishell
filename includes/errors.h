@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 10:59:55 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/21 18:15:27 by mgaudin          ###   ########.fr       */
+/*   Created: 2025/02/21 18:35:28 by mgaudin           #+#    #+#             */
+/*   Updated: 2025/02/21 18:37:56 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef ERROR_H
+# define ERROR_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
+# define UNCLOSED_QUOTES "minishell: syntax error near unexepected unclosed quotes\n"
 
-#endif /* MINISHELL_H */
+#endif /* ERROR_H */
