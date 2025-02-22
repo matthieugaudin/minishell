@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/21 19:18:20 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/22 20:40:32 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 #include "../includes/errors.h"
-
-void ft_quote_spit(void) {}
 
 void	set_token_type(t_token *node)
 {
@@ -72,17 +70,7 @@ void	append_token_node(t_token **head, char *line)
 
 /*
 Check if the line entered has closed quotes in the good sequence.
-If not the porgram should stop properly with a syntax error.
-
-'Hello "World"' -> a stirng inside single quotes
-"Hello World'" -> a stirng inside double quotes
-"Hello World'"" -> the same but after an unclosed quotes
-"'"" hello""" -> 3 double quotes
-"'"" hello"""' -> 3 double quotes + 1 unclosed
-echo "''\"Hello $USER" -> ''"Hello mgaudin -> bash behavior
-but as required in the subject we don't have to implement it so just treat
- \" as " so the result is syntax error
-
+If not, the porgram stop properly with a syntax error message.
 */
 void	check_quotes(char *str)
 {
@@ -134,9 +122,69 @@ t_token	*tokenizer(char *str)
 
 /*
 TO DO
+
+I think we have to keep things simple
+-> check unexpected tokens
+-> split the line returned by readline (harder part)
+-> append a node for each string splitted with good value and token
+-> convert token list to a comd list that will be send to the parsing 
+
 - ckeck unclosed quotes : OK but to test
-- redo ft_split for quotes (do not split spaces between quotes)
-- split sticked << and || (if not between quotes)
-- convert the linked list ot a cmd structure
-- test : e$var == e"cho"
+- check unexpected token >>> or <<<
+- ckeck unexpexted token ||
+- how to treat  & && &&& tokens : i think in quotes it's like an arg so do not prevent
+and outside quotes as an unexpected token because with bash :
+- cat -e & -> problem so i don't have to manage this
+- cat -e && -> bonus part i don't have to check that
+- cat -e &&& -> invalid token
+- cat -e '&' -> invalid option
+
+The objetif is to keep a simple logic
+- if not a valid token send error and stop
+- split the args and remember
+	-> prevent quotes from interpreting any special caracter, bet it : | < << > >> '' "" ;
+	-> sticked quotes are just an arg
+	-> a string with severals quotes also interpret | < > if outside of the quote
+
+< infile1 cat -e||grep >> ok -> unexpected token
+
+< infile1 cat -e|'<<<'grep >> ok
+- <
+- infile1
+- cat
+- -e
+- |
+- <<<grep
+- >>
+- ok
+
+< infile1 cat "-e'||'grep" >> ok
+- <
+- infile1
+- cat
+- -e'||'grep
+- >>
+- ok
+
+< infile1 cat "-e'||'gre">"p" >> ok
+- <
+- infile1
+- cat
+- -e'||'gre
+- >
+- p
+- >>
+- ok
+
+< infile1 cat -e|"grep" ok >> ok
+- <
+- infile1
+- cat
+- -e
+- |
+- grep
+- ok
+- >>
+- ok
+
 */

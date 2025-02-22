@@ -5,7 +5,7 @@ CCFLAGS = -Wall -Wextra -Werror
 LIBFT = libft.a
 LIBFT_DIR = libft
 
-SRC =	srcs/main.c srcs/tokenizer/tokenizer.c
+SRC =	srcs/main.c srcs/tokenizer/tokenizer.c srcs/tokenizer/quoe_split.c
 
 OBJ = $(SRC:.c=.o)
 
