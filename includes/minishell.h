@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 10:59:55 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/21 18:15:27 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:38:02 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
+# include "../libs/libft/libft.h"
 
 #endif /* MINISHELL_H */

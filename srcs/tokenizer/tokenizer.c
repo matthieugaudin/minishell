@@ -6,13 +6,13 @@
 /*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/22 20:40:32 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:43:58 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
-#include "../includes/errors.h"
+#include "../../includes/errors.h"
 
 void	set_token_type(t_token *node)
 {
