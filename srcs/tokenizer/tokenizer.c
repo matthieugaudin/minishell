@@ -6,7 +6,7 @@
 /*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/24 18:43:58 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/24 21:29:12 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,21 +100,23 @@ void	check_quotes(char *str)
 	}
 }
 
-t_token	*tokenizer(char *str)
+/*
+Tokenize the line entered by the user. It verifies the unclosed quotes, create well-splitted tokens that will
+be send to the parser, and regroup each command in a struct.
+*/
+t_token	*tokenizer(char *line)
 {
-	char	**line;
+	char	**tokens;
 	t_token	*head;
 	int		i;
 
 	head = NULL;
-	check_quotes(str);
-	line = ft_split(str, ' ');
-	if (!line)
-		return (NULL);
+	check_quotes(line);
+	tokens = split_tokens(line);
 	i = 0;
-	while (line[i])
+	while (tokens[i])
 	{
-		append_token_node(&head, line[i]);
+		append_token_node(&head, tokens[i]);
 		i++;
 	}
 	return (head);
@@ -122,69 +124,8 @@ t_token	*tokenizer(char *str)
 
 /*
 TO DO
-
-I think we have to keep things simple
--> check unexpected tokens
--> split the line returned by readline (harder part)
--> append a node for each string splitted with good value and token
--> convert token list to a comd list that will be send to the parsing 
-
-- ckeck unclosed quotes : OK but to test
-- check unexpected token >>> or <<<
-- ckeck unexpexted token ||
-- how to treat  & && &&& tokens : i think in quotes it's like an arg so do not prevent
-and outside quotes as an unexpected token because with bash :
-- cat -e & -> problem so i don't have to manage this
-- cat -e && -> bonus part i don't have to check that
-- cat -e &&& -> invalid token
-- cat -e '&' -> invalid option
-
-The objetif is to keep a simple logic
-- if not a valid token send error and stop
-- split the args and remember
-	-> prevent quotes from interpreting any special caracter, bet it : | < << > >> '' "" ;
-	-> sticked quotes are just an arg
-	-> a string with severals quotes also interpret | < > if outside of the quote
-
-< infile1 cat -e||grep >> ok -> unexpected token
-
-< infile1 cat -e|'<<<'grep >> ok
-- <
-- infile1
-- cat
-- -e
-- |
-- <<<grep
-- >>
-- ok
-
-< infile1 cat "-e'||'grep" >> ok
-- <
-- infile1
-- cat
-- -e'||'grep
-- >>
-- ok
-
-< infile1 cat "-e'||'gre">"p" >> ok
-- <
-- infile1
-- cat
-- -e'||'gre
-- >
-- p
-- >>
-- ok
-
-< infile1 cat -e|"grep" ok >> ok
-- <
-- infile1
-- cat
-- -e
-- |
-- grep
-- ok
-- >>
-- ok
-
+	-> check for unclosed quotes
+	-> split the line into a t_token linked list
+	-> give to every line a token
+	-> convert the tokens into t_cmd structure
 */

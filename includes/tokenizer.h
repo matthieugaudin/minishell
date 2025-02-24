@@ -6,7 +6,7 @@
 /*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:43:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/22 18:18:23 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/24 21:27:16 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 t_token	*tokenizer(char *str);
-char	**quote_split(char const *s);
+char	**split_tokens(char const *s);
 void	append_token_node(t_token **head, char *line);
 void	set_token_prev(t_token **head, t_token *node);
 void	set_token_type(t_token *node);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_split.c                                      :+:      :+:    :+:   */
+/*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:16:20 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/22 20:37:29 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/24 21:27:07 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static size_t	count_subtabs(char const *s, char c)
 	return (nb);
 }
 
-char	**quote_split(char const *s)
+char	**split_tokens(char const *s)
 {
 	char    **tab;
 	size_t  tab_len;
