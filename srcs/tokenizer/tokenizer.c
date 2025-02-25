@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/24 21:29:12 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/25 10:33:20 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,9 @@ t_token	*tokenizer(char *line)
 
 /*
 TO DO
-	-> check for unclosed quotes
-	-> split the line into a t_token linked list
+	-> check for unclosed quotes : to test
+	-> split the line regarding quotes : OK
+	-> split the line another time regarding special car outside quotes
 	-> give to every line a token
 	-> convert the tokens into t_cmd structure
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:16:20 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/24 21:27:07 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/25 10:32:00 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static size_t	fill_tab(char **tab, char const *s, char c)
 				inside_quotes = false;
 				quote = '\0';
 			}
-			else if (*s == '\'' || *s == '\"')
+			else if (!inside_quotes && (*s == '\'' || *s == '\"'))
 			{
 				inside_quotes = true;
 				quote = *s;
@@ -78,7 +78,7 @@ static bool	count_subtabs_loop(char const *s, char *quote, bool *inside_quotes, 
 		*inside_quotes = false;
 		*quote = '\0';
 	}
-	else if (*s == '\'' || *s == '\"')
+	else if (!*inside_quotes && (*s == '\'' || *s == '\"'))
 	{
 		*inside_quotes = true;
 		*quote = *s;
@@ -134,17 +134,15 @@ char	**split_tokens(char const *s)
 	return (tab);
 }
 
-
-/*
-invalid tests : "<infile cat -e | ls '>>> outfile' ' okijoihi\"\" ' "
-code to the norme
-*/
 int main(void)
 {
 	char **res;
-
-	res = quote_split("<infile cat -e | ls '>>> outfile' ' okijoihi\"\" ' ");
+	char	*line;
+	
+	line = "<infile cat -e | ls '>>> ""outfile'fsdfsa\"fdsfsa\"dsfas ' okijoihi\"\" ' \"\" ";
+	res = split_tokens(line);
 	int i = 0;
+	printf("%s\n\n", line);
 	while (res[i])
 	{
 		printf("%s\n", res[i]);
