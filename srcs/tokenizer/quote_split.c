@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <mgaudin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: doley <doley@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:16:20 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/22 20:37:29 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/25 16:03:20 by doley            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static size_t	fill_tab(char **tab, char const *s, char c)
 	int		pos;
 	bool	inside_quotes;
 	char	quote;
-	
+
 	pos = 0;
 	quote = '\0';
 	inside_quotes = false;
@@ -52,7 +52,7 @@ static size_t	fill_tab(char **tab, char const *s, char c)
 				inside_quotes = false;
 				quote = '\0';
 			}
-			else if (*s == '\'' || *s == '\"')
+			else if (!inside_quotes && (*s == '\'' || *s == '\"'))
 			{
 				inside_quotes = true;
 				quote = *s;
@@ -78,7 +78,7 @@ static bool	count_subtabs_loop(char const *s, char *quote, bool *inside_quotes, 
 		*inside_quotes = false;
 		*quote = '\0';
 	}
-	else if (*s == '\'' || *s == '\"')
+	else if (!*inside_quotes && (*s == '\'' || *s == '\"'))
 	{
 		*inside_quotes = true;
 		*quote = *s;
@@ -141,9 +141,12 @@ code to the norme
 */
 int main(void)
 {
+	char *line;
 	char **res;
 
-	res = quote_split("<infile cat -e | ls '>>> outfile' ' okijoihi\"\" ' ");
+	line = "<infile cat -e | ls '>>> outfile' ' okijoihi\"\"'";
+	res = quote_split(line);
+	printf("%s\n\n", line);
 	int i = 0;
 	while (res[i])
 	{
