@@ -5,7 +5,7 @@ CCFLAGS = -Wall -Wextra -Werror
 LIBFT = libft.a
 LIBFT_DIR = libs/libft
 
-SRC =	srcs/main.c srcs/tokenizer/tokenizer.c srcs/tokenizer/split_tokens.c
+SRC =	srcs/main.c srcs/tokenizer/tokenizer.c srcs/tokenizer/split_tokens.c srcs/tokenizer/split_quotes.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -18,7 +18,7 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) bonus
 
 $(NAME): $(OBJ)
-		$(CC) $(CCFLAGS) $(OBJ) -o $(NAME) $(LIBFT_DIR)/$(LIBFT) -lreadline 
+		$(CC) $(CCFLAGS) $(OBJ) -o $(NAME) $(LIBFT_DIR)/$(LIBFT) -lreadline
 
 clean:
 	rm -rf $(OBJ)
