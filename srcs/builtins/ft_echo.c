@@ -6,7 +6,7 @@
 /*   By: doley <doley@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 19:52:00 by doley             #+#    #+#             */
-/*   Updated: 2025/02/26 16:21:34 by doley            ###   ########.fr       */
+/*   Updated: 2025/02/26 16:42:50 by doley            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ int	ft_echo(char **args)
 	if (!args)
 		return (0);
 	i = 1;
-	is_n = check_n(args[i]);
+	is_n = false;
 	while (args[i] && check_n(args[i]))
+	{
+		is_n = true;
 		i++;
-	if (!args[i])
-		return (0);
+	}
 	while (args[i])
 	{
 		printf("%s", args[i]);
