@@ -6,16 +6,12 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:43:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 10:20:20 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:03:33 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
-
-/*
-do i need a token for builtins ?
-*/
 
 enum e_token
 {
@@ -30,18 +26,17 @@ enum e_token
 
 typedef struct s_token
 {
-	char				*value;
-	enum e_token		type;
-	struct s_token		*next;
-	struct s_token		*prev;
+	char			*value;
+	enum e_token	type;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
-typedef struct s_cmd
-{
-	
-}	t_cmd;
-
-// t_token	*tokenizer(char *str);
-char	**split_quotes(char const *s);
+t_token	*tokenizer(char *line);
+char	**split_quotes(char *s);
+char	**split_tokens(char *s);
+bool	in_quotes(char *str, int j);
+bool	check_quotes(char *str);
+bool	check_line(char *str, char *set);
 
 #endif /* TOKENIZER_H */

@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:28:54 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 10:20:52 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/26 16:42:12 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ static bool	special_char(char c)
 		return (false);
 }
 
+/*
+Count the number of strings that will be allocated.
+*/
 int	count_substr(char *str)
 {
-	int	i;
-	int	count;
-	bool  is_word;
+	int		i;
+	int		count;
+	bool	is_word;
 
 	i = 0;
 	count = 0;
@@ -39,7 +42,7 @@ int	count_substr(char *str)
 		}
 		else if (special_char(str[i]))
 		{
-			if (pecial_char(str[i + 1]) && str[i] == str[i + 1]
+			if (special_char(str[i + 1]) && str[i] == str[i + 1]
 				&& (str[i] == '<' || str[i] == '>'))
 				i++;
 			count++;
@@ -50,10 +53,13 @@ int	count_substr(char *str)
 	return (count);
 }
 
-int	main(void)
+/*
+Split the input line into several strings regarding the following rules. 
+First, do not split inside quotes.
+Split another time regarding sticked redirections and pipes.
+*/
+char	**split_tokens(char *s)
 {
-	char *line;
-	
-	line = "<<infile";
-	printf("%d", count_substr(line));
+	(void)s;
+	return (NULL);
 }

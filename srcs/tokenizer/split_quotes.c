@@ -6,12 +6,12 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:16:20 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 09:56:55 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:03:52 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+#include "../../includes/tokenizer.h"
 
 static int	fill_subtab(char **tab, int pos, int len)
 {
@@ -30,14 +30,14 @@ static int	fill_subtab(char **tab, int pos, int len)
 	return (0);
 }
 
-static int	fill_tab(char **tab, char const *s, char c)
+static int	fill_tab(char **tab, char *s, char c)
 {
-	int	len;
+	int		len;
 	int		pos;
 	bool	inside_quotes;
 	char	quote;
-	
-	pos = 0;																																																		
+
+	pos = 0;
 	quote = '\0';
 	inside_quotes = false;
 	while (*s)
@@ -71,7 +71,8 @@ static int	fill_tab(char **tab, char const *s, char c)
 	return (0);
 }
 
-static bool	count_subtabs_loop(char const *s, char *quote, bool *inside_quotes, bool *is_in_word)
+static bool	count_subtabs_loop(char *s, char *quote,
+	bool *inside_quotes, bool *is_in_word)
 {
 	if (*quote && *s == *quote)
 	{
@@ -91,9 +92,9 @@ static bool	count_subtabs_loop(char const *s, char *quote, bool *inside_quotes, 
 	return (false);
 }
 
-static int	count_subtabs(char const *s, char c)
+static int	count_subtabs(char *s, char c)
 {
-	int	nb;
+	int		nb;
 	bool	is_in_word;
 	bool	inside_quotes;
 	char	quote;
@@ -117,10 +118,14 @@ static int	count_subtabs(char const *s, char c)
 	return (nb);
 }
 
-char	**split_quotes(char const *s)
+/*
+Split a string into several strings, delimited by a caracter.
+The delimiter is not interpreted if it's inside quotes.
+*/
+char	**split_quotes(char *s)
 {
-	char    **tab;
-	int  tab_len;
+	char	**tab;
+	int		tab_len;
 
 	if (!s)
 		return (NULL);
@@ -133,19 +138,3 @@ char	**split_quotes(char const *s)
 		return (NULL);
 	return (tab);
 }
-
-// int main(void)
-// {
-	// char **res;
-	// char	*line;
-	
-	// line = "e'c    'h \"o    d\"";
-	// res = split_quotes(line);
-	// int i = 0;
-	// printf("%s\n\n", line);
-	// while (res[i])
-	// {
-	// 	printf("%s\n", res[i]);
-	// 	i++;
-	// }
-// }

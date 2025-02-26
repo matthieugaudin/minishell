@@ -1,3 +1,13 @@
-- function to check simple synstax errors : OK
+
+
+
+- check for unclosed quotes : to test
+- check for sticked unexpected tokens : OK
 - split regarding quotes : OK
-- function to split another time
+- split another time regarding special tokens : 
+    -> refactor the code and add comments : OK
+    -> use an index for split_quotes norme the code :
+- create a node for each token :
+- convert each node to a cmd structure : 
+- handle error messages
+- handle memory alocation
