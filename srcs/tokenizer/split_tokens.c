@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 08:28:54 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 16:42:12 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:51:47 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ Split another time regarding sticked redirections and pipes.
 */
 char	**split_tokens(char *s)
 {
-	(void)s;
-	return (NULL);
+	char	**quoted_split;
+
+	quoted_split = split_quotes(s);
 }

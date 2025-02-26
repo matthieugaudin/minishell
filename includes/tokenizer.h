@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:43:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 17:03:33 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:53:35 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	**split_tokens(char *s);
 bool	in_quotes(char *str, int j);
 bool	check_quotes(char *str);
 bool	check_line(char *str, char *set);
+int		fill_tab(char **tab, char *s);
 
 #endif /* TOKENIZER_H */
