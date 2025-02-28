@@ -6,14 +6,14 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 17:00:37 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/28 18:01:48 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 
-static void	set_token_type(t_token *node)
+void	set_token_type(t_token *node)
 {
 	if (ft_strcmp(node->value, "<") == 0)
 		node->type = INPUT;
@@ -33,7 +33,7 @@ static void	set_token_type(t_token *node)
 		node->type = COMMAND;
 }
 
-static void	set_token_prev(t_token **head, t_token *node)
+void	set_token_prev(t_token **head, t_token *node)
 {
 	t_token	*last_node;
 
@@ -53,7 +53,7 @@ static void	set_token_prev(t_token **head, t_token *node)
 	}
 }
 
-static void	append_token_node(t_token **head, char *line)
+void	append_token_node(t_token **head, char *line)
 {
 	t_token	*node;
 
@@ -68,26 +68,61 @@ static void	append_token_node(t_token **head, char *line)
 	node->next = NULL;
 }
 
-/*
-Tokenize the line entered by the user. It verifies the unclosed quotes,
-create well-splitted tokens that will be send to the parser,
-and regroup each command in a struct.
-*/
-t_token	*tokenizer(char *line)
+bool	special_car(char c)
 {
-	char	**tokens;
+	if (c == '<' || c == '>' || c == '|')
+		return (true);
+	else
+		return (false);
+}
+
+t_token	*tokenizer(char *s)
+{
 	t_token	*head;
+	char	*value;
+	int		len;
 	int		i;
 
 	head = NULL;
-	check_quotes(line);
-	check_line(line, "<>|&");
-	tokens = split_tokens(line);
+	check_unexpected(s);
+
 	i = 0;
-	while (tokens[i])
+	while (*s)
 	{
-		append_token_node(&head, tokens[i]);
-		i++;
+		len = 0;
+		while (*s && *s == ' ')
+			s++;
+		while (*s && (*s != ' ' || (*s == ' ' && in_quotes(s - i, i)))
+			&& (!special_car(*s) || (special_car(*s) && in_quotes(s - i, i))))
+		{
+			i++;
+			s++;
+			len++;
+		}
+		if (len == 0 && special_car(*s) && !in_quotes(s - i, i))
+		{
+			s++;
+			i++;
+			len++;
+			if (special_car(*s) && *s == *(s - 1)
+				&& (*s == '<' || *s == '>'))
+			{
+				i++;
+				s++;
+				len++;
+			}
+		}
+		if (*s)
+		{				
+			value = malloc((len + 1) * sizeof(char));
+			ft_strlcat(value, s - len, len + 1);
+			append_token_node(&head, value);
+		}
 	}
 	return (head);
+}
+
+void test(void)
+{
+	
 }

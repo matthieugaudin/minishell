@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:23:50 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 17:02:33 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/02/28 17:57:23 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,19 @@ bool	check_quotes(char *str)
 		}
 		i++;
 	}
-	return (quotes_open);
+	return (!quotes_open);
+}
+
+void	check_unexpected(char *s)
+{
+	if (!check_quotes(s))
+	{
+		printf("minishell: unclosed quotes");
+		exit(0);
+	}
+	if (!check_line(s, "<>|&"))
+	{
+		printf("minishell: syntax error near unexpected token `<'");
+		exit(0);
+	}
 }

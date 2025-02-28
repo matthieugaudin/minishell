@@ -1,13 +1,10 @@
 
 
 
-- check for unclosed quotes : to test
+- check for unclosed quotes : OK
 - check for sticked unexpected tokens : OK
-- split regarding quotes : OK
-- split another time regarding special tokens : 
-    -> refactor the code and add comments : OK
-    -> use an index for split_quotes norme the code :
-- create a node for each token :
+- split the line into a linked list with a node for each token: OK
+- give to each token a type : 
 - convert each node to a cmd structure : 
-- handle error messages
-- handle memory alocation
+- handle memory allocation error : 
+- handle error messages : 
