@@ -1,10 +1,29 @@
 
 
-
-- check for unclosed quotes : OK
 - check for sticked unexpected tokens : OK
 - split the line into a linked list with a node for each token: OK
-- give to each token a type : 
-- convert each node to a cmd structure : 
+- give to each token a type : OK
+- parse the token struct : 
 - handle memory allocation error : 
-- handle error messages : 
+- handle error messages :
+
+
+
+
+
+TEST
+
+int	main(void)
+{
+	t_token	*head;
+	char	*line;
+
+	line = "cat -e<<infile|grep \"'ok''\" >>'>\"outfile\"|' ";
+	head = tokenizer(line);
+	printf("%s\n\n", line);
+	while (head)
+	{
+		printf("%s     ->>>>>>>>> %u\n", head->value, head->type);
+		head = head->next;
+	}
+}

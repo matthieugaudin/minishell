@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:43:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 17:53:35 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:10:33 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ typedef struct s_token
 }	t_token;
 
 t_token	*tokenizer(char *line);
-char	**split_quotes(char *s);
-char	**split_tokens(char *s);
+void	append_token_node(t_token **head, char *line);
+void	set_token_prev(t_token **head, t_token *node);
+void	set_token_type(t_token *node);
 bool	in_quotes(char *str, int j);
 bool	check_quotes(char *str);
 bool	check_line(char *str, char *set);
-int		fill_tab(char **tab, char *s);
+void	check_unexpected(char *s);
+bool	special_car(char c);
 
 #endif /* TOKENIZER_H */
