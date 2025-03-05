@@ -1,0 +1,15 @@
+
+
+- check for sticked unexpected tokens : OK
+- split the line into a linked list with a node for each token: OK
+- give to each token a type : OK
+- parse the token struct : 
+
+- when an error happend on tokenizer or paser: 
+	-> free all leaks
+	-> write the error
+	-> exit the program
+
+- check tokens order : to test
+- convert the token struct to a cmd struct : 
+- expend the user variables :
