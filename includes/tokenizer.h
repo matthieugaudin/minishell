@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:43:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/05 17:25:31 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/06 09:52:02 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	set_token_prev(t_token **head, t_token *node);
 void	set_token_type(t_token *node);
 
 /*===============CHECKS===============*/
-bool	check_quotes(char *str);
-bool	check_line(char *str, char *set);
-void	check_unexpected(char *s);
+char	check_quotes(char *str);
+char	check_line(char *str, char *set);
+void	send_token_err(char c);
 
 /*===============UTILS===============*/
 bool	in_quotes(char *str, int j);

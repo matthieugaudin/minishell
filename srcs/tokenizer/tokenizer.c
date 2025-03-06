@@ -6,12 +6,31 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/03 13:34:00 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/06 09:55:54 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
+
+void	check_unexpected(char *s)
+{
+	char	quote_tkn;
+	char	line_tkn;
+
+	quote_tkn = check_quotes(s);
+	line_tkn = check_line(s, "<>|&");
+	if (quote_tkn != '\0')
+	{
+		send_token_err(quote_tkn);
+		exit (2);
+	}
+	else if (line_tkn != '\0')
+	{
+		send_token_err(line_tkn);
+		exit (2);
+	}
+}
 
 bool	special_car(char c)
 {
@@ -77,4 +96,3 @@ t_token	*tokenizer(char *s)
 	create_tokens(s, &head);
 	return (head);
 }
-

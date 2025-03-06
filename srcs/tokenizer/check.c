@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:23:50 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/03 14:31:48 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/06 09:52:08 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /*
 Check if there are unexpected tokens because some caracters are sticked together
 */
-bool	check_line(char *str, char *set)
+char	check_line(char *str, char *set)
 {
 	int	i;
 	int	nb_car;
@@ -34,18 +34,18 @@ bool	check_line(char *str, char *set)
 			if (((*set == '<' || *set == '>') && nb_car > 2)
 				|| (*set == '|' && nb_car > 1)
 				|| (*set == '&' && nb_car > 0))
-				return (false);
+				return (*set);
 			i++;
 		}
 		set++;
 	}
-	return (true);
+	return ('\0');
 }
 
 /*
 Check if the line entered has closed quotes in the good sequence.
 */
-bool	check_quotes(char *str)
+char	check_quotes(char *str)
 {
 	bool	quotes_open;
 	char	quote;
@@ -66,12 +66,15 @@ bool	check_quotes(char *str)
 		}
 		i++;
 	}
-	return (!quotes_open);
+	if (quotes_open)
+		return (quote);
+	else
+		return ('\0');
 }
 
-void	send_token_err(char *s)
+void	send_token_err(char c)
 {
 	ft_putstr_fd("minishell: syntax error near unexepected token '", 2);
-	write(2, s, ft_strlen(s));
+	write(2, &c, 1);
 	ft_putstr_fd("'\n", 2);
 }
