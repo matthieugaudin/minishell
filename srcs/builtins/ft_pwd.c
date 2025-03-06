@@ -6,7 +6,7 @@
 /*   By: doley <doley@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 19:52:20 by doley             #+#    #+#             */
-/*   Updated: 2025/02/26 17:36:51 by doley            ###   ########.fr       */
+/*   Updated: 2025/03/06 20:38:52 by doley            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 int	ft_pwd(void)
 {
-	char	buffer[PATH_MAX];
+	char	*path;
 
-	if (getcwd(buffer, PATH_MAX))
+	path = getcwd(NULL, 0);
+	if (!path)
 	{
-		printf("%s\n", buffer);
-		return (0);
-	}
-	else
-	{
-		perror("pwd error");
+		perror("pwd");
 		return (1);
 	}
+	ft_putendl_fd(path, 1);
+	free(path);
+	return (0);
 }
