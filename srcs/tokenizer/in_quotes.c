@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:21:02 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/02/26 17:01:07 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/07 10:43:30 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ bool	in_quotes(char *str, int j)
 		{
 			quotes_open = false;
 		}
+		i++;
+	}
+	return (quotes_open);
+}
+
+bool	in_dbl_quotes(char *str, int j)
+{
+	int		i;
+	bool	quotes_open;
+
+	i = 0;
+	quotes_open = false;
+	while (i <= j)
+	{
+		if (str[i] == '\"')
+			quotes_open = !quotes_open;
 		i++;
 	}
 	return (quotes_open);

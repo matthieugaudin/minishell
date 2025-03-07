@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 09:55:36 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/06 18:38:06 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/07 11:51:36 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,25 +75,19 @@ char	*get_env_var(char *str, char **envp)
 void	expand_var(t_token *node, char **envp, int start)
 {
 	char	*env_var;
-	char	*tmp_var;
+	int		env_len;
+	// char	*tmp_var;
 	int		remainder;
 	int		len;
 
 	env_var = get_env_var(node->value + start, envp);
+	env_len = 0;
 	if (env_var != NULL)
-	{
-		// replace with the envp var (allocate + strcat)
-		remainder = node->value + start + get_var_len(node->value, start);
-		len = start + ft_strlen(*env_var) + remainder;
-		tmp_var = malloc(sizeof(char) * (len + 1));
-		ft_strlcat(tmp_var, node->value, start);
-		ft_strlcat(tmp_var, node->value + start, ft_strlen(*env_var));
-		ft_strlcat(tmp_var, node->value + start + ft_strlen(*env_var), remainder);
-	}
-	// else
-	// {
-	// 	// replace with nothing
-	// }
+		env_len = ft_strlen(env_var);
+	remainder = ft_strlen(node->value + start + ft_strlen(node->value + get_var_len(node->value, start)));
+	len = (start - 1) + env_len + remainder;
+	// tmp_var = malloc(sizeof(char) * (len + 1));
+	printf("%d\n", len);
 }
 
 
@@ -118,6 +112,10 @@ void	expansion(t_token *node, char **envp)
     }
 }
 
+// segfault : "ok\"$USE'R\"ok"
+// "OK\"'$USER''\"ok"
+// "ok$USE'R'ok"
+
 int main(int argc, char **argv, char **envp)
 {
 	t_token *head;
@@ -125,6 +123,6 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 
-	head = tokenizer("$LSCOLORSS");
+	head = tokenizer("ok$USE'R'ok");
 	expansion(head, envp);
 }

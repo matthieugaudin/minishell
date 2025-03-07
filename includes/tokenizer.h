@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:43:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/06 09:52:02 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/07 10:43:38 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	send_token_err(char c);
 
 /*===============UTILS===============*/
 bool	in_quotes(char *str, int j);
+bool	in_dbl_quotes(char *str, int j);
 bool	special_car(char c);
 
 #endif /* TOKENIZER_H */

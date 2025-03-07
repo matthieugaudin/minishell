@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:37 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/06 09:55:54 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/03/07 10:44:54 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool	create_tokens(char *s, t_token **head)
 	{
 		len = 0;
 		extract_token(&s, &len, &i);
-		if (*s)
+		if (*s || len > 0)
 		{
 			value = malloc((len + 1) * sizeof(char));
 			ft_strlcat(value, s - len, len + 1);
