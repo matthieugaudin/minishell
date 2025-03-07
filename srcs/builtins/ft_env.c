@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: doley <doley@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 19:52:45 by doley             #+#    #+#             */
-/*   Updated: 2025/03/06 21:03:16 by doley            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 typedef struct s_env
@@ -40,33 +28,33 @@ int	ft_env(t_env *env)
 //     t_env *env1 = malloc(sizeof(t_env));
 //     t_env *env2 = malloc(sizeof(t_env));
 //     t_env *env3 = malloc(sizeof(t_env));
-    
+
 //     if (!env1 || !env2 || !env3)
 //     {
 //         // En cas d'erreur d'allocation, on quitte le programme
 //         return (1);
 //     }
-    
+
 //     // Initialisation des noeuds avec des variables d'environnement fictives
 //     env1->name = "PATH";
 //     env1->value = "/usr/bin:/bin";
 //     env1->next = env2;
-    
+
 //     env2->name = "HOME";
 //     env2->value = "/home/user";
 //     env2->next = env3;
-    
+
 //     env3->name = "SHELL";
 //     env3->value = "/bin/bash";
 //     env3->next = NULL;
-    
+
 //     // Affichage de l'environnement
 //     ft_env(env1);
-    
+
 //     // Libération de la mémoire allouée
 //     free(env1);
 //     free(env2);
 //     free(env3);
-    
+
 //     return (0);
 // }

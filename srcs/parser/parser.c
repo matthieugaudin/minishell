@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 18:44:05 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/03/03 14:20:08 by mgaudin          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 
@@ -25,7 +13,7 @@ bool	is_redirected(enum e_token type)
 bool	is_command(t_token *token)
 {
 	bool	is_cmd;
-	
+
 	is_cmd = false;
 	token = token->prev;
 	while (token && token->type != PIPE)
