@@ -58,17 +58,26 @@ void	expand_var(t_token *node, char **envp, int start)
 {
 	char	*var_value;
 	char	*var_name;
+	char	*res;
+	int		value_len;
+	int		name_len;
 	int		remainder;
 	int		len;
 
 	var_name = get_var_name(node->value + start);
 	var_value = get_var_value(envp, var_name);
+	value_len = ft_strlen(var_value);
+	name_len = ft_strlen(var_name);
 	remainder = ft_strlen(node->value + start + ft_strlen(var_name));
-	len = (start - 1) + ft_strlen(var_value) + remainder;
-	printf("%d\n", len);
+	len = (start - 1) + value_len + remainder;
+	res = malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(res, node->value, start);
+	if (var_value)
+		ft_strlcat(res + start - 1, var_value, value_len + 1);
+	ft_strlcat(res + start - 1 + value_len, node->value + start + name_len, remainder + 1);
+	free(node->value);
+	node->value = res;
 }
-
-
 
 void	expansion(t_token *node, char **envp)
 {
@@ -88,19 +97,4 @@ void	expansion(t_token *node, char **envp)
 		}
 		node = node->next;
     }
-}
-
-// segfault : "ok\"$USE'R\"ok"
-// "OK\"'$USER''\"ok"
-// "ok$USE'R'ok"
-
-int main(int argc, char **argv, char **envp)
-{
-	t_token *head;
-
-	(void)argc;
-	(void)argv;
-
-	head = tokenizer("ok\"$USERR\"ok");
-	expansion(head, envp);
 }
