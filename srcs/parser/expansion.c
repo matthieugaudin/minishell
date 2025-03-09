@@ -92,7 +92,11 @@ void	expansion(t_token *node, char **envp)
 		while (str[i])
 		{
 			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i)))
+			{
 				expand_var(node, envp, i + 1);
+				str = node->value;
+				i = -1;
+			}
 			i++;
 		}
 		node = node->next;
