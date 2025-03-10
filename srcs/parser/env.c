@@ -36,13 +36,13 @@ char	*get_env_value(char *envp_str)
 	int		i;
 	int		j;
 
-	i = 1;
+	i = 0;
 	while (is_posix_std(envp_str[i]))
 		i++;
+	i++;
 	j = 0;
 	while (envp_str[i + j])
 		j++;
-	
 	env_value = malloc(sizeof(char) * (j + 1));
 	ft_strlcpy(env_value, envp_str + i, j + 1);
 	return (env_value);
