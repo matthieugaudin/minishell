@@ -13,6 +13,7 @@ void	set_last_cmd_next(t_cmd *head, t_cmd *node)
 
 void	set_cmd_content(t_token **tokens, t_cmd *cmd)
 {
+	(void)cmd;
 	while (*tokens && (*tokens)->type != PIPE)
 	{
 		*tokens = (*tokens)->next;
@@ -49,6 +50,15 @@ t_cmd	*create_cmd(t_token *tokens)
 	return (cmd);
 }
 
+void	show_token(t_token *token)
+{
+	while (token)
+	{
+		printf("%s\n", token->value);
+		token = token->next;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -58,5 +68,6 @@ int	main(int argc, char **argv, char **envp)
 
 	token = tokenizer("<infile cat -e > outfile|grep $USER");
 	expansion(token, envp);
+	show_token(token);
 	cmd = create_cmd(token);
 }
