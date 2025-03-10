@@ -102,3 +102,16 @@ void	expansion(t_token *node, char **envp)
 		node = node->next;
     }
 }
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_token *head;
+
+// 	(void)argc;
+// 	(void)argv;
+
+// 	head = tokenizer("echo ?");
+// 	expansion(head, envp);
+// 	printf("%s\n", head->value);
+// 	printf("%s\n", head->next->value);
+// }

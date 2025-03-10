@@ -1,10 +1,9 @@
 
 
-
-
-
-- check tokens order and manage error : to test
-- expend the user variables with the path :
-- remove opening/closing quotes : 
-- convert the token struct to a cmd struct : 
-- handle all malloc failure : 
+- convert the token struct to a cmd struct
+- check tokens order and manage error
+- remove opening/closing quotes
+- handle all malloc failure
+- Not interpret special characters such as \ or ;
+- handle echo $?
+- transform all space by 9->13 + 32
