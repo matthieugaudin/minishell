@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "libs/libft/libft.h"
 # include <stdbool.h>
 
 /*
@@ -20,6 +19,6 @@ typedef struct s_cmd
     struct s_cmd	*next;
 }	t_cmd;
 
-void	expansion(t_token *node, char **envp);
+void	expansion(t_token *node, t_env *env);
 
 #endif /* PARSER_H */

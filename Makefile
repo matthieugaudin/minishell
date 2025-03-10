@@ -6,7 +6,8 @@ LIBFT = libft.a
 LIBFT_DIR = libs/libft
 
 SRC =	srcs/main.c srcs/tokenizer/tokenizer.c srcs/tokenizer/check.c srcs/tokenizer/in_quotes.c \
-		srcs/tokenizer/token_list.c
+		srcs/tokenizer/token_list.c srcs/parser/command.c srcs/parser/env.c srcs/parser/expansions.c \
+		 srcs/parser/parser.c
 
 OBJ = $(SRC:.c=.o)
 

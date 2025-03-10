@@ -9,4 +9,17 @@
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+/*==============ENV==============*/
+t_env   *create_env(char **envp);
+char	*get_env_name(char *envp_str);
+char	*get_env_value(char *envp_str);
+bool	is_posix_std(char c);
+
 #endif /* MINISHELL_H */
