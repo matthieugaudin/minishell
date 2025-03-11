@@ -30,23 +30,23 @@ char	*get_env_name(char *envp_str)
 	return (env_name);
 }
 
-char	*get_env_value(char *envp_str)
-{
-	char	*env_value;
-	int		i;
-	int		j;
+// char	*get_env_value(char *envp_str)
+// {
+// 	char	*env_value;
+// 	int		i;
+// 	int		j;
 
-	i = 0;
-	while (is_posix_std(envp_str[i]))
-		i++;
-	i++;
-	j = 0;
-	while (envp_str[i + j])
-		j++;
-	env_value = malloc(sizeof(char) * (j + 1));
-	ft_strlcpy(env_value, envp_str + i, j + 1);
-	return (env_value);
-}
+// 	i = 0;
+// 	while (is_posix_std(envp_str[i]))
+// 		i++;
+// 	i++;
+// 	j = 0;
+// 	while (envp_str[i + j])
+// 		j++;
+// 	env_value = malloc(sizeof(char) * (j + 1));
+// 	ft_strlcpy(env_value, envp_str + i, j + 1);
+// 	return (env_value);
+// }
 
 void	append_env_node(t_env **env, char *envp)
 {
@@ -55,7 +55,7 @@ void	append_env_node(t_env **env, char *envp)
 
 	node = malloc(sizeof(t_env));
 	node->name = get_env_name(envp);
-	node->value = get_env_value(envp);
+	node->value = getenv(node->name);
 	node->next = NULL;
 	if (*env == NULL)
 	{
