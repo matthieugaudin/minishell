@@ -1,16 +1,24 @@
 
 
-- check for sticked unexpected tokens : OK
-- split the line into a linked list with a node for each token: OK
-- give to each token a type : OK
 
 
-Parsing : 
-- check tokens order and manage error : to test
-- convert the token struct to a cmd struct : 
-- expend the user variables with the path :
 
-- when an error happend on tokenizer or paser:
-	-> free all leaks
-	-> write the error : OK
-	-> exit the program : OK
+
+- convert the token struct to a cmd struct
+    -> rename redirections to REDIR_
+    -> how to differentiate the 2 enum types
+    -> how to diferentiate append mode
+    -> t_file *files
+    -> char **args
+    -> testing
+
+
+
+
+- redo the naming of variables (head, node)
+- check tokens order and manage error
+- transform all space by 9->13 + 32
+- remove opening/closing quotes
+- handle all malloc failure
+- Not interpret special characters such as \ or ;
+- handle echo $?

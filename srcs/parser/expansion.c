@@ -1,91 +1,47 @@
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 
-/*
-Verifies that a character follows the posix standards,
-meaning that it's an uppercase/lowercase letter, a digit,
-or an underscore.
-*/
-bool	is_posix_std(char c)
+char	*get_var_value(t_env *env, char *var_name)
 {
-	if (ft_isalnum(c) || c == '_')
-		return (true);
-	else
-		return (false);
-}
-
-/*
-Takes an environment variable from envp and returns its name.
-*/
-char	*get_var_name(char *env_var)
-{
-	char	*var_name;
-	int		i;
-
-	i = 0;
-	while (is_posix_std(env_var[i]))
-		i++;
-	var_name = malloc(sizeof(char) * (i + 1));
-	ft_strlcpy(var_name, env_var, i + 1);
-	return (var_name);
-}
-
-int		get_var_len(char *str, int start)
-{
-	int	i;
-
-	i = 0;
-	while (is_posix_std(str[start + i]))
+	while (env)
 	{
-		i++;
+		if (ft_strcmp(env->name, var_name) == 0)
+			return (env->value);
+		env = env->next;
 	}
-	return (i);
-}
-
-char	*get_env_var(char *str, char **envp)
-{
-	char	*envp_name;
-	char	*str_name;
-
-	while (*envp)
-	{
-		envp_name = get_var_name(*envp);
-		str_name = get_var_name(str);
-		if (ft_strcmp(envp_name, str_name) == 0)
-			return (*envp);
-		envp++;
-	}
-	free(envp_name);
-	free(str_name);
 	return (NULL);
 }
 
-void	expand_var(t_token *node, char **envp, int start)
+void	expand_var(t_token *node, t_env *env, int start)
 {
-	char	*env_var;
-	int		env_len;
-	// char	*tmp_var;
+	char	*var_value;
+	char	*var_name;
+	char	*res;
+	int		value_len;
+	int		name_len;
 	int		remainder;
 	int		len;
 
-	env_var = get_env_var(node->value + start, envp);
-	env_len = 0;
-	if (env_var != NULL)
-		env_len = ft_strlen(env_var);
-	remainder = ft_strlen(node->value + start + ft_strlen(node->value + get_var_len(node->value, start)));
-	len = (start - 1) + env_len + remainder;
-	// tmp_var = malloc(sizeof(char) * (len + 1));
-	printf("%d\n", len);
+	var_name = get_env_name(node->value + start);
+	var_value = get_var_value(env, var_name);
+	value_len = ft_strlen(var_value);
+	name_len = ft_strlen(var_name);
+	remainder = ft_strlen(node->value + start + ft_strlen(var_name));
+	len = (start - 1) + value_len + remainder;
+	res = malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(res, node->value, start);
+	if (var_value)
+		ft_strlcat(res + start - 1, var_value, value_len + 1);
+	ft_strlcat(res + start - 1 + value_len, node->value + start + name_len, remainder + 1);
+	free(node->value);
+	node->value = res;
 }
 
-
-
-void	expansion(t_token *node, char **envp)
+void	expansion(t_token *node, t_env *env)
 {
 	char	*str;
 	int		i;
 
-	(void)envp;
 	while (node)
     {
 		i = 0;
@@ -93,24 +49,13 @@ void	expansion(t_token *node, char **envp)
 		while (str[i])
 		{
 			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i)))
-				expand_var(node, envp, i + 1);
+			{
+				expand_var(node, env, i + 1);
+				str = node->value;
+				i = -1;
+			}
 			i++;
 		}
 		node = node->next;
     }
-}
-
-// segfault : "ok\"$USE'R\"ok"
-// "OK\"'$USER''\"ok"
-// "ok$USE'R'ok"
-
-int main(int argc, char **argv, char **envp)
-{
-	t_token *head;
-
-	(void)argc;
-	(void)argv;
-
-	head = tokenizer("ok$USE'R'ok");
-	expansion(head, envp);
 }
