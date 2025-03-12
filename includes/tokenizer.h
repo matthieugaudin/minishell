@@ -1,6 +1,8 @@
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
+# include <stdbool.h>
+
 enum e_token
 {
 	COMMAND,

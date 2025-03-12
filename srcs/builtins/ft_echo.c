@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-bool	check_n(char *str)
+static bool	check_n(char *str)
 {
 	size_t	i;
 

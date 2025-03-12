@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "../../includes/tokenizer.h"
 
 /*
 Verifies that a character follows the posix standards,
@@ -68,7 +67,7 @@ void	append_env_node(t_env **env, char *envp)
 	last_node->next = node;
 }
 
-t_env   *create_env(char **envp)
+void	create_env(char **envp)
 {
     t_env	*env;
 
@@ -78,5 +77,5 @@ t_env   *create_env(char **envp)
 		append_env_node(&env, *envp);
 		envp++;
 	}
-	return (env);
+	ft_setter(&env, "env");
 }

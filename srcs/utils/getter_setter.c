@@ -1,9 +1,9 @@
 #include "../../includes/minishell.h"
 
-static void	**ft_gset_handler(void **set, char *str)
+static t_env	**ft_gset_handler(t_env **set, char *str)
 {
-	static	t_env		**env;
-	static	t_export 	**export;
+	static	t_env	**env;
+	static	t_env 	**exp;
 
 	if (ft_strcmp(str, "env") == 0)
 	{
@@ -14,12 +14,12 @@ static void	**ft_gset_handler(void **set, char *str)
 	else
 	{
 		if (set)
-			export = set;
-		return (export);
+			exp = set;
+		return (exp);
 	}
 }
 
-void	ft_setter(void **set, char *str)
+void	ft_setter(t_env **set, char *str)
 {
 	ft_gset_handler(set, str);
 }
