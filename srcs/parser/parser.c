@@ -35,7 +35,7 @@ void    parser(t_token *head)
 	token = head;
 	while (token)
 	{
-		if (is_redirected(token->type) && (!token->next || token->next != FILE_T))
+		if (is_redirected(token->type) && (!token->next || token->next->type != FILE_T))
 			return ;
 		else if (token->type == PIPE && (!token->prev || !token->next || token->next->type == PIPE))
 			return ;

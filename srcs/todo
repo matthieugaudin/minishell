@@ -4,21 +4,14 @@
 
 
 
-- convert the token struct to a cmd struct
-    -> rename redirections to REDIR_
-    -> how to differentiate the 2 enum types
-    -> how to diferentiate append mode
-    -> t_file *files
-    -> char **args
-    -> testing
+- convert the token struct to a first cmd struct : OK
+- check tokens order and manage error : to do
+- quote removal part : to do
 
 
-
-
-- redo the naming of variables (head, node)
-- check tokens order and manage error
-- transform all space by 9->13 + 32
-- remove opening/closing quotes
 - handle all malloc failure
+- transform all space by 9->13 + 32
 - Not interpret special characters such as \ or ;
 - handle echo $?
+- redo the naming of variables (head, node)
+- expansion part including $VAR in envp and "$VAR" in export

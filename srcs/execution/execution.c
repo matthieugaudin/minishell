@@ -19,4 +19,6 @@ For output i don't know.
 When a here_doc is called, he has the prioirty, understand that
 
 A good thing can be to understand with a lot of redirection how to data flow betweem files
+
+Do the here_doc expand with realine
 */
