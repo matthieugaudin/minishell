@@ -3,15 +3,13 @@
 
 
 
-
-- convert the token struct to a first cmd struct : OK
-- check tokens order and manage error : to do
-- quote removal part : to do
-
-
-- handle all malloc failure
 - transform all space by 9->13 + 32
+- check tokens order and manage error
 - Not interpret special characters such as \ or ;
-- handle echo $?
-- redo the naming of variables (head, node)
-- expansion part including $VAR in envp and "$VAR" in export
+- handle all memory free and malloc failure
+    -> at the end of parsing only t_cmd is not free
+    -> it is never free even before execve but close fds
+
+- handle echo $? (wait exec)
+- handle $VAR and "$VAR" (wait doley)
+- begin the execution part
