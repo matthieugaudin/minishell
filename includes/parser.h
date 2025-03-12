@@ -1,24 +1,14 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# include "tokenizer.h"
 # include <stdbool.h>
-
-/*
-- links with echo $?
-- how to handle builtins
-*/
-
-enum e_file
-{
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-};
 
 typedef struct  s_file
 {
-    char       *name;
-    enum e_file  type;
+    char            *name;
+    enum e_token     type;
+    struct s_file   *next;
 }   t_file;
 
 typedef struct s_cmd
@@ -31,5 +21,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 void	expansion(t_token *node, t_env *env);
+t_file	*new_file(char *name, enum e_token type);
+void	add_file_back(t_file **head, t_file *new);
 
 #endif /* PARSER_H */

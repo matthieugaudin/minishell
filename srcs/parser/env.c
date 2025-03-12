@@ -30,21 +30,21 @@ char	*get_env_name(char *envp_str)
 	return (env_name);
 }
 
-char	*get_env_value(char *envp_str)
+char	*get_env_value(char *name)
 {
 	char	*env_value;
 	int		i;
 	int		j;
 
 	i = 0;
-	while (is_posix_std(envp_str[i]))
+	while (is_posix_std(name[i]))
 		i++;
 	i++;
 	j = 0;
-	while (envp_str[i + j])
+	while (name[i + j])
 		j++;
 	env_value = malloc(sizeof(char) * (j + 1));
-	ft_strlcpy(env_value, envp_str + i, j + 1);
+	ft_strlcpy(env_value, name + i, j + 1);
 	return (env_value);
 }
 
