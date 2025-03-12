@@ -12,7 +12,7 @@ bool	in_quotes(char *str, int j)
 
 	i = 0;
 	quotes_open = false;
-	while (i <= j)
+	while (i < j)
 	{
 		if (!quotes_open && (str[i] == '\'' || str[i] == '\"'))
 		{
@@ -35,7 +35,7 @@ bool	in_dbl_quotes(char *str, int j)
 
 	i = 0;
 	quotes_open = false;
-	while (i <= j)
+	while (i < j)
 	{
 		if (str[i] == '\"')
 			quotes_open = !quotes_open;
