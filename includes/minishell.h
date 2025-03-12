@@ -26,7 +26,6 @@ typedef struct s_export
 /*==============ENV==============*/
 t_env   *create_env(char **envp);
 char	*get_env_name(char *envp_str);
-char	*get_env_value(char *envp_str);
 bool	is_posix_std(char c);
 void	ft_setter(void **set, char *str);
 void	**ft_getter(char *str);
