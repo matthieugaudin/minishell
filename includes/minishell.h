@@ -22,4 +22,7 @@ char	*get_env_name(char *envp_str);
 char	*get_env_value(char *envp_str);
 bool	is_posix_std(char c);
 
+/*==============UTILS==============*/
+bool	is_space(char c);
+
 #endif /* MINISHELL_H */

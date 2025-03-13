@@ -30,12 +30,12 @@ bool	special_car(char c)
 
 void	extract_token(char **s, int *len, int *i)
 {
-	while (**s && **s == ' ')
+	while (**s && is_space(**s))
 	{
 		(*s)++;
 		(*i)++;
 	}
-	while (**s && (**s != ' ' || (**s == ' ' && in_quotes(*s - *i, *i)))
+	while (**s && (!is_space(**s) || (is_space(**s) && in_quotes(*s - *i, *i)))
 		&& (!special_car(**s) || (special_car(**s) && in_quotes(*s - *i, *i))))
 	{
 		(*i)++;
