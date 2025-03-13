@@ -16,7 +16,7 @@ bool	is_posix_std(char c)
 /*
 Takes an environment variable from envp and returns its name.
 */
-char	*get_env_name(char *envp_str)
+static char	*get_env_name(char *envp_str)
 {
 	char	*env_name;
 	int		i;
@@ -47,7 +47,7 @@ char	*get_env_name(char *envp_str)
 // 	return (env_value);
 // }
 
-void	append_env_node(t_env **env, char *envp)
+static void	append_env_node(t_env **env, char *envp)
 {
 	t_env	*last_node;
 	t_env	*node;
@@ -77,5 +77,7 @@ void	create_env(char **envp)
 		append_env_node(&env, *envp);
 		envp++;
 	}
-	ft_setter(&env, "env");
+	ft_setter(env, "env");
 }
+
+

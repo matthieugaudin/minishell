@@ -16,11 +16,11 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-/*==============ENV==============*/
-t_list   *create_env(char **envp);
-char	*get_env_name(char *envp_str);
+/*==============ENV==============*/\
+
+void	create_env(char **envp);
 bool	is_posix_std(char c);
-void	ft_setter(t_env **set, char *str);
-void	**ft_getter(char *str);
+void	ft_setter(t_env *set, char *str);
+t_env	**ft_getter(char *str);
 
 #endif /* MINISHELL_H */
