@@ -16,11 +16,15 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_data
+{
+	t_env	*env;
+	t_env	*exp;
+}	t_data;
+
 /*==============ENV==============*/\
 
-void	create_env(char **envp);
+void	create_env(t_data *data, char **envp);
 bool	is_posix_std(char c);
-void	ft_setter(t_env *set, char *str);
-t_env	**ft_getter(char *str);
-
+void	create_export(t_data *data);
 #endif /* MINISHELL_H */
