@@ -25,4 +25,7 @@ bool	is_posix_std(char c);
 /*==============UTILS==============*/
 bool	is_space(char c);
 
+/*==============ERROR==============*/
+void	syntax_error(char c);
+
 #endif /* MINISHELL_H */

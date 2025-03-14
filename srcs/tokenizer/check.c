@@ -60,9 +60,10 @@ char	check_quotes(char *str)
 		return ('\0');
 }
 
-void	send_token_err(char c)
+void	syntax_error(char c)
 {
 	ft_putstr_fd("minishell: syntax error near unexepected token '", 2);
 	write(2, &c, 1);
 	ft_putstr_fd("'\n", 2);
+	exit(2);
 }

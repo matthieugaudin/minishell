@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 
-bool	is_redirected(enum e_token type)
+bool	is_redir(enum e_token type)
 {
 	if (type == INPUT || type == OUTPUT
 		|| type == APPEND || type == HERE_DOC)
@@ -10,37 +10,14 @@ bool	is_redirected(enum e_token type)
 		return (false);
 }
 
-bool	is_command(t_token *token)
+void    parser(t_token *token)
 {
-	bool	is_cmd;
-
-	is_cmd = false;
-	token = token->prev;
-	while (token && token->type != PIPE)
-	{
-		if (token->type == COMMAND)
-		{
-			is_cmd = true;
-			break ;
-		}
-		token = token->prev;
-	}
-	return (is_cmd);
-}
-
-void    parser(t_token *head)
-{
-	t_token	*token;
-
-	token = head;
 	while (token)
 	{
-		if (is_redirected(token->type) && (!token->next || token->next->type != FILE_T))
-			return ;
-		else if (token->type == PIPE && (!token->prev || !token->next || token->next->type == PIPE))
-			return ;
-		else if (token->type == PIPE && !is_command(token))
-			return ;
+		if (is_redir(token->type) && (!token->next || token->next->type != FILE_T))
+			syntax_error(token->value[0]);
+		if (token->type == PIPE && (!token->prev || !token->next || token->next->type == PIPE))
+			syntax_error('|');
 		token = token->next;
 	}
 }

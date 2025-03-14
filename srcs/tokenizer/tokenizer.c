@@ -9,15 +9,9 @@ void	check_unexpected(char *s)
 	quote_tkn = check_quotes(s);
 	line_tkn = check_line(s, "<>|&");
 	if (quote_tkn != '\0')
-	{
-		send_token_err(quote_tkn);
-		exit (2);
-	}
+		syntax_error(quote_tkn);
 	else if (line_tkn != '\0')
-	{
-		send_token_err(line_tkn);
-		exit (2);
-	}
+		syntax_error(line_tkn);
 }
 
 bool	special_car(char c)
@@ -70,7 +64,7 @@ bool	create_tokens(char *s, t_token **head)
 		extract_token(&s, &len, &i);
 		if (*s || len > 0)
 		{
-			value = malloc((len + 1) * sizeof(char));
+			value = malloc((len + 1) * sizeof(char)); // malloc
 			ft_strlcat(value, s - len, len + 1);
 			append_token_node(head, value);
 		}
