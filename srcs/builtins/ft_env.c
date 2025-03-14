@@ -1,12 +1,5 @@
 #include "../../includes/minishell.h"
 
-typedef struct s_env
-{
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
 int	ft_env(t_env *env)
 {
 	t_env	*tmp;

@@ -1,5 +1,4 @@
 #include "../../includes/minishell.h"
-#include "../../includes/tokenizer.h"
 
 /*
 Verifies that a character follows the posix standards,
@@ -17,7 +16,7 @@ bool	is_posix_std(char c)
 /*
 Takes an environment variable from envp and returns its name.
 */
-char	*get_env_name(char *envp_str)
+static char	*get_env_name(char *envp_str)
 {
 	char	*env_name;
 	int		i;
@@ -30,6 +29,7 @@ char	*get_env_name(char *envp_str)
 	return (env_name);
 }
 
+<<<<<<< HEAD
 char	*get_env_value(char *name)
 {
 	char	*env_value;
@@ -49,13 +49,16 @@ char	*get_env_value(char *name)
 }
 
 void	append_env_node(t_env **env, char *envp)
+=======
+static void	append_env_node(t_env **env, char *envp)
+>>>>>>> doley
 {
 	t_env	*last_node;
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
 	node->name = get_env_name(envp);
-	node->value = get_env_value(envp);
+	node->value = getenv(node->name);
 	node->next = NULL;
 	if (*env == NULL)
 	{
@@ -68,15 +71,15 @@ void	append_env_node(t_env **env, char *envp)
 	last_node->next = node;
 }
 
-t_env   *create_env(char **envp)
+void	create_env(t_data *data, char **envp)
 {
-    t_env	*env;
-
-	env = NULL;
+	data->env = NULL;
 	while (*envp)
 	{
-		append_env_node(&env, *envp);
+		append_env_node(&data->env, *envp);
 		envp++;
 	}
-	return (env);
+	create_export(data);
 }
+
+

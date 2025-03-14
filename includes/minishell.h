@@ -16,11 +16,11 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-/*==============ENV==============*/
-t_env   *create_env(char **envp);
-char	*get_env_name(char *envp_str);
-char	*get_env_value(char *envp_str);
-bool	is_posix_std(char c);
+typedef struct s_data
+{
+	t_env	*env;
+	t_env	*exp;
+}	t_data;
 
 /*==============UTILS==============*/
 bool	is_space(char c);
@@ -28,4 +28,9 @@ bool	is_space(char c);
 /*==============ERROR==============*/
 void	syntax_error(char c);
 
+/*==============ENV==============*/\
+
+void	create_env(t_data *data, char **envp);
+bool	is_posix_std(char c);
+void	create_export(t_data *data);
 #endif /* MINISHELL_H */
