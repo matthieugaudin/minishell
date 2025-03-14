@@ -3,13 +3,18 @@
 
 
 
-- transform all space by 9->13 + 32
-- check tokens order and manage error
-- Not interpret special characters such as \ or ;
-- handle all memory free and malloc failure
-    -> at the end of parsing only t_cmd is not free
-    -> it is never free even before execve but close fds
+- malloc error and free :
+    -> tokenizer : OK
+    -> parser : OK
+    -> env
+    -> expansion
+    -> quote_removal
+    -> command
+    -> exp
 
+
+- take a time to make header files working as an API with mate
+- take a time to rename variables/files/functions with mate
 - handle echo $? (wait exec)
 - handle $VAR and "$VAR" (wait doley)
 - begin the execution part
