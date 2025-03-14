@@ -1,17 +1,19 @@
 #include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 
-void	check_unexpected(char *s)
+void	free_tokens(t_token *tokens, bool alloc_err)
 {
-	char	quote_tkn;
-	char	line_tkn;
+	t_token *tmp;
 
-	quote_tkn = check_quotes(s);
-	line_tkn = check_line(s, "<>|&");
-	if (quote_tkn != '\0')
-		syntax_error(quote_tkn);
-	else if (line_tkn != '\0')
-		syntax_error(line_tkn);
+	while (tokens)
+	{
+		free(tokens->value);
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp);
+	}
+	if (alloc_err)
+		perror("Memory allocation failed");
 }
 
 bool	special_car(char c)
@@ -64,8 +66,13 @@ bool	create_tokens(char *s, t_token **head)
 		extract_token(&s, &len, &i);
 		if (*s || len > 0)
 		{
-			value = malloc((len + 1) * sizeof(char)); // malloc
-			ft_strlcat(value, s - len, len + 1);
+			value = malloc((len + 1) * sizeof(char));
+			if (!value)
+			{
+				free_tokens(*head, true);
+				exit(EXIT_FAILURE);
+			}
+			ft_strlcpy(value, s - len, len + 1);
 			append_token_node(head, value);
 		}
 	}
@@ -75,9 +82,16 @@ bool	create_tokens(char *s, t_token **head)
 t_token	*tokenizer(char *s)
 {
 	t_token	*head;
+	char	quote;
+	char	line;
 
 	head = NULL;
-	check_unexpected(s);
+	quote = check_quotes(s);
+	line = check_line(s, "<>&");
+	if (quote != '\0')
+		syntax_error(head, quote);
+	else if (line != '\0')
+		syntax_error(head, line);
 	create_tokens(s, &head);
 	return (head);
 }

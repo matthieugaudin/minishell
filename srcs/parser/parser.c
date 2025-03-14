@@ -12,12 +12,15 @@ bool	is_redir(enum e_token type)
 
 void    parser(t_token *token)
 {
+	t_token	*first_token;
+
+	first_token = token;
 	while (token)
 	{
 		if (is_redir(token->type) && (!token->next || token->next->type != FILE_T))
-			syntax_error(token->value[0]);
+			syntax_error(first_token, token->value[0]);
 		if (token->type == PIPE && (!token->prev || !token->next || token->next->type == PIPE))
-			syntax_error('|');
+			syntax_error(first_token, '|');
 		token = token->next;
 	}
 }

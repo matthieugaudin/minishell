@@ -33,7 +33,8 @@ void	set_token_type(t_token *node);
 /*===============CHECKS===============*/
 char	check_quotes(char *str);
 char	check_line(char *str, char *set);
-void	send_token_err(char c);
+void	syntax_error(t_token *tokens, char c);
+void	free_tokens(t_token *tokens, bool alloc_err);
 
 /*===============UTILS===============*/
 bool	in_quotes(char *str, int j);

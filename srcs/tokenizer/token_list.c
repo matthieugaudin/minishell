@@ -47,7 +47,11 @@ void	append_token_node(t_token **head, char *line)
 
 	node = malloc(sizeof(t_token));
 	if (!node)
-		return ;
+	{
+		free(line);
+		free_tokens(*head, true);
+		exit(EXIT_FAILURE);
+	}
 	if (*head == NULL)
 		*head = node;
 	node->value = line;

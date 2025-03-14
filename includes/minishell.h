@@ -25,11 +25,8 @@ typedef struct s_data
 /*==============UTILS==============*/
 bool	is_space(char c);
 
-/*==============ERROR==============*/
-void	syntax_error(char c);
-
 /*==============ENV==============*/
-
+char	*get_env_name(char *envp_str);
 void	create_env(t_data *data, char **envp);
 bool	is_posix_std(char c);
 void	create_export(t_data *data);
