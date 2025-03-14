@@ -28,7 +28,7 @@ bool	is_space(char c);
 /*==============ERROR==============*/
 void	syntax_error(char c);
 
-/*==============ENV==============*/\
+/*==============ENV==============*/
 
 void	create_env(t_data *data, char **envp);
 bool	is_posix_std(char c);
