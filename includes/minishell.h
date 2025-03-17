@@ -30,7 +30,7 @@ void	syntax_error(char c);
 
 /*==============ENV==============*/
 
-void	create_env(t_data *data, char **envp);
 bool	is_posix_std(char c);
+void	create_env(t_data *data, char **envp);
 void	create_export(t_data *data);
 #endif /* MINISHELL_H */
