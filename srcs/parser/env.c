@@ -59,5 +59,3 @@ void	create_env(t_data *data, char **envp)
 	}
 	create_export(data);
 }
-
-
