@@ -1,8 +1,36 @@
 
 
 
+TO DO
+    -> check_builtins : 
+    -> find_exec_path : 
+    -> redirect_fds : 
+    -> execute_cmd : 
+    -> wait_children : 
+    -> test everything with a t_cmd sent
+- handle exit code
+- handle singals
+- handle expand in the here_doc using export struct
 
 
+
+
+EXECUTION
+/*
+handle heredoc : OK
+fork for each cmd : OK
+	 -> open files :OK
+	 -> check if there is a builtin
+     -> find the executable
+        if cmd not found fork anyway but exit 127
+     -> redirect fds
+     -> exec command
+     -> wait for all processes
+*/
+
+
+
+PARSING
 - malloc error and free :
     -> tokenizer : OK
     -> parser : OK
@@ -11,10 +39,9 @@
     -> quote_removal
     -> command
     -> exp
-
-
+- do not expand if it's a heredoc
 - take a time to make header files working as an API with mate
 - take a time to rename variables/files/functions with mate
-- handle echo $? (wait exec)
 - handle $VAR and "$VAR" (wait doley)
-- begin the execution part
+
+

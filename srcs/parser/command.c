@@ -74,6 +74,7 @@ void	init_cmd_content(t_cmd *cmd, t_token *tokens)
 		tokens = tokens->next;
 	}
 	ft_memset(cmd, 0, sizeof(t_cmd));
+	cmd->fd_out = 1;
 	cmd->args = malloc(sizeof(char *) * (nb_cmds + 1));
 	cmd->args[nb_cmds] = NULL;
 }

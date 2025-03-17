@@ -1,62 +1,66 @@
 #include "../../includes/minishell.h"
 #include "../../includes/parser.h"
 
-// handle heredoc
-// open every other files
-// fork for every cmd
-//      -> find the executable
-//         if cmd not found it juste skip the redirection and exece
-//      -> redirect fds
-//      -> check if there is a builtin
-//      -> exec command
-//      -> wait for all processes
+/*
+wait(&status) returns the pid of the finished process
+(on error  || if finish) -1 is returned and errno is setup
+errno == ECHILD if finished
+if the last cmd is running and a signal happend, the exit code is different
+exemple : ctrl C during a sleep 
+*/
+void	wait_children(void) {}
 
-char    *random_file(void)
+void	open_files(t_cmd *cmd)
 {
-    char	*file_path;
-	char	*file_name;
-	int		name_len;
-	int		total_len;
-    int		fd;
-
-	name_len = 15;
-	file_name = malloc(sizeof(char) * (name_len + 1));
-	file_name[name_len] = '\0';
-	fd = open("/dev/urandom", O_RDONLY, 0644);
-	if (read(fd, file_name, name_len) == -1)
+	while (cmd->files)
 	{
-		perror("read system call failed");
+		if (cmd->files->type == INPUT)
+			cmd->fd_in = open(cmd->files->name, O_RDONLY);
+		else if (cmd->files->type == OUTPUT)
+			cmd->fd_out = open(cmd->files->name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+		else if (cmd->files->type == APPEND)
+			cmd->fd_out = open(cmd->files->name, O_RDWR | O_CREAT | O_APPEND, 0664);
+		if (cmd->fd_out == -1)
+			cmd->fd_out = open("/dev/null", O_RDONLY);
 	}
-	total_len = ft_strlen("/tmp/") + name_len + ft_strlen(".tmp");
-	file_path = malloc(sizeof(char) * (total_len + 1));
-	ft_strlcpy(file_path, "/tmp/", 6);
-	ft_strlcat(file_path + 5, file_name, name_len + 1);
-	ft_strlcat(file_path + 5 + name_len, ".tmp", 5);
-	close(fd);
-	return (file_path);
+	cmd->files = cmd->files->next;
 }
 
-void    handle_here_doc(t_cmd *cmds)
+void	check_builtins(t_cmd *cmd)
 {
-    char	*file_path;
-	int		fd;
+	char *cmd_name;
 
-    while (cmds)
-    {
-        // creer un nom random et un path dans /tmp
-        file_path = random_file();
-		while (cmds->here_doc)
+	cmd_name = cmd->args[0];
+	if (ft_strcmp(cmd_name, "cd"));
+		// to do
+	else if (ft_strcmp(cmd_name, "echo"));
+		// to do
+}
+
+void	execution(t_cmd *cmds)
+{
+	pid_t	pid;
+	pid_t	last_pid;
+	
+	open_here_doc(cmds);
+	while (cmds)
+	{
+		pid = fork();
+		if (!cmds->next)
+			last_pid = pid;
+		if (pid == 0)
 		{
-            // ouvrir un fichier .tmp avec ce nom et flags destr
-			fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-            // lire stdin avec readline
-			cmds->here_doc = cmds->here_doc->next;
+			open_files(cmds);
+			check_builtins(cmds);
+			find_exec_path(cmds);
+			redirect_fds(cmds);
+			execute_cmd(cmds);
 		}
-        cmds = cmds->next;
-    }
-}
-
-void    execution(t_cmd *cmds)
-{
-    handle_here_doc(cmds);
+		else
+		{
+			// parent
+		}
+		cmds = cmds->next;
+	}
+	wait_children();
 }

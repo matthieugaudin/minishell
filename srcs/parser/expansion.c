@@ -48,7 +48,7 @@ void	expansion(t_token *node, t_env *env)
 		str = node->value;
 		while (str[i])
 		{
-			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i)))
+			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i)) && node->type != HERE_DOC)
 			{
 				expand_var(node, env, i + 1);
 				str = node->value;
