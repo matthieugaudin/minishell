@@ -3,56 +3,53 @@
 void free_env_node(t_env *node)
 {
 	if (!node)
-        return;
-    free(node->name);
-    free(node->value);
-    free(node);
+		return;
+	free(node->name);
+	free(node->value);
+	free(node);
 }
 
 static void ft_check_and_remove(char *str, t_env **head)
 {
-    t_env *prev;
-    t_env *current;
+	t_env *prev;
+	t_env *current;
 
-    if (ft_strcmp((*head)->name, str) == 0)
-    {
-        current = *head;
-        *head = (*head)->next;
-        free_env_node(current);
-        return;
-    }
+	if (ft_strcmp((*head)->name, str) == 0)
+	{
+		current = *head;
+		*head = (*head)->next;
+		free_env_node(current);
+		return;
+	}
 	prev = *head;
-    current = (*head)->next;
-    while (current)
-    {
+	current = (*head)->next;
+	while (current)
+	{
 		if (ft_strcmp(current->name, str) == 0)
-        {
+		{
 			prev->next = current->next;
-            free_env_node(current);
-            return;
-        }
-        prev = current;
-        current = current->next;
-    }
+			free_env_node(current);
+			return;
+		}
+		prev = current;
+		current = current->next;
+	}
 }
 
 int ft_unset(t_data *data, char **args)
 {
-    size_t i;
+	size_t i;
 
 	i = 0;
-    while (args[i])
-    {
-		// if (is_posix_std(args[i]))
-        // {
-        if (data->env)
-            ft_check_and_remove(args[i], &data->env);
-        if (data->exp)
-            ft_check_and_remove(args[i], &data->exp);
-        //}
-        i++;
-    }
-    return (0);
+	while (args[i])
+	{
+		if (data->env)
+			ft_check_and_remove(args[i], &data->env);
+		if (data->exp)
+			ft_check_and_remove(args[i], &data->exp);
+		i++;
+	}
+	return (0);
 }
 
 
