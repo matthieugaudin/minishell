@@ -8,6 +8,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <errno.h>
+#include "tokenizer.h"
+
 
 typedef struct s_env
 {
@@ -25,12 +32,12 @@ typedef struct s_data
 /*==============UTILS==============*/
 bool	is_space(char c);
 
-/*==============ERROR==============*/
-void	syntax_error(char c);
-
 /*==============ENV==============*/
 
+char	*get_env_name(char *envp_str);
+void	create_env(t_data *data, char **envp);
 bool	is_posix_std(char c);
 void	create_env(t_data *data, char **envp);
 void	create_export(t_data *data);
+void    open_here_doc(t_cmd *cmds);
 #endif /* MINISHELL_H */

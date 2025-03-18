@@ -16,7 +16,7 @@ bool	is_posix_std(char c)
 /*
 Takes an environment variable from envp and returns its name.
 */
-static char	*get_env_name(char *envp_str)
+char	*get_env_name(char *envp_str)
 {
 	char	*env_name;
 	int		i;

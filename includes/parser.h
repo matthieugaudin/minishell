@@ -17,11 +17,14 @@ typedef struct s_cmd
     bool			is_here_doc;
 	t_list			*here_doc;
     t_file			*files;
+    int             fd_in;
+    int             fd_out;
     struct s_cmd	*next;
 }	t_cmd;
 
 void	expansion(t_token *node, t_env *env);
 t_file	*new_file(char *name, enum e_token type);
 void	add_file_back(t_file **head, t_file *new);
+t_cmd	*create_cmd(t_token *tokens);
 
 #endif /* PARSER_H */
