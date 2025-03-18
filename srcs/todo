@@ -2,6 +2,7 @@
 
 
 TO DO
+    -> merge with doley and 
     -> check_builtins : 
     -> find_exec_path : 
     -> redirect_fds : 
@@ -11,8 +12,6 @@ TO DO
 - handle exit code
 - handle singals
 - handle expand in the here_doc using export struct
-
-
 
 
 EXECUTION
@@ -43,5 +42,3 @@ PARSING
 - take a time to make header files working as an API with mate
 - take a time to rename variables/files/functions with mate
 - handle $VAR and "$VAR" (wait doley)
-
-

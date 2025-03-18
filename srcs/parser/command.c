@@ -98,59 +98,59 @@ t_cmd	*create_cmd(t_token *tokens)
 	return (cmds);
 }
 
-// int main(int argc, char **argv, char **envp)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	char	*line;
-// 	t_token	*tokens;
-// 	t_cmd	*cmd;
-// 	t_list	*here_doc;
-// 	t_file	*file;
-// 	int		i = 0;
+int main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	char	*line;
+	t_token	*tokens;
+	t_cmd	*cmd;
+	t_list	*here_doc;
+	t_file	*file;
+	int		i = 0;
 
-// 	line = "<out\"\"file";
-// 	printf("%s\n\n", line);
-// 	tokens = tokenizer(line);
-// 	expansion(tokens, create_env(envp));
-// 	cmd = create_cmd(tokens);
-//     while (cmd)
-//     {
-//         printf("=== Command Node ===\n");
+	line = "<out\"\"file";
+	printf("%s\n\n", line);
+	tokens = tokenizer(line);
+	expansion(tokens, create_env(envp));
+	cmd = create_cmd(tokens);
+    while (cmd)
+    {
+        printf("=== Command Node ===\n");
 
-//         // Print args
-//         printf("Arguments: ");
-//         if (cmd->args)
-//         {
-//             for (i = 0; cmd->args[i]; i++)
-//                 printf("%s ", cmd->args[i]);
-//         }
-//         printf("\n");
+        // Print args
+        printf("Arguments: ");
+        if (cmd->args)
+        {
+            for (i = 0; cmd->args[i]; i++)
+                printf("%s ", cmd->args[i]);
+        }
+        printf("\n");
 
-//         // Print is_here_doc
-//         printf("Here-Doc: %s\n", cmd->is_here_doc ? "true" : "false");
+        // Print is_here_doc
+        printf("Here-Doc: %s\n", cmd->is_here_doc ? "true" : "false");
 
-//         // Print here_doc
-//         printf("Here-Doc Content:\n");
-//         here_doc = cmd->here_doc;
-//         while (here_doc)
-//         {
-//             printf("  - %s\n", (char *)here_doc->content);
-//             here_doc = here_doc->next;
-//         }
+        // Print here_doc
+        printf("Here-Doc Content:\n");
+        here_doc = cmd->here_doc;
+        while (here_doc)
+        {
+            printf("  - %s\n", (char *)here_doc->content);
+            here_doc = here_doc->next;
+        }
 
-//         // Print files
-//         printf("Files:\n");
-//         file = cmd->files;
-//         while (file)
-//         {
-//             printf("  - Name: %s, Type: %u\n", file->name, file->type);
-//             file = file->next;
-//         }
+        // Print files
+        printf("Files:\n");
+        file = cmd->files;
+        while (file)
+        {
+            printf("  - Name: %s, Type: %u\n", file->name, file->type);
+            file = file->next;
+        }
 
-//         printf("\n");
+        printf("\n");
 
-//         // Move to next command node
-//         cmd = cmd->next;
-//     }
-// }
+        // Move to next command node
+        cmd = cmd->next;
+    }
+}
