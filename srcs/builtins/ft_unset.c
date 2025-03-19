@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void free_env_node(t_env *node)
+void	free_env_node(t_env *node)
 {
 	if (!node)
 		return;
@@ -9,7 +9,7 @@ void free_env_node(t_env *node)
 	free(node);
 }
 
-static void ft_check_and_remove(char *str, t_env **head)
+static void	ft_check_and_remove(char *str, t_env **head)
 {
 	t_env *prev;
 	t_env *current;
@@ -36,7 +36,7 @@ static void ft_check_and_remove(char *str, t_env **head)
 	}
 }
 
-int ft_unset(t_data *data, char **args)
+int	ft_unset(t_data *data, char **args)
 {
 	size_t i;
 
