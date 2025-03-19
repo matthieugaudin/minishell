@@ -26,12 +26,19 @@ static void	ft_insert_node(t_env **exp, t_env *new_node)
 		return;
 	}
 	current = *exp;
-	while (current->next && strcmp(new_node->name, current->next->name) > 0)
+	while (current->next && strcmp(new_node->name, current->next->name) >= 0)
 	{
 		current = current->next;
+		if (strcmp(new_node->name, current->name) == 0 && new_node->value)
+		{
+			current->value = ft_strdup(new_node->value);
+			free_env_node(new_node);
+			return ;
+		}
 	}
 	new_node->next = current->next;
 	current->next = new_node;
+	return ;
 }
 
 void	create_export(t_data *data)

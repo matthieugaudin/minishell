@@ -35,6 +35,8 @@ static void	append_env_node(t_env **env, char *envp)
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
+	if (!node)
+		return ;
 	node->name = get_env_name(envp);
 	node->value = ft_strdup(getenv(node->name));
 	node->next = NULL;

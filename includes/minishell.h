@@ -36,6 +36,7 @@ bool	is_space(char c);
 
 char	*get_env_name(char *envp_str);
 void	create_env(t_data *data, char **envp);
+void	free_env_node(t_env *node);
 bool	is_posix_std(char c);
 void	create_env(t_data *data, char **envp);
 void	create_export(t_data *data);
