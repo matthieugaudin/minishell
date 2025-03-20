@@ -1,14 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	free_env_node(t_env *node)
-{
-	if (!node)
-		return;
-	free(node->name);
-	free(node->value);
-	free(node);
-}
-
 static void	ft_check_and_remove(char *str, t_env **head)
 {
 	t_env *prev;

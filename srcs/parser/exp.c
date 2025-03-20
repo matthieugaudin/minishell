@@ -1,5 +1,14 @@
 #include "../../includes/minishell.h"
 
+void	free_env_node(t_env *node)
+{
+	if (!node)
+		return;
+	free(node->name);
+	free(node->value);
+	free(node);
+}
+
 t_env	*ft_new_node(char *name, char *value)
 {
 	t_env	*new;
