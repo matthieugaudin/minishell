@@ -50,10 +50,14 @@ static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 	char	*name;
 	char	*value;
 
-	if (!name || !value)
-		return (1);
 	name = ft_substr(arg, 0, i_egal);
 	value = ft_substr(arg, i_egal + 1, ft_strlen(arg) - i_egal - 1);
+	if (!name || !value)
+	{
+		free(name);
+		free(value);
+		return (1);
+	}
 	ft_insert_exp_node(&data->exp, ft_new_node(name, value));
 	ft_update_env_node(&data->env, ft_new_node(name, value));
 	free(name);
@@ -70,10 +74,11 @@ int ft_export(t_data *data, char **args)
 	while (args[i])
 	{
 		i_egal = ft_find_egal_pos(args[i]);
-		if (i_egal == 1)
+		if (i_egal == 0)
 			ft_insert_exp_node(&data->exp, ft_new_node(args[i], NULL));
-		else if (i_egal)
+		else if (i_egal > 0)
 			ft_update_env_exp(data, args[i], i_egal);
+		i++;
 	}
 	return (0);
 }
