@@ -40,5 +40,7 @@ void	free_env_node(t_env *node);
 bool	is_posix_std(char c);
 void	create_env(t_data *data, char **envp);
 void	create_export(t_data *data);
-void    open_here_doc(t_cmd *cmds);
+void	ft_insert_exp_node(t_env **exp, t_env *new_node);
+t_env	*ft_new_node(char *name, char *value);
+// void    open_here_doc(t_cmd *cmds);
 #endif /* MINISHELL_H */

@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static t_env	*ft_new_node(char *name, char *value)
+t_env	*ft_new_node(char *name, char *value)
 {
 	t_env	*new;
 
@@ -13,7 +13,7 @@ static t_env	*ft_new_node(char *name, char *value)
 	return (new);
 }
 
-static void	ft_insert_node(t_env **exp, t_env *new_node)
+void	ft_insert_exp_node(t_env **exp, t_env *new_node)
 {
 	t_env	*current;
 
@@ -28,13 +28,14 @@ static void	ft_insert_node(t_env **exp, t_env *new_node)
 	current = *exp;
 	while (current->next && strcmp(new_node->name, current->next->name) >= 0)
 	{
-		current = current->next;
-		if (strcmp(new_node->name, current->name) == 0 && new_node->value)
+		if (new_node->value && strcmp(new_node->name, current->name) == 0)
 		{
+			free(current->value);
 			current->value = ft_strdup(new_node->value);
 			free_env_node(new_node);
 			return ;
 		}
+		current = current->next;
 	}
 	new_node->next = current->next;
 	current->next = new_node;
@@ -55,7 +56,7 @@ void	create_export(t_data *data)
 		new_node = ft_new_node(cur_env->name, cur_env->value);
 		if (!new_node)
 			return ;
-		ft_insert_node(&data->exp, new_node);
+		ft_insert_exp_node(&data->exp, new_node);
 		cur_env = cur_env->next;
 	}
 }
