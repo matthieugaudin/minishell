@@ -1,25 +1,24 @@
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 #include "../../includes/parser.h"
 
-void	wait_children(pid_t last_pid)
+void	wait_children(t_data *data, pid_t last_pid)
 {
 	pid_t	pid;
 	int		status;
 
-	while (true)
+	pid = wait(&status);
+	while (pid > 0)
 	{
-		pid = wait(&status);
 		if (pid == last_pid)
 		{
-			// set exit code
+			if (WIFEXITED(status))
+			 	data->status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				data->status = (128 + WTERMSIG(status));
 		}
-		else if (pid == -1)
-		{
-			// an error occured
-		}
+		pid = wait(&status);
 	}
 }
-
 
 /*
 when an open fails the command is not executed
@@ -45,23 +44,17 @@ void	open_files(t_cmd *cmd)
 	cmd->files = cmd->files->next;
 }
 
-void	check_builtins(t_cmd *cmd)
+void	execute_cmd(t_data *data, t_cmd *cmd)
 {
-	char *cmd_name;
-
-	cmd_name = cmd->args[0];
-	if (ft_strcmp(cmd_name, "cd"));
-		// to do
-	else if (ft_strcmp(cmd_name, "echo"));
-		// to do
+	execve(cmd->path, cmd->args, data->env);
 }
 
-void	execution(t_cmd *cmds)
+void	execution(t_data *data, t_cmd *cmds)
 {
 	pid_t	pid;
 	pid_t	last_pid;
 
-	open_here_doc(cmds);
+	// open_here_doc(cmds);
 	while (cmds)
 	{
 		pid = fork();
@@ -70,13 +63,16 @@ void	execution(t_cmd *cmds)
 		if (pid == 0)
 		{
 			open_files(cmds);
-			check_builtins(cmds);
-			find_exec_path(cmds);
-			redirect_fds(cmds);
-			execute_cmd(cmds);
+			if (cmds != NULL)
+			{
+				check_builtins(cmds);
+				find_exec_path(cmds);
+				redirect_fds(cmds);
+				execute_cmd(data, cmds);
+			}
 		}
 		// parent
 		cmds = cmds->next;
 	}
-	wait_children(last_pid);
+	wait_children(data, last_pid);
 }

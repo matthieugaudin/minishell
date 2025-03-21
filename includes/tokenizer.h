@@ -17,6 +17,7 @@ enum e_token
 typedef struct s_token
 {
 	char			*value;
+	bool			hdoc_quoted;
 	enum e_token	type;
 	struct s_token	*next;
 	struct s_token	*prev;

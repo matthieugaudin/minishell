@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 #include "../../includes/tokenizer.h"
 
 char	*get_var_value(t_env *env, char *var_name)
@@ -48,7 +48,10 @@ void	expansion(t_token *node, t_env *env)
 		str = node->value;
 		while (str[i])
 		{
-			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i)) && !(node->prev && node->prev->type == HERE_DOC))
+			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i))
+				&& !(node->prev && node->prev->type == HERE_DOC)
+				&& (!is_space(str[i + 1]) && str[i + 1] != '\0'
+				&&!(in_dbl_quotes(str, i) && str[i + 1] == '\"')))
 			{
 				expand_var(node, env, i + 1);
 				str = node->value;

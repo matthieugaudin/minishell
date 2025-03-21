@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
 /*
 Verifies that a character follows the posix standards,

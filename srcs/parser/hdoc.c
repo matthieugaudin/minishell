@@ -2,20 +2,20 @@
 #include "../../includes/tokenizer.h"
 #include "../../includes/parser.h"
 
-t_file	*new_file(char *name, enum e_token type)
+t_hdoc  *new_hdoc(char *limiter, bool is_quoted)
 {
-	t_file	*new;
+	t_hdoc 	*new;
 
-	new = malloc(sizeof(t_file));
-	new->name = name;
-	new->type = type;
+	new = malloc(sizeof(t_hdoc));
+	new->limiter = limiter;
+	new->expand = is_quoted;
 	new->next = NULL;
 	return (new);
 }
 
-void	add_file_back(t_file **head, t_file *new)
+void	add_hdoc_back(t_hdoc **head, t_hdoc *new)
 {
-	t_file	*last;
+	t_hdoc	*last;
 
 	if (*head == NULL)
 	{

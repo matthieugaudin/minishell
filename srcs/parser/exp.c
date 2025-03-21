@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 
 static t_env	*ft_new_node(char *name, char *value)
 {

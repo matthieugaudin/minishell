@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/execution.h"
 #include "../../includes/tokenizer.h"
 #include "../../includes/parser.h"
 
@@ -24,7 +24,7 @@ void	set_last_cmd_next(t_cmd **cmds, t_cmd *cmd)
 
 void	handle_files(t_token *tokens, t_cmd *cmd)
 {
-	t_list	*limiter;
+	t_hdoc	*limiter;
 	t_file	*file;
 
 	file = NULL;
@@ -32,8 +32,8 @@ void	handle_files(t_token *tokens, t_cmd *cmd)
 	if (tokens->prev->type == HERE_DOC)
 	{
 		cmd->is_here_doc = true;
-		limiter = ft_lstnew(tokens->value);
-		ft_lstadd_back(&cmd->here_doc, limiter);
+		limiter = new_hdoc(tokens->value, tokens->hdoc_quoted);
+		add_hdoc_back(&cmd->here_doc, limiter);
 	}
 	else
 	{
@@ -98,59 +98,62 @@ t_cmd	*create_cmd(t_token *tokens)
 	return (cmds);
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	char	*line;
-	t_token	*tokens;
-	t_cmd	*cmd;
-	t_list	*here_doc;
-	t_file	*file;
-	int		i = 0;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	char	*line;
+// 	t_token	*tokens;
+// 	t_cmd	*cmd;
+// 	t_hdoc	*here_doc;
+// 	t_file	*file;
+// 	t_data	*data = malloc(sizeof(t_data));
+// 	int		i = 0;
 
-	line = "<out\"\"file";
-	printf("%s\n\n", line);
-	tokens = tokenizer(line);
-	expansion(tokens, create_env(envp));
-	cmd = create_cmd(tokens);
-    while (cmd)
-    {
-        printf("=== Command Node ===\n");
+// 	line = "\"BONJOUR\"$\"\"";
+// 	printf("%s\n\n", line);
+// 	tokens = tokenizer(line);
+// 	create_env(data, envp);
+// 	expansion(tokens, data->env);
+// 	remove_quotes(tokens);
+// 	cmd = create_cmd(tokens);
+//     while (cmd)
+//     {
+//         printf("=== Command Node ===\n");
 
-        // Print args
-        printf("Arguments: ");
-        if (cmd->args)
-        {
-            for (i = 0; cmd->args[i]; i++)
-                printf("%s ", cmd->args[i]);
-        }
-        printf("\n");
+//         // Print args
+//         printf("Arguments: ");
+//         if (cmd->args)
+//         {
+//             for (i = 0; cmd->args[i]; i++)
+//                 printf("%s ", cmd->args[i]);
+//         }
+//         printf("\n");
 
-        // Print is_here_doc
-        printf("Here-Doc: %s\n", cmd->is_here_doc ? "true" : "false");
+//         // Print is_here_doc
+//         printf("Here-Doc: %s\n", cmd->is_here_doc ? "true" : "false");
 
-        // Print here_doc
-        printf("Here-Doc Content:\n");
-        here_doc = cmd->here_doc;
-        while (here_doc)
-        {
-            printf("  - %s\n", (char *)here_doc->content);
-            here_doc = here_doc->next;
-        }
+//         // Print here_doc
+//         printf("Here-Doc Content:\n");
+//         here_doc = cmd->here_doc;
+//         while (here_doc)
+//         {
+//             printf("  - %s\n", (char *)here_doc->limiter);
+//             here_doc = here_doc->next;
+//         }
 
-        // Print files
-        printf("Files:\n");
-        file = cmd->files;
-        while (file)
-        {
-            printf("  - Name: %s, Type: %u\n", file->name, file->type);
-            file = file->next;
-        }
+//         // Print files
+//         printf("Files:\n");
+//         file = cmd->files;
+//         while (file)
+//         {
+//             printf("  - Name: %s, Type: %u\n", file->name, file->type);
+//             file = file->next;
+//         }
 
-        printf("\n");
+//         printf("\n");
 
-        // Move to next command node
-        cmd = cmd->next;
-    }
-}
+//         // Move to next command node
+//         cmd = cmd->next;
+//     }
+// }

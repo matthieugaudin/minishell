@@ -1,5 +1,5 @@
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
 # include <stdio.h>
 # include <linux/limits.h>
@@ -7,26 +7,26 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <fcntl.h>
+# include <errno.h>
 # include "../libs/libft/libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <errno.h>
-#include "tokenizer.h"
+# include "parser.h"
 
 
-typedef struct s_env
-{
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
+/*
+dup stdin and stdout
+*/
 typedef struct s_data
 {
 	t_env	*env;
 	t_env	*exp;
+	t_cmd	*cmds;
+	int		**pipes;
+	char	*path;
+	int		status;
 }	t_data;
 
 /*==============UTILS==============*/
@@ -39,5 +39,5 @@ void	create_env(t_data *data, char **envp);
 bool	is_posix_std(char c);
 void	create_env(t_data *data, char **envp);
 void	create_export(t_data *data);
-void    open_here_doc(t_cmd *cmds);
-#endif /* MINISHELL_H */
+
+#endif /* EXECUTION_H */
