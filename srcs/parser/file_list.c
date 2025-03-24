@@ -1,5 +1,3 @@
-#include "../../includes/minishell.h"
-#include "../../includes/tokenizer.h"
 #include "../../includes/parser.h"
 
 t_file	*new_file(char *name, enum e_token type)

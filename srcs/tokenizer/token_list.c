@@ -1,4 +1,3 @@
-#include "../../includes/minishell.h"
 #include "../../includes/tokenizer.h"
 
 void	set_token_type(t_token *node)
@@ -19,6 +18,10 @@ void	set_token_type(t_token *node)
 		node->type = FILE_T;
 	else
 		node->type = COMMAND;
+	if (node->prev && node->prev->type == HERE_DOC && is_quotes(node))
+		node->hdoc_quoted = false;
+	else
+		node->hdoc_quoted = true;
 }
 
 void	set_token_prev(t_token **head, t_token *node)
@@ -50,7 +53,7 @@ void	append_token_node(t_token **head, char *line)
 	{
 		free(line);
 		free_tokens(*head, true);
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	if (*head == NULL)
 		*head = node;

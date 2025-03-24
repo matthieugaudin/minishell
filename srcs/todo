@@ -1,44 +1,26 @@
 
 
 
-TO DO
-    -> merge with doley and 
-    -> check_builtins : 
-    -> find_exec_path : 
-    -> redirect_fds : 
-    -> execute_cmd : 
-    -> wait_children : 
-    -> test everything with a t_cmd sent
-- handle exit code
-- handle singals
-- handle expand in the here_doc using export struct
+-> refactor properly all files and headers as an API : OK
+    -> reorgenize exp and env not use t_data : OK
+    -> put all functions to static if needed : OK
+    -> makefile and compile : to test
+-> test exec
+-> display a prompt
+-> check_builtins in exec
+    -> which builtin needs execve
+    -> dup stdin and stdout
+-> handle echo + not a posix after (if not a posix but not $?) :
+-> expand the $? : 
+-> handle $VAR and "$VAR"
+-> handle singals
+-> free data 
+-> add comments to each function for team mate
+-> protect every syscall
 
 
-EXECUTION
-/*
-handle heredoc : OK
-fork for each cmd : OK
-	 -> open files :OK
-	 -> check if there is a builtin
-     -> find the executable
-        if cmd not found fork anyway but exit 127
-     -> redirect fds
-     -> exec command
-     -> wait for all processes
-*/
-
-
-
-PARSING
-- malloc error and free :
-    -> tokenizer : OK
-    -> parser : OK
-    -> env
-    -> expansion
-    -> quote_removal
-    -> command
-    -> exp
-- do not expand if it's a heredoc
-- take a time to make header files working as an API with mate
-- take a time to rename variables/files/functions with mate
-- handle $VAR and "$VAR" (wait doley)
+TESTS : 
+- no command
+- ctrl on here_doc
+- enter with nothing
+- enter with spaces

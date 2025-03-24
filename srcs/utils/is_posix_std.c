@@ -1,8 +1,8 @@
 #include "../../includes/tokenizer.h"
 
-bool	is_space(char c)
+bool	is_posix_std(char c)
 {
-	if ((c >= 9 && c <= 13) || c == 32)
+	if (ft_isalnum(c) || c == '_')
 		return (true);
 	else
 		return (false);
