@@ -7,13 +7,15 @@ static int	ft_find_egal_pos(char *str)
 	if (!str || !*str || ft_isdigit(str[0]))
 		return (-1);
 	i = 0;
-	while (str[i] && str[i] != '=')
+	while (str[i])
 	{
 		if (!is_posix_std(str[i]))
 			return (-1);
+		if (str[i] == '=')
+			return (i);
 		i++;
 	}
-	return (i);
+	return (0);
 }
 
 static void ft_update_env_node(t_env **env, t_env *new_node)
@@ -74,6 +76,7 @@ int ft_export(t_data *data, char **args)
 	while (args[i])
 	{
 		i_egal = ft_find_egal_pos(args[i]);
+		printf("i_egal : %zu\n", i_egal);
 		if (i_egal == 0)
 			ft_insert_exp_node(&data->exp, ft_new_node(args[i], NULL));
 		else if (i_egal > 0)
@@ -82,3 +85,35 @@ int ft_export(t_data *data, char **args)
 	}
 	return (0);
 }
+
+// void	print_data(t_env *env, t_env *exp)
+// {
+// 	printf("#######\tENV\t#######\n\n");
+// 	while (env != NULL)
+// 	{
+// 		printf("%s=%s\n", env->name, env->value);
+// 		env = env->next;
+// 	}
+// 	printf("\n\n#######\tEXP\t#######\n\n");
+// 	while (exp != NULL)
+// 	{
+// 		printf("%s=%s\n", exp->name, exp->value);
+// 		exp = exp->next;
+// 	}
+// }
+
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_data	*data;
+// 	char	*args[] = {"salut", "cava", NULL};
+
+// 	data = malloc(sizeof(t_data));
+// 	(void)argc;
+// 	(void)argv;
+// 	data->env = create_env(envp);
+// 	data->exp = create_export(data->env);
+
+// 	ft_export(data, args);
+// 	print_data(data->env, data->exp);
+// 	return (0);
+// }

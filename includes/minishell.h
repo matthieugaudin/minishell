@@ -35,11 +35,10 @@ bool	is_space(char c);
 /*==============ENV==============*/
 
 char	*get_env_name(char *envp_str);
-void	create_env(t_data *data, char **envp);
 void	free_env_node(t_env *node);
 bool	is_posix_std(char c);
-void	create_env(t_data *data, char **envp);
-void	create_export(t_data *data);
+t_env	*create_env(char **envp);
+t_env	*create_export(t_env *env);
 void	ft_insert_exp_node(t_env **exp, t_env *new_node);
 t_env	*ft_new_node(char *name, char *value);
 // void    open_here_doc(t_cmd *cmds);

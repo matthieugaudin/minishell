@@ -16,8 +16,12 @@ t_env	*ft_new_node(char *name, char *value)
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
-	new->name = ft_strdup(name);
-	new->value= ft_strdup(value);
+	new->name = NULL;
+	new->value = NULL;
+	if (name)
+		new->name = ft_strdup(name);
+	if (value)
+		new->value= ft_strdup(value);
 	new->next = NULL;
 	return (new);
 }
@@ -68,10 +72,11 @@ t_env	*create_export(t_env *env)
 	{
 		new_node = ft_new_node(cur_env->name, cur_env->value);
 		if (!new_node)
-			return ;
+			return (NULL);
 		ft_insert_exp_node(&exp, new_node);
 		cur_env = cur_env->next;
 	}
+	return (exp);
 }
 
 
