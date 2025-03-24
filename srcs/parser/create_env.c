@@ -1,5 +1,4 @@
-#include "../../includes/execution.h"
-/*#include "../../includes/parser.h"*/
+#include "../../includes/parser.h"
 
 /*
 Takes an environment variable from envp and returns its name.

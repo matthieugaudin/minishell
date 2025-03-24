@@ -1,6 +1,6 @@
 #include "../../includes/parser.h"
 
-static char	*get_var_value(t_env *env, char *var_name)
+char	*get_var_value(t_env *env, char *var_name)
 {
 	while (env)
 	{

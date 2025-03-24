@@ -4,7 +4,7 @@
 -> refactor properly all files and headers as an API : OK
     -> reorgenize exp and env not use t_data : OK
     -> put all functions to static if needed : OK
-    -> makefile and compile : to test
+    -> makefile and compile : OK
 -> test exec
 -> display a prompt
 -> check_builtins in exec

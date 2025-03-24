@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/builtins.h"
 
 static bool	check_n(char *str)
 {

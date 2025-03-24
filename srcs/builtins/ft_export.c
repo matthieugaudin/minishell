@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/builtins.h"
 
 static int	ft_find_egal_pos(char *str)
 {

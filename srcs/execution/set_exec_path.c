@@ -81,7 +81,6 @@ static void	special_cases(t_cmd *cmd)
 void	set_exec_path(t_data *data, t_cmd *cmd)
 {
 	char 	**paths;
-	int		fd;
 
     if (ft_strncmp(cmd->args[0], "./", 2) == 0 || cmd->args[0][0] == '/')
     {

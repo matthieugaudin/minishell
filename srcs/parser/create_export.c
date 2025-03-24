@@ -1,5 +1,4 @@
-#include "../../includes/execution.h"
-/*#include "../../includes/parser.h"*/
+#include "../../includes/parser.h"
 
 void	free_env_node(t_env *node)
 {

@@ -40,12 +40,16 @@ typedef struct s_cmd
 void    parse_tokens(t_token *token);
 void	expand_tokens(t_token *node, t_env *env);
 void	remove_quotes(t_token *tokens);
+char	*get_var_value(t_env *env, char *var_name);
 char	*get_env_name(char *envp_str);
+void	free_env_node(t_env *node);
+void	ft_insert_exp_node(t_env **exp, t_env *new_node);
+t_env	*ft_new_node(char *name, char *value);
 
 /*==========EXEC DATA==========*/
 t_cmd	*create_cmd(t_token *tokens);
-/*void	create_export(t_data *data)*/
-/*void	create_env(t_data *data, char **envp)*/
+t_env	*create_export(t_env *env);
+t_env	*create_env(char **envp);
 
 /*============LINKED LISTS===========*/
 t_hdoc  *new_hdoc(char *limiter, bool is_quoted);

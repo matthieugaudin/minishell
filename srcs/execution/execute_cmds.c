@@ -1,10 +1,11 @@
 #include "../../includes/execution.h"
 
-static void	execute_cmd(t_data *data, t_cmd *cmd)
-{
-	// check for builtins
-	execve(cmd->path, cmd->args, data->env);
-}
+// static void	execute_cmd(t_data *data, t_cmd *cmd)
+// {
+// 	// check for builtins
+//	// convert envp to char **
+// 	execve(cmd->path, cmd->args, data->env);
+// }
 
 void	execute_cmds(t_data *data, t_cmd *cmds)
 {
@@ -24,7 +25,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 			{
 				set_exec_path(data, cmds);
 				redirect_fds(data, cmds);
-				execute_cmd(data, cmds);
+				// execute_cmd(data, cmds);
 			}
 		}
 		cmds = cmds->next;

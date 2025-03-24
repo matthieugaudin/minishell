@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../../includes/builtins.h"
 
 static void	ft_check_and_remove(char *str, t_env **head)
 {
