@@ -51,21 +51,25 @@ void	ft_insert_exp_node(t_env **exp, t_env *new_node)
 	return ;
 }
 
-void	create_export(t_data *data)
+t_env	*create_export(t_env *env)
 {
+	t_env	*exp;
 	t_env	*cur_env;
 	t_env	*new_node;
 
-	data->exp = NULL;
-	if (!data->env)
-		return ;
-	cur_env = data->env;
+	if (!env)
+		return (NULL);
+	exp = malloc(sizeof(t_env));
+	if (!exp)
+		return (NULL);
+	exp = NULL;
+	cur_env = env;
 	while (cur_env)
 	{
 		new_node = ft_new_node(cur_env->name, cur_env->value);
 		if (!new_node)
 			return ;
-		ft_insert_exp_node(&data->exp, new_node);
+		ft_insert_exp_node(&exp, new_node);
 		cur_env = cur_env->next;
 	}
 }

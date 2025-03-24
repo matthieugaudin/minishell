@@ -51,13 +51,18 @@ static void	append_env_node(t_env **env, char *envp)
 	last_node->next = node;
 }
 
-void	create_env(t_data *data, char **envp)
+t_env	*create_env(char **envp)
 {
-	data->env = NULL;
+	t_env	*env;
+
+	env = malloc(sizeof(t_env));
+	if (!env)
+		return (NULL);
+	env = NULL;
 	while (*envp)
 	{
-		append_env_node(&data->env, *envp);
+		append_env_node(&env, *envp);
 		envp++;
 	}
-	create_export(data);
+	return (env);
 }
