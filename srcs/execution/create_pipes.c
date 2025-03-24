@@ -1,5 +1,4 @@
 #include "../../includes/execution.h"
-#include "../../includes/parser.h"
 
 void	create_pipes(t_data *data)
 {

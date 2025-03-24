@@ -1,10 +1,9 @@
-#include "../../includes/execution.h"
+#include "../includes/execution.h"
 #include "../includes/tokenizer.h"
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_token	*head;
 
 	(void)argc;
 	(void)argv;
@@ -16,7 +15,6 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell>");
 		if (line)
 			add_history(line);
-		head = tokenizer(line);
 		free(line);
 	}
 	rl_clear_history();

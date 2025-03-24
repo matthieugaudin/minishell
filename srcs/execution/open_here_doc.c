@@ -1,7 +1,6 @@
 #include "../../includes/execution.h"
-#include "../../includes/parser.h"
 
-char    *get_file_path(void)
+static char    *get_file_path(void)
 {
 	char 	alnum[63];
 	char	file_path[5 + 20 + 4 + 1];
@@ -25,7 +24,7 @@ char    *get_file_path(void)
 	return (res);
 }
 
-void	expand_line(t_env *env, char **line, int start)
+static void	expand_line(t_env *env, char **line, int start)
 {
 	char	*var_value;
 	char	*var_name;
@@ -49,7 +48,7 @@ void	expand_line(t_env *env, char **line, int start)
 	*line = res;
 }
 
-char	*expand_hdoc(t_env *env, char *line)
+static char	*expand_hdoc(t_env *env, char *line)
 {
 	int	i;
 
@@ -67,7 +66,7 @@ char	*expand_hdoc(t_env *env, char *line)
 	return (line);
 }
 
-void	fill_here_doc(t_cmd *cmds, t_env *env, int here_doc)
+static void	fill_here_doc(t_cmd *cmds, t_env *env, int here_doc)
 {
 	char	*line;
 	char	*new;
@@ -114,26 +113,3 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
         cmds = cmds->next;
     }
 }
-
-int main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-
-	char *line;
-	t_token *tokens;
-	t_cmd	*cmds;
-	t_data *data;
-
-	data = malloc(sizeof(t_data));
-	create_env(data, envp);
-	line = "<<''lim1";
-	tokens = tokenizer(line);
-	expansion(tokens, data->env);
-	remove_quotes(tokens);
-	cmds = create_cmd(tokens);
-	data->cmds = cmds;
-	open_here_doc(data->cmds, data->env);
-}
-
-// open fails two times

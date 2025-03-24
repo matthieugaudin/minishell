@@ -1,24 +1,13 @@
 #include "../../includes/execution.h"
-#include "../../includes/parser.h"
 
-void	send_error(char *arg, int errno_cpy)
-{
-	if (errno_cpy != -1)
-		errno = errno_cpy;
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(errno), 2);
-}
-
-void	cmd_not_found(char *arg)
+static void	cmd_not_found(char *arg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putendl_fd(": command not found", 2);
 }
 
-char	**get_paths(t_cmd *cmd, t_env *env)
+static char	**get_paths(t_cmd *cmd, t_env *env)
 {
 	char	**paths;
 	char	*tmp;
@@ -47,7 +36,7 @@ char	**get_paths(t_cmd *cmd, t_env *env)
 	return (paths);
 }
 
-char	*get_access_path(char **paths)
+static char	*get_access_path(char **paths)
 {
 	char	*access_path;
 	int		i;
@@ -69,7 +58,7 @@ char	*get_access_path(char **paths)
 	return (access_path);
 }
 
-void	special_cases(t_cmd *cmd)
+static void	special_cases(t_cmd *cmd)
 {
 	int	fd;
 
@@ -89,7 +78,7 @@ void	special_cases(t_cmd *cmd)
 	cmd->path = cmd->args[0];
 }
 
-void	find_exec_path(t_cmd *cmd, t_data *data)
+void	set_exec_path(t_data *data, t_cmd *cmd)
 {
 	char 	**paths;
 	int		fd;
@@ -109,19 +98,3 @@ void	find_exec_path(t_cmd *cmd, t_data *data)
 		}
     }
 }
-
- /*
- int main(int argc, char **argv, char **envp)
- {
-	 (void)argc;
-	 (void)argv;
-	 // (void)envp;
-	 t_data *data = malloc(sizeof(t_data));
-	 t_token *token = tokenizer("sfwfdsfasdfsok");
-	 remove_quotes(token);
-	 t_cmd *cmd = create_cmd(token);
-	 create_env(data, envp);
-	 find_exec_path(cmd, data);
-	 printf("%s\n", cmd->path);
- }
- */

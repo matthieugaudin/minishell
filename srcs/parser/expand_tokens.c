@@ -1,7 +1,6 @@
-#include "../../includes/execution.h"
-#include "../../includes/tokenizer.h"
+#include "../../includes/parser.h"
 
-char	*get_var_value(t_env *env, char *var_name)
+static char	*get_var_value(t_env *env, char *var_name)
 {
 	while (env)
 	{
@@ -12,7 +11,7 @@ char	*get_var_value(t_env *env, char *var_name)
 	return (NULL);
 }
 
-void	expand_var(t_token *node, t_env *env, int start)
+static void	expand_var(t_token *node, t_env *env, int start)
 {
 	char	*var_value;
 	char	*var_name;
@@ -37,7 +36,7 @@ void	expand_var(t_token *node, t_env *env, int start)
 	node->value = res;
 }
 
-void	expansion(t_token *node, t_env *env)
+void	expand_tokens(t_token *node, t_env *env)
 {
 	char	*str;
 	int		i;

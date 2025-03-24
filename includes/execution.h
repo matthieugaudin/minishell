@@ -1,43 +1,30 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include <stdio.h>
-# include <linux/limits.h>
-# include <stdlib.h>
-# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include <errno.h>
-# include "../libs/libft/libft.h"
 # include "parser.h"
 
-
-/*
-dup stdin and stdout
-*/
 typedef struct s_data
 {
 	t_env	*env;
 	t_env	*exp;
 	t_cmd	*cmds;
 	int		**pipes;
-	char	*path;
 	int		status;
 }	t_data;
 
-/*==============UTILS==============*/
-bool	is_space(char c);
-
-/*==============ENV==============*/
-
-char	*get_env_name(char *envp_str);
-void	create_env(t_data *data, char **envp);
-bool	is_posix_std(char c);
-void	create_env(t_data *data, char **envp);
-void	create_export(t_data *data);
+/*==============EXEC==============*/
+void	execute_cmds(t_data *data, t_cmd *cmds);
+void    open_here_doc(t_cmd *cmds, t_env *env);
+void	open_files(t_cmd *cmd);
+void	set_exec_path(t_data *data, t_cmd *cmd);
+void	redirect_fds(t_data *data, t_cmd *cmds);
+void	wait_children(t_data *data, pid_t last_pid);
+void	send_error(char *arg, int errno_cpy);
 
 #endif /* EXECUTION_H */

@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <stdbool.h>
 # include "tokenizer.h"
 
 typedef struct s_env
@@ -37,14 +36,21 @@ typedef struct s_cmd
     struct s_cmd	*next;
 }	t_cmd;
 
-void	expansion(t_token *node, t_env *env);
+/*==============PARSER==============*/
+void    parse_tokens(t_token *token);
+void	expand_tokens(t_token *node, t_env *env);
+void	remove_quotes(t_token *tokens);
+char	*get_env_name(char *envp_str);
+
+/*==========EXEC DATA==========*/
+t_cmd	*create_cmd(t_token *tokens);
+/*void	create_export(t_data *data)*/
+/*void	create_env(t_data *data, char **envp)*/
+
+/*============LINKED LISTS===========*/
+t_hdoc  *new_hdoc(char *limiter, bool is_quoted);
+void	add_hdoc_back(t_hdoc **head, t_hdoc *new);
 t_file	*new_file(char *name, enum e_token type);
 void	add_file_back(t_file **head, t_file *new);
-t_cmd	*create_cmd(t_token *tokens);
-void	remove_quotes(t_token *tokens);
-char	*get_var_value(t_env *env, char *var_name);
-void	expand_var(t_token *node, t_env *env, int start);
-void	add_hdoc_back(t_hdoc **head, t_hdoc *new);
-t_hdoc  *new_hdoc(char *limiter, bool is_quoted);
 
 #endif /* PARSER_H */

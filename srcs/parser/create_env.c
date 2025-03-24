@@ -1,17 +1,5 @@
 #include "../../includes/execution.h"
-
-/*
-Verifies that a character follows the posix standards,
-meaning that it's an uppercase/lowercase letter, a digit,
-or an underscore.
-*/
-bool	is_posix_std(char c)
-{
-	if (ft_isalnum(c) || c == '_')
-		return (true);
-	else
-		return (false);
-}
+/*#include "../../includes/parser.h"*/
 
 /*
 Takes an environment variable from envp and returns its name.

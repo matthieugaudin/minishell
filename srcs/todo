@@ -1,19 +1,26 @@
 
 
 
--> redirect_fds (verify not the first)
--> check_builtins
--> update makefile
--> refactor properly all files and headers as an API
+-> refactor properly all files and headers as an API : OK
+    -> reorgenize exp and env not use t_data : OK
+    -> put all functions to static if needed : OK
+    -> makefile and compile : to test
+-> test exec
 -> display a prompt
+-> check_builtins in exec
+    -> which builtin needs execve
+    -> dup stdin and stdout
 -> handle echo + not a posix after (if not a posix but not $?) :
 -> expand the $? : 
 -> handle $VAR and "$VAR"
 -> handle singals
--> no free on each line
+-> free data 
+-> add comments to each function for team mate
 -> protect every syscall
 
 
 TESTS : 
 - no command
 - ctrl on here_doc
+- enter with nothing
+- enter with spaces

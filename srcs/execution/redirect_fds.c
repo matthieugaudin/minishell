@@ -1,14 +1,13 @@
 #include "../../includes/execution.h"
-#include "../../includes/parser.h"
 
-void	redirect_fd(t_data *data, t_cmd *cmds)
+void	redirect_fds(t_data *data, t_cmd *cmds)
 {
 	int	i;
 
 	i = 0;
 	while (cmds)
 	{
-		if (cmds->fd_in == 0) // && je suis pas le first
+		if (cmds->fd_in == 0 && i > 0)
 			dup2(cmds->fd_in, data->pipes[i - 1][0]);
 		else if (cmds->fd_in != 0)
 			dup2(cmds->fd_in, 0);

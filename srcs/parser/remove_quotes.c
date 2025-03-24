@@ -1,8 +1,6 @@
-#include "../../includes/execution.h"
-#include "../../includes/tokenizer.h"
 #include "../../includes/parser.h"
 
-void	fill_tkn_value(char *value, char *tmp)
+static void	fill_tkn_value(char *value, char *tmp)
 {
 	char	quote;
 	int		i;
@@ -13,7 +11,7 @@ void	fill_tkn_value(char *value, char *tmp)
 	quote = '\0';
 	while (tmp[i])
 	{
-		if (!(!in_quotes(tmp, i) && (tmp[i] == '\'' || tmp[i] == '\"')) && !(in_quotes(tmp, i) && tmp[i] == quote)) // not in quotes && str = quote
+		if (!(!in_quotes(tmp, i) && (tmp[i] == '\'' || tmp[i] == '\"')) && !(in_quotes(tmp, i) && tmp[i] == quote))
 		{
 			value[j] = tmp[i];
 			j++;
@@ -26,7 +24,7 @@ void	fill_tkn_value(char *value, char *tmp)
 	}
 }
 
-int	count_del_quotes(t_token *token)
+static int	count_del_quotes(t_token *token)
 {
 	char	*str;
 	char	quote;

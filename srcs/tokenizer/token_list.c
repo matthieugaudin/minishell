@@ -1,19 +1,4 @@
-#include "../../includes/execution.h"
 #include "../../includes/tokenizer.h"
-
-bool	is_quotes(t_token *node)
-{
-	int	i;
-
-	i = 0;
-	while (node->value[i])
-	{
-		if (node->value[i] == '\'' || node->value[i] == '\"')
-			return (true);
-		i++;
-	}
-	return (false);
-}
 
 void	set_token_type(t_token *node)
 {
@@ -68,7 +53,7 @@ void	append_token_node(t_token **head, char *line)
 	{
 		free(line);
 		free_tokens(*head, true);
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	if (*head == NULL)
 		*head = node;

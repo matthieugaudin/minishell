@@ -1,16 +1,6 @@
-#include "../../includes/execution.h"
-#include "../../includes/tokenizer.h"
+#include "../../includes/parser.h"
 
-bool	is_redir(enum e_token type)
-{
-	if (type == INPUT || type == OUTPUT
-		|| type == APPEND || type == HERE_DOC)
-		return (true);
-	else
-		return (false);
-}
-
-void    parser(t_token *token)
+void    parse_tokens(t_token *token)
 {
 	t_token	*first_token;
 

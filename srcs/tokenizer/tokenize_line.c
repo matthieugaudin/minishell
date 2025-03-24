@@ -1,22 +1,6 @@
-#include "../../includes/execution.h"
 #include "../../includes/tokenizer.h"
 
-void	free_tokens(t_token *tokens, bool alloc_err)
-{
-	t_token *tmp;
-
-	while (tokens)
-	{
-		free(tokens->value);
-		tmp = tokens;
-		tokens = tokens->next;
-		free(tmp);
-	}
-	if (alloc_err)
-		perror("Memory allocation failed");
-}
-
-bool	special_car(char c)
+static bool	special_car(char c)
 {
 	if (c == '<' || c == '>' || c == '|')
 		return (true);
@@ -24,7 +8,7 @@ bool	special_car(char c)
 		return (false);
 }
 
-void	extract_token(char **s, int *len, int *i)
+static void	extract_token(char **s, int *len, int *i)
 {
 	while (**s && is_space(**s))
 	{
@@ -53,7 +37,7 @@ void	extract_token(char **s, int *len, int *i)
 	}
 }
 
-bool	create_tokens(char *s, t_token **head)
+static bool	create_tokens(char *s, t_token **head)
 {
 	char	*value;
 	int		len;
@@ -70,7 +54,7 @@ bool	create_tokens(char *s, t_token **head)
 			if (!value)
 			{
 				free_tokens(*head, true);
-				exit(EXIT_FAILURE);
+				exit(1);
 			}
 			ft_strlcpy(value, s - len, len + 1);
 			append_token_node(head, value);
@@ -79,7 +63,7 @@ bool	create_tokens(char *s, t_token **head)
 	return (true);
 }
 
-t_token	*tokenizer(char *s)
+t_token	*tokenize_line(char *s)
 {
 	t_token	*head;
 	char	quote;
