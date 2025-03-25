@@ -1,13 +1,14 @@
 #include "../../includes/execution.h"
 
-// static void	execute_cmd(t_data *data, t_cmd *cmd)
-// {
-// 	// check for builtins
-//	// convert envp to char **
-// 	execve(cmd->path, cmd->args, data->env);
-// }
+static void	execute_cmd(t_data *data, t_cmd *cmd, char **envp)
+{
+	(void)data;
+	// check for builtins
+	// convert envp to char **
+	execve(cmd->path, cmd->args, envp);
+}
 
-void	execute_cmds(t_data *data, t_cmd *cmds)
+void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 {
 	pid_t	pid;
 	pid_t	last_pid;
@@ -20,15 +21,41 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 			last_pid = pid;
 		if (pid == 0)
 		{
-			open_files(cmds);
+			open_files(cmds, cmds->files);
 			if (cmds != NULL)
 			{
 				set_exec_path(data, cmds);
 				redirect_fds(data, cmds);
-				// execute_cmd(data, cmds);
+				execute_cmd(data, cmds, envp);
 			}
 		}
 		cmds = cmds->next;
 	}
 	wait_children(data, last_pid);
 }
+
+// i lose the head of hdoc
+// the bad file is displayed : <create_pipes.c <<lim cat
+// ls >a| ls >>a | <<lim ls <<lim1 | <<lim2 ls
+// ls >a| ls >>a | <<l1 ls | <<l2 ls
+// ls >a| ls >>a | <<l1<<l2 ls |  ls
+// ls | cat
+
+// int main(int argc, char **argv, char **envp)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	char *line;
+
+// 	t_data *data = malloc(sizeof(t_data));
+// 	data->env = create_env(envp);
+// 	data->exp = create_export(data->env);
+// 	line = "ls | ./ls";
+// 	t_token *token = tokenize_line(line);
+// 	parse_tokens(token);
+// 	expand_tokens(token, data->env);
+// 	remove_quotes(token);
+// 	data->cmds = create_cmd(token);
+// 	create_pipes(data, data->cmds);
+// 	execute_cmds(data, data->cmds, envp);
+// }

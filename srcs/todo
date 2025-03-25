@@ -1,22 +1,19 @@
 
 
 
--> refactor properly all files and headers as an API : OK
-    -> reorgenize exp and env not use t_data : OK
-    -> put all functions to static if needed : OK
-    -> makefile and compile : OK
--> test exec
+-> have a working exec :
 -> display a prompt
 -> check_builtins in exec
     -> which builtin needs execve
     -> dup stdin and stdout
 -> handle echo + not a posix after (if not a posix but not $?) :
--> expand the $? : 
+-> expand the $? exit code: 
 -> handle $VAR and "$VAR"
 -> handle singals
--> free data 
--> add comments to each function for team mate
+-> free data
+-> pass testers
 -> protect every syscall
+-> add comments to each function for team mate
 
 
 TESTS : 

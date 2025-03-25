@@ -62,7 +62,8 @@ static void	set_cmd_content(t_token **tokens, t_cmd *cmd)
 
 static void	init_cmd_content(t_cmd *cmd, t_token *tokens)
 {
-	int	nb_cmds;
+	int			nb_cmds;
+	static int	index;
 
 	nb_cmds = 0;
 	while (tokens && tokens->type != PIPE)
@@ -73,6 +74,8 @@ static void	init_cmd_content(t_cmd *cmd, t_token *tokens)
 	}
 	ft_memset(cmd, 0, sizeof(t_cmd));
 	cmd->fd_out = 1;
+	cmd->index = index;
+	index++;
 	cmd->args = malloc(sizeof(char *) * (nb_cmds + 1));
 	cmd->args[nb_cmds] = NULL;
 }

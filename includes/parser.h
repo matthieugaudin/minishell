@@ -33,6 +33,7 @@ typedef struct s_cmd
     t_file			*files;
     int             fd_in;
     int             fd_out;
+    int             index;
     struct s_cmd	*next;
 }	t_cmd;
 

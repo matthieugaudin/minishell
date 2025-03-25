@@ -106,7 +106,6 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 			if (cmds->fd_in != 0)
 				close(cmds->fd_in);
 			cmds->fd_in = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			perror("open");
 			fill_here_doc(cmds, env, cmds->fd_in);
 			cmds->here_doc = cmds->here_doc->next;
 		}

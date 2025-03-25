@@ -1,18 +1,17 @@
 #include "../../includes/execution.h"
 
-void	create_pipes(t_data *data)
+void	create_pipes(t_data *data, t_cmd *cmds)
 {
 	int	nb_pipes;
 	int	i;
 
-	nb_pipes = 1;
-	while (data->cmds->next)
+	nb_pipes = 0;
+	while (cmds->next)
 	{
 		nb_pipes++;
-		data->cmds = data->cmds->next;
+		cmds = cmds->next;
 	}
-	data->pipes = malloc(sizeof(int *) * (nb_pipes + 1));
-	data->pipes[nb_pipes] = NULL;
+	data->pipes = malloc(sizeof(int *) * nb_pipes);
 	i = 0;
 	while (i < nb_pipes)
 	{
