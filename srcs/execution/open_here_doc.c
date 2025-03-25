@@ -66,7 +66,7 @@ static char	*expand_hdoc(t_env *env, char *line)
 	return (line);
 }
 
-static void	fill_here_doc(t_cmd *cmds, t_env *env, int here_doc)
+static void	fill_here_doc(t_hdoc *hdoc, t_env *env, int here_doc)
 {
 	char	*line;
 	char	*new;
@@ -74,9 +74,9 @@ static void	fill_here_doc(t_cmd *cmds, t_env *env, int here_doc)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, cmds->here_doc->limiter) == 0)
+		if (ft_strcmp(line, hdoc->limiter) == 0)
 			break ;
-		if (cmds->here_doc->expand)
+		if (hdoc->expand)
 		{
 			new = expand_hdoc(env, line);
 			write(here_doc, new, ft_strlen(new));
@@ -92,6 +92,7 @@ static void	fill_here_doc(t_cmd *cmds, t_env *env, int here_doc)
 void    open_here_doc(t_cmd *cmds, t_env *env)
 {
     char	*file_path;
+	t_hdoc	*here_doc;
 
     while (cmds)
     {
@@ -101,13 +102,14 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 			free(file_path);
 			file_path = get_file_path();
 		}
-		while (cmds->here_doc)
+		here_doc = cmds->here_doc;
+		while (here_doc)
 		{
 			if (cmds->fd_in != 0)
 				close(cmds->fd_in);
 			cmds->fd_in = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			fill_here_doc(cmds, env, cmds->fd_in);
-			cmds->here_doc = cmds->here_doc->next;
+			fill_here_doc(here_doc, env, cmds->fd_in);
+			here_doc = here_doc->next;
 		}
         cmds = cmds->next;
     }

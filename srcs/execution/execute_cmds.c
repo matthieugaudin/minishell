@@ -34,12 +34,13 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 	wait_children(data, last_pid);
 }
 
-// i lose the head of hdoc
+// heredoc as infile doesn't work : <<l1 cat >out
 // the bad file is displayed : <create_pipes.c <<lim cat
+// "ls <<l1<<l2 | <<l3 ls <<l4<<l5 | <<l6 cat -e >out"
 // ls >a| ls >>a | <<lim ls <<lim1 | <<lim2 ls
 // ls >a| ls >>a | <<l1 ls | <<l2 ls
 // ls >a| ls >>a | <<l1<<l2 ls |  ls
-// ls | cat
+
 
 // int main(int argc, char **argv, char **envp)
 // {
@@ -50,7 +51,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 // 	t_data *data = malloc(sizeof(t_data));
 // 	data->env = create_env(envp);
 // 	data->exp = create_export(data->env);
-// 	line = "ls | ./ls";
+// 	line = "ls | cat |ls > out";
 // 	t_token *token = tokenize_line(line);
 // 	parse_tokens(token);
 // 	expand_tokens(token, data->env);
