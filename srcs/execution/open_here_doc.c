@@ -66,7 +66,7 @@ static char	*expand_hdoc(t_env *env, char *line)
 	return (line);
 }
 
-static void	fill_here_doc(t_hdoc *hdoc, t_env *env, int here_doc)
+static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 {
 	char	*line;
 	char	*new;
@@ -74,9 +74,9 @@ static void	fill_here_doc(t_hdoc *hdoc, t_env *env, int here_doc)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, hdoc->limiter) == 0)
+		if (ft_strcmp(line, file->name) == 0)
 			break ;
-		if (hdoc->expand)
+		if (file->expand)
 		{
 			new = expand_hdoc(env, line);
 			write(here_doc, new, ft_strlen(new));
@@ -92,7 +92,8 @@ static void	fill_here_doc(t_hdoc *hdoc, t_env *env, int here_doc)
 void    open_here_doc(t_cmd *cmds, t_env *env)
 {
     char	*file_path;
-	t_hdoc	*here_doc;
+	t_file	*files;
+	int		fd;
 
     while (cmds)
     {
@@ -102,14 +103,25 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 			free(file_path);
 			file_path = get_file_path();
 		}
-		here_doc = cmds->here_doc;
-		while (here_doc)
+		files = cmds->files;
+		while (files)
 		{
-			if (cmds->fd_in != 0)
-				close(cmds->fd_in);
-			cmds->fd_in = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			fill_here_doc(here_doc, env, cmds->fd_in);
-			here_doc = here_doc->next;
+			if (files->type == HERE_DOC)
+			{
+				fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				fill_here_doc(files, env, fd);
+				if (is_last_redir(files))
+				{
+					close(fd);
+					cmds->fd_in = open(file_path, O_RDONLY);
+				}
+				else
+				{
+					close(fd);
+					unlink(file_path);
+				}
+			}
+			files = files->next;
 		}
         cmds = cmds->next;
     }

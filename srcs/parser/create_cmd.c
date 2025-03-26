@@ -22,22 +22,12 @@ static void	set_last_cmd_next(t_cmd **cmds, t_cmd *cmd)
 
 static void	handle_files(t_token *tokens, t_cmd *cmd)
 {
-	t_hdoc	*limiter;
 	t_file	*file;
 
-	file = NULL;
-	limiter = NULL;
 	if (tokens->prev->type == HERE_DOC)
-	{
 		cmd->is_here_doc = true;
-		limiter = new_hdoc(tokens->value, tokens->hdoc_quoted);
-		add_hdoc_back(&cmd->here_doc, limiter);
-	}
-	else
-	{
-		file = new_file(tokens->value, tokens->prev->type);
-		add_file_back(&cmd->files, file);
-	}
+	file = new_file(tokens->value, tokens->prev->type, tokens->hdoc_quoted);
+	add_file_back(&cmd->files, file);
 }
 
 static void	set_cmd_content(t_token **tokens, t_cmd *cmd)

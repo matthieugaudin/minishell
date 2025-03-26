@@ -19,9 +19,9 @@ void	set_token_type(t_token *node)
 	else
 		node->type = COMMAND;
 	if (node->prev && node->prev->type == HERE_DOC && is_quotes(node))
-		node->hdoc_quoted = false;
-	else
 		node->hdoc_quoted = true;
+	else
+		node->hdoc_quoted = false;
 }
 
 void	set_token_prev(t_token **head, t_token *node)
