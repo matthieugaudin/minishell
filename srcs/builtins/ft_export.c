@@ -57,23 +57,30 @@ static void	display_export(t_env *exp)
 	}
 }
 
+static void	print_export_error(char *str)
+{
+	ft_putstr_fd("export: '", 2);
+    ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
+
 int ft_export(t_data *data, char **args)
 {
 	int	i;
 	int	i_egal;
+	int	ret;
 
 	i = 0;
-	if (!args && !args[0])
+	ret = 0;
+	if (!args || !args[0])
 		display_export(data->exp);
 	while (args && args[i])
 	{
 		i_egal = ft_find_egal_pos(args[i]);
 		if (i_egal == -1)
         {
-            ft_putstr_fd("export: '", 2);
-            ft_putstr_fd(args[i], 2);
-            ft_putstr_fd("': not a valid identifier\n", 2);
-			return (1);
+            print_export_error(args[i]);
+			ret = 1;
 		}
 		else if (i_egal == 0)
 			ft_update_exp_node(&data->exp, ft_new_node(args[i], NULL));
@@ -81,7 +88,7 @@ int ft_export(t_data *data, char **args)
 			ft_update_env_exp(data, args[i], i_egal);
 		i++;
 	}
-	return (0);
+	return (ret);
 }
 
 // void	print_data(t_env *env)

@@ -6,10 +6,10 @@ static bool	is_n_option(char *str)
 
 	i = 0;
 	if (!str || str[i] != '-')
-		return (0);
+		return (false);
 	i = 1;
 	if (!str[i])
-		return (0);
+		return (false);
 	while (str[i] && str[i] == 'n')
 		i++;
 	return (str[i] == '\0');
