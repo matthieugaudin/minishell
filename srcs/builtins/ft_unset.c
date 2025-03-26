@@ -47,21 +47,28 @@ static void	ft_check_and_remove(char *str, t_env **head)
 	}
 }
 
+static void	print_unset_error(char *str)
+{
+	ft_putstr_fd("unset: '", 2);
+    ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
+
 int	ft_unset(t_data *data, char **args)
 {
 	size_t i;
+	int		ret;
 
 	if (!args || !args[0])
 		return (0);
 	i = 0;
+	ret = 0;
 	while (args[i])
 	{
 		if (!is_valid_name(args[i]))
 		{
-			ft_putstr_fd("unset: '", 2);
-            ft_putstr_fd(args[i], 2);
-            ft_putstr_fd("': not a valid identifier\n", 2);
-            return (1);
+			print_unset_error(args[i]);
+            ret = 1;
 		}
 		else
 		{
@@ -69,10 +76,10 @@ int	ft_unset(t_data *data, char **args)
 				ft_check_and_remove(args[i], &data->env);
 			if (data->exp)
 				ft_check_and_remove(args[i], &data->exp);
-			i++;
 		}
+		i++;
 	}
-	return (0);
+	return (ret);
 }
 
 
