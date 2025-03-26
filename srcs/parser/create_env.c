@@ -1,5 +1,34 @@
 #include "../../includes/parser.h"
 
+void ft_update_env_node(t_env **env, t_env *new_node)
+{
+	t_env	*current;
+
+	if (!env || !new_node)
+		return;
+	if (*env == NULL)
+	{
+		new_node->next = *env;
+		*env = new_node;
+		return;
+	}
+	current = *env;
+	while (current->next)
+	{
+		if (new_node->value && strcmp(new_node->name, current->name) == 0)
+		{
+			free(current->value);
+			current->value = ft_strdup(new_node->value);
+			free_env_node(new_node);
+			return ;
+		}
+		current = current->next;
+	}
+	new_node->next = current->next;
+	current->next = new_node;
+	return ;
+}
+
 /*
 Takes an environment variable from envp and returns its name.
 */

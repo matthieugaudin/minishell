@@ -26,7 +26,7 @@ t_env	*ft_new_node(char *name, char *value)
 	return (new);
 }
 
-void	ft_insert_exp_node(t_env **exp, t_env *new_node)
+void	ft_update_exp_node(t_env **exp, t_env *new_node)
 {
 	t_env	*current;
 
@@ -73,7 +73,7 @@ t_env	*create_export(t_env *env)
 		new_node = ft_new_node(cur_env->name, cur_env->value);
 		if (!new_node)
 			return (NULL);
-		ft_insert_exp_node(&exp, new_node);
+		ft_update_exp_node(&exp, new_node);
 		cur_env = cur_env->next;
 	}
 	return (exp);

@@ -43,7 +43,8 @@ void	remove_quotes(t_token *tokens);
 char	*get_var_value(t_env *env, char *var_name);
 char	*get_env_name(char *envp_str);
 void	free_env_node(t_env *node);
-void	ft_insert_exp_node(t_env **exp, t_env *new_node);
+void	ft_update_env_node(t_env **env, t_env *new_node);
+void	ft_update_exp_node(t_env **exp, t_env *new_node);
 t_env	*ft_new_node(char *name, char *value);
 
 /*==========EXEC DATA==========*/
