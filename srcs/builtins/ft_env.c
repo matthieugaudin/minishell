@@ -1,12 +1,22 @@
 #include "../../includes/builtins.h"
 
-int	ft_env(t_env *env)
+int	ft_env(t_env *env, char **args)
 {
+	if (args && args[1])
+	{
+		ft_putstr_fd("env: '", 2);
+		ft_putstr_fd(args[1], 2);
+		ft_putendl_fd("': No such file or directory", 2);
+		return (127);
+	}
 	while (env)
 	{
 		ft_putstr_fd(env->name, 1);
 		ft_putstr_fd("=", 1);
-		ft_putendl_fd(env->value, 1);
+		if (env->value)
+			ft_putendl_fd(env->value, 1);
+		else
+			ft_putchar_fd('\n', 1);
 		env = env->next;
 	}
 	return (0);
