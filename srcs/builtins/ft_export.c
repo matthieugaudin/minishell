@@ -91,6 +91,9 @@ int ft_export(t_data *data, char **args)
 	return (ret);
 }
 
+
+
+
 // void	print_data(t_env *env)
 // {
 // 	printf("#######\tENV\t#######\n\n");
