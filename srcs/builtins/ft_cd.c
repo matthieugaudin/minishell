@@ -20,8 +20,10 @@ char	*find_path(t_env *env, char *name)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(name, 2);
-		ft_putendl_fd("minishell: cd: HOME not set", 2 );
+		ft_putendl_fd(" not set", 2 );
+		return (NULL);
 	}
+	return (path);
 }
 
 int	ft_cd(t_data *data, char *args)
@@ -29,14 +31,13 @@ int	ft_cd(t_data *data, char *args)
 	char	*curpath;
 
 	if (!args)
-	{
-		curpath = find_variable_value(data->env, "HOME");
-		if (!curpath)
-			ft_putendl_fd("minishell: cd: HOME not set", 1);
-	}
+		curpath = find_path(data->env, "HOME");
 	else
 	{
-		if (ft_strcmp(args[0], '-') == 0)
-			find_variable_value(data->env, "OLDPWD");
+		if (ft_strcmp(args, "-") == 0)
+			curpath = find_path(data->env, "OLDPWD");
+		else
+			curpath = args;
 	}
+	chdir(curpath);
 }
