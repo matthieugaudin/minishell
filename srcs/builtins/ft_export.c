@@ -4,7 +4,9 @@ static int	ft_find_egal_pos(char *str)
 {
 	int	i;
 
-	if (!str || !*str || ft_isdigit(str[0]))
+	if (!str || !*str)
+		return (-1);
+	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (-1);
 	i = 0;
 	while (str[i])
@@ -31,8 +33,8 @@ static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 		free(value);
 		return (1);
 	}
-	ft_update_exp_node(&data->exp, ft_new_node(name, value));
 	ft_update_env_node(&data->env, ft_new_node(name, value));
+	ft_update_exp_node(&data->exp, ft_new_node(name, value));
 	free(name);
 	free(value);
 	return (0);
@@ -42,11 +44,15 @@ static void	display_export(t_env *exp)
 {
 	while (exp)
 	{
-		printf("declare -x ");
-		printf("%s", exp->name);
+		ft_putstr_fd("declare -x ", 1);
+		ft_putstr_fd(exp->name, 1);
 		if (exp->value != NULL)
-			printf("=\"%s\"", exp->value);
-		printf("\n");
+		{	
+			ft_putstr_fd("=\"", 1);
+            ft_putstr_fd(exp->value, 1);
+            ft_putstr_fd("\"", 1);
+		}
+		ft_putchar_fd('\n', 1);
 		exp = exp->next;
 	}
 }
@@ -57,18 +63,21 @@ int ft_export(t_data *data, char **args)
 	int	i_egal;
 
 	i = 0;
-	if (!args)
-	{
+	if (!args && !args[0])
 		display_export(data->exp);
-		return (0);
-	}
-	while (args[i])
+	while (args && args[i])
 	{
 		i_egal = ft_find_egal_pos(args[i]);
-		printf("i_egal : %i\n", i_egal);
-		if (i_egal == 0)
+		if (i_egal == -1)
+        {
+            ft_putstr_fd("export: '", 2);
+            ft_putstr_fd(args[i], 2);
+            ft_putstr_fd("': not a valid identifier\n", 2);
+			return (1);
+		}
+		else if (i_egal == 0)
 			ft_update_exp_node(&data->exp, ft_new_node(args[i], NULL));
-		else if (i_egal > 0)
+		else
 			ft_update_env_exp(data, args[i], i_egal);
 		i++;
 	}
