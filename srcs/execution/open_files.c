@@ -16,7 +16,7 @@ void	open_files(t_cmd *cmd, t_file *files)
 		{
 			send_error(files->name, errno);
 			// free
-			// exit code
+			exit(1);
 		}
 		if (is_last_redir(files) && (files->type == OUTPUT || files->type == APPEND))
 			cmd->fd_out = fd;

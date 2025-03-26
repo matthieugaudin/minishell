@@ -3,22 +3,12 @@
 
 
 -> have a working exec :
-    -> heredoc as infile : 
-    -> unlink heredoc : 
-    -> expand limiter quotes : 
-    -> order handling :
-    -> exit code : 
-    -> no valgrind error
-    -> close other cmds here_doc fds : 
-    -> close fds pipeline : OK
-    -> close fds files : OK
+    -> testing : pipex tester tests : 
 -> display a prompt
--> check_builtins in exec
-    -> which builtin needs execve
-    -> dup stdin and stdout
 -> handle echo + not a posix after (if not a posix but not $?) :
 -> expand the $? exit code: 
 -> handle $VAR and "$VAR"
+-> check_builtins in execve (fork ? dup ?) : 
 -> handle singals
 -> free data + close fds + settle valgrind errors
 -> pass subject tests
@@ -32,5 +22,3 @@ TESTS :
 - ctrl on here_doc
 - enter with nothing
 - enter with spaces
-- make a directory ok and tests : ok, /ok, ./ok, <ok, <ok cat, >>ok, <../ok
-- <ok cat : Is a directory  -> comes from execve not open
