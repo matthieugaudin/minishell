@@ -67,7 +67,7 @@ static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 	return (0);
 }
 
-void	display_export(t_env *exp)
+static void	display_export(t_env *exp)
 {
 	while (exp)
 	{
