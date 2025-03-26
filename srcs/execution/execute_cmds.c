@@ -40,6 +40,10 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 				execute_cmd(data, cmds, envp);
 			}
 		}
+		if (cmds->index > 0)
+			close(data->pipes[cmds->index - 1][0]);
+		if (cmds->next)
+			close(data->pipes[cmds->index][1]);
 		cmds = cmds->next;
 	}
 	wait_children(data, last_pid);
@@ -54,7 +58,7 @@ int main(int argc, char **argv, char **envp)
 	t_data *data = malloc(sizeof(t_data));
 	data->env = create_env(envp);
 	data->exp = create_export(data->env);
-	line = "<../ok";
+	line = "<out ls -lha >out";
 	t_token *token = tokenize_line(line);
 	parse_tokens(token);
 	expand_tokens(token, data->env);
