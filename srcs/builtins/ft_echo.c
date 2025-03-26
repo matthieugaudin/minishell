@@ -1,21 +1,18 @@
 #include "../../includes/builtins.h"
 
-static bool	check_n(char *str)
+static bool	is_n_option(char *str)
 {
 	size_t	i;
 
 	i = 0;
-	if (str[i] != '-')
+	if (!str || str[i] != '-')
 		return (0);
-	i++;
-	if (str[i] != 'n')
+	i = 1;
+	if (!str[i])
 		return (0);
 	while (str[i] && str[i] == 'n')
 		i++;
-	if (!str[i])
-		return (1);
-	else
-		return (0);
+	return (str[i] == '\0');
 }
 
 int	ft_echo(char **args)
@@ -23,11 +20,14 @@ int	ft_echo(char **args)
 	size_t	i;
 	bool	is_n;
 
-	if (!args)
-		return (1);
+	if (!args || !args[0])
+	{
+		ft_putstr_fd("\n", 1);
+		return (0);
+	}
 	i = 1;
 	is_n = false;
-	while (args[i] && check_n(args[i]))
+	while (args[i] && is_n_option(args[i]))
 	{
 		is_n = true;
 		i++;
@@ -36,7 +36,7 @@ int	ft_echo(char **args)
 	{
 		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
-		ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!is_n)
