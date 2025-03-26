@@ -70,11 +70,14 @@ t_env	*create_export(t_env *env)
 	cur_env = env;
 	while (cur_env)
 	{
-		new_node = ft_new_node(cur_env->name, cur_env->value);
-		if (!new_node)
-			return (NULL);
-		ft_update_exp_node(&exp, new_node);
-		cur_env = cur_env->next;
+		if (strcmp(cur_env->name, "_") != 0)
+		{
+			new_node = ft_new_node(cur_env->name, cur_env->value);
+			if (!new_node)
+				return (NULL);
+			ft_update_exp_node(&exp, new_node);
+			cur_env = cur_env->next;
+		}
 	}
 	return (exp);
 }
