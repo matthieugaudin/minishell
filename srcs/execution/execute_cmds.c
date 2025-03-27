@@ -8,11 +8,11 @@ static void	execute_cmd(t_data *data, t_cmd *cmd, char **envp)
 	execve(cmd->path, cmd->args, envp);
 }
 
-void	close_hdoc_fds(t_cmd *cmds, int index)
+void	close_hdoc_fds(t_cmd *cmds, bool is_child, int index)
 {
 	while (cmds)
 	{
-		if (cmds->fd_in != 0 && cmds->index != index)
+		if (cmds->fd_in != 0 && (cmds->index != index || !is_child))
 			close(cmds->fd_in);
 		cmds = cmds->next;
 	}
@@ -31,7 +31,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 			last_pid = pid;
 		if (pid == 0)
 		{
-			close_hdoc_fds(data->cmds, cmds->index);
+			close_hdoc_fds(data->cmds, true, cmds->index);
 			open_files(cmds, cmds->files);
 			if (cmds->args[0] != NULL)
 			{
@@ -46,9 +46,13 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 			close(data->pipes[cmds->index][1]);
 		cmds = cmds->next;
 	}
+	close_hdoc_fds(data->cmds, false, 0);
 	wait_children(data, last_pid);
 }
 
+
+// <out ls : conditional jump
+// <<lim ls : unclosed fd
 int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -58,7 +62,7 @@ int main(int argc, char **argv, char **envp)
 	t_data *data = malloc(sizeof(t_data));
 	data->env = create_env(envp);
 	data->exp = create_export(data->env);
-	line = "<out ls -lha >out";
+	line = "<<lim<<lim<<lim ls | <out<<lim ls";
 	t_token *token = tokenize_line(line);
 	parse_tokens(token);
 	expand_tokens(token, data->env);

@@ -13,6 +13,7 @@ static char    *get_file_path(void)
 	ft_memcpy(alnum, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", sizeof(alnum) - 1);
 	fd = open("/dev/urandom", O_RDONLY);
 	read(fd, buffer, 20);
+	close(fd);
 	i = 0;
 	while (i < 20)
 	{
