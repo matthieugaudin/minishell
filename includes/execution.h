@@ -1,11 +1,13 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
+# define _GNU_SOURCE
 
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include <fcntl.h>
 # include "parser.h"
 

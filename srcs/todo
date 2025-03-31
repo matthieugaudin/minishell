@@ -1,14 +1,13 @@
 
 
--> display a simple prompt : OK
--> handle $ expand : 
--> handle $VAR and "$VAR" :
--> expand the $? : 
--> store the exit code : 
-    -> put exit code to 2 when syntaz error occured
--> check_builtins in execve (fork ? dup ?) : 
 -> handle singals : 
+    -> ctrl C here_doc
+    -> ctlr \ here_doc
+    -> ctrl D here_doc
+    -> while a child is running like sleep (kill ?)
+-> check_builtins in execve (fork ? dup ?) :
 -> free all data :
+    -> free en ctrl D
 -> close fds : 
 -> pass subject tests : 
 -> pass testers : 
