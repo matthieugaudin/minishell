@@ -1,31 +1,19 @@
 
 
-
-
-EXECUTION
--> have a working exec :
-    -> testing (sleep1 | sleep 3) : OK
-    -> fix conditinal jumps : THURSDAY
-    -> fix basic fds not closed : THURSDAY
--> store the exit code : THURSDAY
+-> display a simple prompt : OK
+-> handle $ expand : 
+-> handle $VAR and "$VAR" :
+-> expand the $? : 
+-> store the exit code : 
+    -> put exit code to 2 when syntaz error occured
 -> check_builtins in execve (fork ? dup ?) : 
-
-PARSING
--> handle echo + not a posix after (if not a posix but not $?) : THURSDAY
-    ->begin by taking notes
--> expand the $? : THURSDAY
--> handle $VAR and "$VAR" : if time thursday
-
-GENERAL
--> display a prompt
--> handle singals
--> free data
--> close fds
--> settle valgrind errors
--> pass subject tests
--> pass testers
--> protect every syscall
--> add comments to each function for team mate
+-> handle singals : 
+-> free all data :
+-> close fds : 
+-> pass subject tests : 
+-> pass testers : 
+-> protect every syscall : 
+-> code to norme : 
 
 TESTS : 
 - no command

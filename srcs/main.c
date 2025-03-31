@@ -5,7 +5,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_data	*data;
 	t_token *token;
-	t_token *tmp;
 
 	(void)argc;
 	(void)argv;
@@ -22,17 +21,15 @@ int	main(int argc, char **argv, char **envp)
 			parse_tokens(token);
 			expand_tokens(token, data->env);
 			remove_quotes(token);
-			printf("%s\n\n", line);
-			tmp = token;
-			while (token)
-			{
-				printf("%s %d\n", token->value, token->type);
-				token = token->next;
-			}
-			free_tokens(tmp, false);
+			data->cmds = create_cmd(token);
+			create_pipes(data, data->cmds);
+			execute_cmds(data, data->cmds, envp);
+			free_tokens(token, false);
+			free_data(data);
 			add_history(line);
 		}
 	}
 	rl_clear_history();
+	free(data);
 	return (0);
 }

@@ -50,10 +50,9 @@ static void	set_cmd_content(t_token **tokens, t_cmd *cmd)
 	}
 }
 
-static void	init_cmd_content(t_cmd *cmd, t_token *tokens)
+static void	init_cmd_content(t_cmd *cmd, t_token *tokens, int index)
 {
 	int			nb_cmds;
-	static int	index;
 
 	nb_cmds = 0;
 	while (tokens && tokens->type != PIPE)
@@ -65,7 +64,6 @@ static void	init_cmd_content(t_cmd *cmd, t_token *tokens)
 	ft_memset(cmd, 0, sizeof(t_cmd));
 	cmd->fd_out = 1;
 	cmd->index = index;
-	index++;
 	cmd->args = malloc(sizeof(char *) * (nb_cmds + 1));
 	cmd->args[nb_cmds] = NULL;
 }
@@ -74,17 +72,20 @@ t_cmd	*create_cmd(t_token *tokens)
 {
 	t_cmd	*cmds;
 	t_cmd	*cmd;
+	int		index;
 
 	cmd = NULL;
 	cmds = NULL;
+	index = 0;
 	while (tokens)
 	{
 		cmd = malloc(sizeof(t_cmd));
-		init_cmd_content(cmd, tokens);
+		init_cmd_content(cmd, tokens, index);
 		set_cmd_content(&tokens, cmd);
 		set_last_cmd_next(&cmds, cmd);
 		if (tokens)
 			tokens = tokens->next;
+		index++;
 	}
 	return (cmds);
 }
