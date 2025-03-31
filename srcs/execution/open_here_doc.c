@@ -46,6 +46,42 @@ static void	expand_line(t_env *env, char **line, int start)
 	if (var_value)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
 	ft_strlcat(res + start - 1 + value_len, *line + start + name_len, remainder + 1);
+	free(*line);
+	*line = res;
+}
+
+static void	expand_exit(char **line, int start)
+{
+	char	*res;
+	char	*code;
+	int		code_len;
+	int		remainder;
+	int		len;
+
+	code = ft_itoa(exit_code(0, false));
+	code_len = ft_strlen(code);
+	remainder = ft_strlen(*line + start + 1);
+	len = (start - 1) + code_len + remainder;
+	res = malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(res, *line, start);
+	ft_strlcat(res + start - 1, code, code_len + 1);
+	ft_strlcat(res + start - 1 + code_len, *line + start + 1, remainder + 1);
+	free(*line);
+	*line = res;
+}
+
+static void	expand_digit(char **line, int start)
+{
+	char	*res;
+	int		remainder;
+	int		len;
+
+	len = ft_strlen(*line) - 2;
+	remainder = ft_strlen(*line + start + 1);
+	res = malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(res, *line, start);
+	ft_strlcat(res + start - 1, *line + start + 1, remainder + 1);
+	free(*line);
 	*line = res;
 }
 
@@ -56,10 +92,14 @@ static char	*expand_hdoc(t_env *env, char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && !is_space(line[i + 1])
-			&& line[i + 1] != '\0' && is_posix_std(line[i + 1]))
+		if (line[i] == '$')
 		{
-			expand_line(env, &line, i + 1);
+			if (line[i + 1] == '?')
+				expand_exit(&line, i + 1);
+			else if (ft_isdigit(line[i + 1]))
+				expand_digit(&line, i + 1);
+			else if (is_posix_std(line[i + 1]))
+				expand_line(env, &line, i + 1);
 			i = -1;
 		}
 		i++;
