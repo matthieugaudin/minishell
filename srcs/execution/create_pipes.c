@@ -6,7 +6,7 @@ void	create_pipes(t_data *data, t_cmd *cmds)
 	int	i;
 
 	nb_pipes = 0;
-	while (cmds->next)
+	while (cmds && cmds->next)
 	{
 		nb_pipes++;
 		cmds = cmds->next;
