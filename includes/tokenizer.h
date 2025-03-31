@@ -49,5 +49,6 @@ bool	is_quotes(t_token *node);
 bool	in_quotes(char *str, int j);
 bool	is_redir(enum e_token type);
 bool	in_dbl_quotes(char *str, int j);
+int		exit_code(int new_code, bool to_set);
 
 #endif /* TOKENIZER_H */

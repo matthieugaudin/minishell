@@ -11,9 +11,9 @@ void	wait_children(t_data *data, pid_t last_pid)
 		if (wait(&status) == last_pid)
 		{
 			if (WIFEXITED(status))
-				data->status = WEXITSTATUS(status);
+				exit_code(WEXITSTATUS(status), true);
 			else if (WIFSIGNALED(status))
-				data->status = (128 + WTERMSIG(status));
+				exit_code(128 + WTERMSIG(status), true);
 		}
 		cmds = cmds->next;
 	}

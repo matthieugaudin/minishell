@@ -15,7 +15,6 @@ typedef struct s_data
 	t_env	*exp;
 	t_cmd	*cmds;
 	int		**pipes;
-	int		status;
 }	t_data;
 
 /*==============EXEC==============*/

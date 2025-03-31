@@ -49,25 +49,3 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 	close_hdoc_fds(data->cmds, false, 0);
 	wait_children(data, last_pid);
 }
-
-
-// <out ls : conditional jump
-// <<lim ls : unclosed fd
-int main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	char *line;
-
-	t_data *data = malloc(sizeof(t_data));
-	data->env = create_env(envp);
-	data->exp = create_export(data->env);
-	line = "<<lim<<lim<<lim ls | <out<<lim ls";
-	t_token *token = tokenize_line(line);
-	parse_tokens(token);
-	expand_tokens(token, data->env);
-	remove_quotes(token);
-	data->cmds = create_cmd(token);
-	create_pipes(data, data->cmds);
-	execute_cmds(data, data->cmds, envp);
-}
