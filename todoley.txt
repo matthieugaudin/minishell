@@ -1,5 +1,5 @@
 - Check env variable that shouldn't be in export (ex : '_:')
-- Convert env in char **
+OK - Convert env in char **
 - Add "+=" to export
 - Check export 'a=' or 'a=""' -> should be in env, but not 'c' (maybe should put '\0' in value)
 - Free env and export
