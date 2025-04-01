@@ -107,14 +107,33 @@ static char	*expand_hdoc(t_env *env, char *line)
 	return (line);
 }
 
+static void	hdoc_warning(char *limiter, int line)
+{
+	char *str_line;
+
+	str_line = ft_itoa(line);
+	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putstr_fd(str_line, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
+	ft_putstr_fd(limiter, 2);
+	ft_putstr_fd("')\n", 2);
+}
+
 static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 {
-	char	*line;
-	char	*new;
+	char		*line;
+	char		*new;
+	static int	i;
 
 	while (1)
 	{
 		line = readline("> ");
+		i++;
+		if (!line)
+		{
+			hdoc_warning(file->name, i);
+			break ;
+		}
 		if (ft_strcmp(line, file->name) == 0)
 			break ;
 		if (file->expand)
