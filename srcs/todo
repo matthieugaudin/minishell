@@ -7,7 +7,7 @@
     -> which builtin needs execve
     -> dup stdin and stdout
 -> handle echo + not a posix after (if not a posix but not $?) :
--> expand the $? exit code: 
+-> expand the $? exit code:
 -> handle $VAR and "$VAR"
 -> handle singals
 -> free data
@@ -16,7 +16,7 @@
 -> add comments to each function for team mate
 
 
-TESTS : 
+TESTS :
 - no command
 - ctrl on here_doc
 - enter with nothing
