@@ -11,6 +11,8 @@
 # include <fcntl.h>
 # include "parser.h"
 
+extern int sigint_flag;
+
 typedef struct s_data
 {
 	t_env	*env;
@@ -29,5 +31,6 @@ void	wait_children(t_data *data, pid_t last_pid);
 void	send_error(char *arg, int errno_cpy);
 void	create_pipes(t_data *data, t_cmd *cmds);
 void	free_data(t_data *data);
+void	handle_signals(int mode);
 
 #endif /* EXECUTION_H */

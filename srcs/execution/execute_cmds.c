@@ -24,9 +24,10 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 	pid_t	last_pid;
 
 	open_here_doc(cmds, data->env);
-	while (cmds)
+	while (cmds && sigint_flag != 1)
 	{
 		pid = fork();
+		handle_signals(2);
 		if (!cmds->next)
 			last_pid = pid;
 		if (pid == 0)

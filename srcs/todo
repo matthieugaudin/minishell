@@ -1,16 +1,14 @@
 
 
--> handle singals : 
-    -> ctrl C here_doc
-    -> ctlr \ here_doc
-    -> ctrl D here_doc
-    -> while a child is running like sleep (kill ?)
--> check_builtins in execve (fork ? dup ?) :
--> free all data :
+-> | ls segfault : wednesday
+-> trunc spaces when $var : wednesday
+-> check_builtins in execve (fork ? dup ?) : wednesday
+-> refactor files : 
+-> free all data : 
     -> free en ctrl D
--> close fds : 
--> pass subject tests : 
--> pass testers : 
+-> delete _GNU_SOURCE : 
+-> pass tests : 
+-> pass simple tester : 
 -> protect every syscall : 
 -> code to norme : 
 
@@ -19,3 +17,5 @@ TESTS :
 - ctrl on here_doc
 - enter with nothing
 - enter with spaces
+- exit shell value is the last command
+- unset le PATH

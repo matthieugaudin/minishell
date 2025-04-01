@@ -125,13 +125,18 @@ static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 	char		*new;
 	static int	i;
 
-	while (1)
+	int fd = dup(0);
+	handle_signals(1);
+	while (sigint_flag == 0)
 	{
 		line = readline("> ");
 		i++;
 		if (!line)
 		{
-			hdoc_warning(file->name, i);
+			dup2(fd, 0);
+			close(fd);
+			if (sigint_flag == 0)
+				hdoc_warning(file->name, i);
 			break ;
 		}
 		if (ft_strcmp(line, file->name) == 0)
@@ -155,6 +160,7 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 	t_file	*files;
 	int		fd;
 
+	sigint_flag = 0;
     while (cmds)
     {
         file_path = get_file_path();
