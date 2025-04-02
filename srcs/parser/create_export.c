@@ -31,17 +31,17 @@ void	ft_update_exp_node(t_env **exp, t_env *new_node)
 	t_env	*current;
 
 	if (!exp || !new_node)
-		return;
-	if (*exp == NULL || strcmp(new_node->name, (*exp)->name) < 0)
+		return ;
+	if (*exp == NULL || ft_strcmp(new_node->name, (*exp)->name) < 0)
 	{
 		new_node->next = *exp;
 		*exp = new_node;
-		return;
+		return ;
 	}
 	current = *exp;
-	while (current->next && strcmp(new_node->name, current->next->name) >= 0)
+	while (current->next && ft_strcmp(new_node->name, current->next->name) >= 0)
 	{
-		if (new_node->value && strcmp(new_node->name, current->name) == 0)
+		if (new_node->value && ft_strcmp(new_node->name, current->name) == 0)
 		{
 			free(current->value);
 			current->value = ft_strdup(new_node->value);
