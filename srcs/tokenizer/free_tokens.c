@@ -6,7 +6,8 @@ void	free_tokens(t_token *tokens, bool alloc_err)
 
 	while (tokens)
 	{
-		free(tokens->value);
+		if (tokens->type != COMMAND && tokens->type != FILE_T)
+			free(tokens->value);
 		tmp = tokens;
 		tokens = tokens->next;
 		free(tmp);

@@ -1,12 +1,13 @@
 #include "../../includes/parser.h"
 
-t_file	*new_file(char *name, enum e_token type)
+t_file	*new_file(char *name, enum e_token type, bool hdoc_quotes)
 {
 	t_file	*new;
 
 	new = malloc(sizeof(t_file));
 	new->name = name;
 	new->type = type;
+	new->expand = !hdoc_quotes;
 	new->next = NULL;
 	return (new);
 }

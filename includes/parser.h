@@ -14,22 +14,15 @@ typedef struct  s_file
 {
     char            *name;
     enum e_token     type;
+    bool            expand;
     struct s_file   *next;
 }   t_file;
-
-typedef struct  s_hdoc
-{
-    char            *limiter;
-    bool            expand;
-    struct s_hdoc   *next;
-}   t_hdoc;
 
 typedef struct s_cmd
 {
     char			**args;
     char            *path;
     bool			is_here_doc;
-	t_hdoc			*here_doc;
     t_file			*files;
     int             fd_in;
     int             fd_out;
@@ -38,7 +31,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 /*==============PARSER==============*/
-void    parse_tokens(t_token *token);
+bool    parse_tokens(t_token *token);
 void	expand_tokens(t_token *node, t_env *env);
 void	remove_quotes(t_token *tokens);
 char	*get_var_value(t_env *env, char *var_name);
@@ -53,10 +46,12 @@ t_cmd	*create_cmd(t_token *tokens);
 t_env	*create_export(t_env *env);
 t_env	*create_env(char **envp);
 
-/*============LINKED LISTS===========*/
-t_hdoc  *new_hdoc(char *limiter, bool is_quoted);
-void	add_hdoc_back(t_hdoc **head, t_hdoc *new);
-t_file	*new_file(char *name, enum e_token type);
+/*============LINKED LIST===========*/
+t_file	*new_file(char *name, enum e_token type,  bool hdoc_quotes);
 void	add_file_back(t_file **head, t_file *new);
+
+/*============UTILS===========*/
+bool	is_last_redir(t_file *file);
+bool	only_spaces(char *line);
 
 #endif /* PARSER_H */

@@ -1,13 +1,17 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
+# define _GNU_SOURCE
 
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <signal.h>
 # include <fcntl.h>
 # include "parser.h"
+
+extern int sigint_flag;
 
 typedef struct s_data
 {
@@ -15,7 +19,6 @@ typedef struct s_data
 	t_env	*exp;
 	t_cmd	*cmds;
 	int		**pipes;
-	int		status;
 }	t_data;
 
 /*==============EXEC==============*/
@@ -27,5 +30,7 @@ void	redirect_fds(t_data *data, t_cmd *cmds);
 void	wait_children(t_data *data, pid_t last_pid);
 void	send_error(char *arg, int errno_cpy);
 void	create_pipes(t_data *data, t_cmd *cmds);
+void	free_data(t_data *data);
+void	handle_signals(int mode);
 
 #endif /* EXECUTION_H */

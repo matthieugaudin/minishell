@@ -13,6 +13,7 @@ static char    *get_file_path(void)
 	ft_memcpy(alnum, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", sizeof(alnum) - 1);
 	fd = open("/dev/urandom", O_RDONLY);
 	read(fd, buffer, 20);
+	close(fd);
 	i = 0;
 	while (i < 20)
 	{
@@ -45,6 +46,42 @@ static void	expand_line(t_env *env, char **line, int start)
 	if (var_value)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
 	ft_strlcat(res + start - 1 + value_len, *line + start + name_len, remainder + 1);
+	free(*line);
+	*line = res;
+}
+
+static void	expand_exit(char **line, int start)
+{
+	char	*res;
+	char	*code;
+	int		code_len;
+	int		remainder;
+	int		len;
+
+	code = ft_itoa(exit_code(0, false));
+	code_len = ft_strlen(code);
+	remainder = ft_strlen(*line + start + 1);
+	len = (start - 1) + code_len + remainder;
+	res = malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(res, *line, start);
+	ft_strlcat(res + start - 1, code, code_len + 1);
+	ft_strlcat(res + start - 1 + code_len, *line + start + 1, remainder + 1);
+	free(*line);
+	*line = res;
+}
+
+static void	expand_digit(char **line, int start)
+{
+	char	*res;
+	int		remainder;
+	int		len;
+
+	len = ft_strlen(*line) - 2;
+	remainder = ft_strlen(*line + start + 1);
+	res = malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(res, *line, start);
+	ft_strlcat(res + start - 1, *line + start + 1, remainder + 1);
+	free(*line);
 	*line = res;
 }
 
@@ -55,10 +92,14 @@ static char	*expand_hdoc(t_env *env, char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && !is_space(line[i + 1])
-			&& line[i + 1] != '\0' && is_posix_std(line[i + 1]))
+		if (line[i] == '$')
 		{
-			expand_line(env, &line, i + 1);
+			if (line[i + 1] == '?')
+				expand_exit(&line, i + 1);
+			else if (ft_isdigit(line[i + 1]))
+				expand_digit(&line, i + 1);
+			else if (is_posix_std(line[i + 1]))
+				expand_line(env, &line, i + 1);
 			i = -1;
 		}
 		i++;
@@ -66,17 +107,41 @@ static char	*expand_hdoc(t_env *env, char *line)
 	return (line);
 }
 
-static void	fill_here_doc(t_hdoc *hdoc, t_env *env, int here_doc)
+static void	hdoc_warning(char *limiter, int line)
 {
-	char	*line;
-	char	*new;
+	char *str_line;
 
-	while (1)
+	str_line = ft_itoa(line);
+	ft_putstr_fd("minishell: warning: here-document at line ", 2);
+	ft_putstr_fd(str_line, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
+	ft_putstr_fd(limiter, 2);
+	ft_putstr_fd("')\n", 2);
+}
+
+static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
+{
+	char		*line;
+	char		*new;
+	static int	i;
+
+	int fd = dup(0);
+	handle_signals(1);
+	while (sigint_flag == 0)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, hdoc->limiter) == 0)
+		i++;
+		if (!line)
+		{
+			dup2(fd, 0);
+			close(fd);
+			if (sigint_flag == 0)
+				hdoc_warning(file->name, i);
 			break ;
-		if (hdoc->expand)
+		}
+		if (ft_strcmp(line, file->name) == 0)
+			break ;
+		if (file->expand)
 		{
 			new = expand_hdoc(env, line);
 			write(here_doc, new, ft_strlen(new));
@@ -92,8 +157,10 @@ static void	fill_here_doc(t_hdoc *hdoc, t_env *env, int here_doc)
 void    open_here_doc(t_cmd *cmds, t_env *env)
 {
     char	*file_path;
-	t_hdoc	*here_doc;
+	t_file	*files;
+	int		fd;
 
+	sigint_flag = 0;
     while (cmds)
     {
         file_path = get_file_path();
@@ -102,14 +169,25 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 			free(file_path);
 			file_path = get_file_path();
 		}
-		here_doc = cmds->here_doc;
-		while (here_doc)
+		files = cmds->files;
+		while (files)
 		{
-			if (cmds->fd_in != 0)
-				close(cmds->fd_in);
-			cmds->fd_in = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			fill_here_doc(here_doc, env, cmds->fd_in);
-			here_doc = here_doc->next;
+			if (files->type == HERE_DOC)
+			{
+				fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				fill_here_doc(files, env, fd);
+				if (is_last_redir(files))
+				{
+					close(fd);
+					cmds->fd_in = open(file_path, O_RDONLY);
+				}
+				else
+				{
+					close(fd);
+					unlink(file_path);
+				}
+			}
+			files = files->next;
 		}
         cmds = cmds->next;
     }

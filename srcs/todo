@@ -1,23 +1,15 @@
 
 
-
--> have a working exec :
--> display a prompt
--> check_builtins in exec
-    -> which builtin needs execve
-    -> dup stdin and stdout
--> handle echo + not a posix after (if not a posix but not $?) :
--> expand the $? exit code:
--> handle $VAR and "$VAR"
--> handle singals
--> free data
--> pass testers
--> protect every syscall
--> add comments to each function for team mate
-
+-> check_builtins in execve (fork ? dup ?) : wednesday
+-> free
+-> norme
+-> syscall 
+-> put headers
 
 TESTS :
 - no command
 - ctrl on here_doc
 - enter with nothing
 - enter with spaces
+- exit shell value is the last command
+- unset le PATH

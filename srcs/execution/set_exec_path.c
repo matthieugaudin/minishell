@@ -20,17 +20,17 @@ static char	**get_paths(t_cmd *cmd, t_env *env)
 		env = env->next;
 	}
 	if (!env)
-		return (NULL);
+		return (NULL); // it segfault
 	paths = ft_split(env->value, ':');
 	i = 0;
 	while (paths[i])
 	{
 		tmp = paths[i];
 		paths[i] = malloc(sizeof(char) * (ft_strlen(paths[i]) + 1 + ft_strlen(cmd->args[0]) + 1));
-		paths[i][ft_strlen(paths[i]) + 1 + ft_strlen(cmd->args[0])] = '\0';
-		ft_memcpy(paths[i], tmp, ft_strlen(tmp));
-		ft_memcpy(paths[i] + ft_strlen(paths[i]), "/", 1);
-		ft_memcpy(paths[i] + ft_strlen(paths[i]), cmd->args[0], ft_strlen(cmd->args[0]));
+		paths[i][ft_strlen(tmp) + 1 + ft_strlen(cmd->args[0])] = '\0';
+		ft_strlcpy(paths[i], tmp, ft_strlen(tmp) + 1);
+		ft_strlcat(paths[i] + ft_strlen(tmp), "/", 2);
+		ft_strlcat(paths[i] + ft_strlen(tmp), cmd->args[0], ft_strlen(cmd->args[0]) + 2);
 		i++;
 	}
 	return (paths);

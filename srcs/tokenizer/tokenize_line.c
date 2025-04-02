@@ -73,9 +73,15 @@ t_token	*tokenize_line(char *s)
 	quote = check_quotes(s);
 	line = check_line(s, "<>&");
 	if (quote != '\0')
+	{
 		syntax_error(head, quote);
+		return (NULL);
+	}
 	else if (line != '\0')
+	{
 		syntax_error(head, line);
+		return (NULL);
+	}
 	create_tokens(s, &head);
 	return (head);
 }
