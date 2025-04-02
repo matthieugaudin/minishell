@@ -26,6 +26,8 @@ static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 	char	*value;
 
 	name = ft_substr(arg, 0, i_egal);
+	// if (arg[i_egal - 1] == '+')
+	// 	// flag_cat = 1;
 	value = ft_substr(arg, i_egal + 1, ft_strlen(arg) - i_egal - 1);
 	if (!name || !value)
 	{
@@ -47,7 +49,7 @@ static void	display_export(t_env *exp)
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(exp->name, 1);
 		if (exp->value != NULL)
-		{	
+		{
 			ft_putstr_fd("=\"", 1);
             ft_putstr_fd(exp->value, 1);
             ft_putstr_fd("\"", 1);
@@ -59,7 +61,7 @@ static void	display_export(t_env *exp)
 
 static void	print_export_error(char *str)
 {
-	ft_putstr_fd("export: '", 2);
+	ft_putstr_fd("minishell: export: '", 2);
     ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }

@@ -3,7 +3,7 @@
 static bool is_valid_name(char *str)
 {
     int	i;
-	
+
 	i = 1;
 	if (!str || !*str)
         return (false);
@@ -49,7 +49,7 @@ static void	ft_check_and_remove(char *str, t_env **head)
 
 static void	print_unset_error(char *str)
 {
-	ft_putstr_fd("unset: '", 2);
+	ft_putstr_fd("minishell: unset: '", 2);
     ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
