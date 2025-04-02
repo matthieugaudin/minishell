@@ -32,5 +32,7 @@ void	send_error(char *arg, int errno_cpy);
 void	create_pipes(t_data *data, t_cmd *cmds);
 void	free_data(t_data *data);
 void	handle_signals(int mode);
+void	handle_builtins(t_data *data, t_cmd *cmd);
+bool	is_builtin(char *str);
 
 #endif /* EXECUTION_H */

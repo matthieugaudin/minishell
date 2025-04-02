@@ -66,7 +66,7 @@ static void	print_export_error(char *str)
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
-int ft_export(t_data *data, char **args)
+int ft_export(t_data *data, char **args, bool exit)
 {
 	int	i;
 	int	i_egal;
@@ -90,7 +90,7 @@ int ft_export(t_data *data, char **args)
 			ft_update_env_exp(data, args[i], i_egal);
 		i++;
 	}
-	return (ret);
+	return (value(ret, exit));
 }
 
 

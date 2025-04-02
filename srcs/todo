@@ -1,18 +1,25 @@
 
 
--> check_builtins in execve (fork ? dup ?) : wednesday
-    -> if alone don't fork, do not return (except exit), set exit status
-    -> if not alone fork, and exit
+-> convert char to env
+-> refactor code a minimum when to much
+-> exit builtin
 -> free
 -> norme
 -> basic tester
--> syscall
+-> protect syscalls
 -> put headers
+
+
+
+BUILTINS ERRORS
+- export the same variable doesn't crush the existing one
+- unset a previous existing cmds do not dispaly error
 
 TESTS :
 - no command
 - ctrl on here_doc
 - enter with nothing
+- export in a pipe
 - enter with spaces
 - unset le PATH
 - launch minishell in minishell

@@ -54,13 +54,13 @@ static void	print_unset_error(char *str)
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
-int	ft_unset(t_data *data, char **args)
+int	ft_unset(t_data *data, char **args, bool exit)
 {
 	size_t i;
 	int		ret;
 
 	if (!args || !args[0])
-		return (0);
+		return (value(0, exit));
 	i = 0;
 	ret = 0;
 	while (args[i])
@@ -79,7 +79,7 @@ int	ft_unset(t_data *data, char **args)
 		}
 		i++;
 	}
-	return (ret);
+	return (value(ret, exit));
 }
 
 

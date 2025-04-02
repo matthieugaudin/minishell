@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-int	ft_pwd(void)
+int	ft_pwd(bool exit)
 {
 	char	*path;
 
@@ -8,9 +8,9 @@ int	ft_pwd(void)
 	if (!path)
 	{
 		perror("pwd");
-		return (1);
+		return (value(1, exit));
 	}
 	ft_putendl_fd(path, 1);
 	free(path);
-	return (0);
+	return (value(0, exit));
 }
