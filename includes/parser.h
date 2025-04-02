@@ -31,7 +31,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 /*==============PARSER==============*/
-void    parse_tokens(t_token *token);
+bool    parse_tokens(t_token *token);
 void	expand_tokens(t_token *node, t_env *env);
 void	remove_quotes(t_token *tokens);
 char	*get_var_value(t_env *env, char *var_name);
@@ -51,5 +51,6 @@ void	add_file_back(t_file **head, t_file *new);
 
 /*============UTILS===========*/
 bool	is_last_redir(t_file *file);
+bool	only_spaces(char *line);
 
 #endif /* PARSER_H */

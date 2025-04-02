@@ -1,16 +1,10 @@
 
 
--> | ls segfault : wednesday
--> trunc spaces when $var : wednesday
 -> check_builtins in execve (fork ? dup ?) : wednesday
--> refactor files : 
--> free all data : 
-    -> free en ctrl D
--> delete _GNU_SOURCE : 
--> pass tests : 
--> pass simple tester : 
--> protect every syscall : 
--> code to norme : 
+-> free
+-> norme
+-> syscall 
+-> put headers
 
 TESTS : 
 - no command

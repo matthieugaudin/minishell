@@ -2,17 +2,6 @@
 
 int sigint_flag = 0;
 
-bool	only_spaces(char *line)
-{
-	while (*line)
-	{
-		if (!is_space(*line))
-			return (false);
-		line++;
-	}
-	return (true);
-}
-
 void	handle_sigint(int sig)
 {
 	(void)sig;
@@ -92,14 +81,16 @@ int	main(int argc, char **argv, char **envp)
 		if (!only_spaces(line))
 		{
 			token = tokenize_line(line);
-			parse_tokens(token);
-			expand_tokens(token, data->env);
-			remove_quotes(token);
-			data->cmds = create_cmd(token);
-			create_pipes(data, data->cmds);
-			execute_cmds(data, data->cmds, envp);
-			free_tokens(token, false);
-			free_data(data);
+			if (token && parse_tokens(token))
+			{
+				expand_tokens(token, data->env);
+				remove_quotes(token);
+				data->cmds = create_cmd(token);
+				create_pipes(data, data->cmds);
+				execute_cmds(data, data->cmds, envp);
+				free_tokens(token, false);
+				free_data(data);
+			}
 			add_history(line);
 		}
 	}
