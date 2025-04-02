@@ -1,9 +1,12 @@
 
 
 -> check_builtins in execve (fork ? dup ?) : wednesday
+    -> if alone don't fork, do not return (except exit), set exit status
+    -> if not alone fork, and exit
 -> free
 -> norme
--> syscall 
+-> basic tester
+-> syscall
 -> put headers
 
 TESTS :
@@ -11,5 +14,7 @@ TESTS :
 - ctrl on here_doc
 - enter with nothing
 - enter with spaces
-- exit shell value is the last command
 - unset le PATH
+- launch minishell in minishell
+- ctrl \ on a blocking command
+- cd .. on rm -r parent dir
