@@ -32,16 +32,16 @@ void	ft_update_exp_node(t_env **exp, t_env *new_node)
 
 	if (!exp || !new_node)
 		return;
-	if (*exp == NULL || strcmp(new_node->name, (*exp)->name) < 0)
+	if (*exp == NULL || ft_strcmp(new_node->name, (*exp)->name) < 0)
 	{
 		new_node->next = *exp;
 		*exp = new_node;
 		return;
 	}
 	current = *exp;
-	while (current->next && strcmp(new_node->name, current->next->name) >= 0)
+	while (current->next && ft_strcmp(new_node->name, current->next->name) >= 0)
 	{
-		if (new_node->value && strcmp(new_node->name, current->name) == 0)
+		if (new_node->value && ft_strcmp(new_node->name, current->name) == 0)
 		{
 			free(current->value);
 			current->value = ft_strdup(new_node->value);
@@ -70,14 +70,14 @@ t_env	*create_export(t_env *env)
 	cur_env = env;
 	while (cur_env)
 	{
-		if (strcmp(cur_env->name, "_") != 0)
+		if (ft_strcmp(cur_env->name, "_") != 0)
 		{
 			new_node = ft_new_node(cur_env->name, cur_env->value);
 			if (!new_node)
 				return (NULL);
 			ft_update_exp_node(&exp, new_node);
-			cur_env = cur_env->next;
 		}
+		cur_env = cur_env->next;
 	}
 	return (exp);
 }
