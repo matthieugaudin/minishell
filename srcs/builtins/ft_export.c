@@ -20,14 +20,40 @@ static int	ft_find_egal_pos(char *str)
 	return (0);
 }
 
+static void	ft_plus_option(t_env **env, t_env **exp, char *name, char *value)
+{
+	t_env	*node;
+	char	*new_value;
+
+	if (!env || !exp || !name)
+		return ;
+	node = *env;
+	while (node)
+	{
+		if (!ft_strcmp(node->name, name))
+		{
+			new_value = ft_strjoin(node->value, value);
+			free(node->value);
+			node->value = new_value;
+			ft_update_exp_node(exp, ft_new_node(name, new_value));
+			return ;
+		}
+		node = node->next;
+	}
+	ft_update_env_node(env, ft_new_node(name, value));
+	ft_update_exp_node(exp, ft_new_node(name, value));
+}
+
+
+
 static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 {
 	char	*name;
 	char	*value;
 
 	name = ft_substr(arg, 0, i_egal);
-	// if (arg[i_egal - 1] == '+')
-	// 	// flag_cat = 1;
+	if (!arg[i_egal + 1])
+		value = NULL;
 	value = ft_substr(arg, i_egal + 1, ft_strlen(arg) - i_egal - 1);
 	if (!name || !value)
 	{
@@ -35,8 +61,13 @@ static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 		free(value);
 		return (1);
 	}
-	ft_update_env_node(&data->env, ft_new_node(name, value));
-	ft_update_exp_node(&data->exp, ft_new_node(name, value));
+	if (arg[i_egal - 1] == '+')
+		ft_plus_option(&data->env, &data->exp, name, value);
+	else
+	{
+		ft_update_env_node(&data->env, ft_new_node(name, value));
+		ft_update_exp_node(&data->exp, ft_new_node(name, value));
+	}
 	free(name);
 	free(value);
 	return (0);
@@ -51,8 +82,8 @@ static void	display_export(t_env *exp)
 		if (exp->value != NULL)
 		{
 			ft_putstr_fd("=\"", 1);
-            ft_putstr_fd(exp->value, 1);
-            ft_putstr_fd("\"", 1);
+			ft_putstr_fd(exp->value, 1);
+			ft_putstr_fd("\"", 1);
 		}
 		ft_putchar_fd('\n', 1);
 		exp = exp->next;
@@ -62,7 +93,7 @@ static void	display_export(t_env *exp)
 static void	print_export_error(char *str)
 {
 	ft_putstr_fd("minishell: export: '", 2);
-    ft_putstr_fd(str, 2);
+	ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
@@ -80,8 +111,8 @@ int ft_export(t_data *data, char **args)
 	{
 		i_egal = ft_find_egal_pos(args[i]);
 		if (i_egal == -1)
-        {
-            print_export_error(args[i]);
+		{
+			print_export_error(args[i]);
 			ret = 1;
 		}
 		else if (i_egal == 0)
