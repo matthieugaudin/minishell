@@ -1,13 +1,23 @@
 
 
--> exit builtin  : to test
--> exit status in builtins : to do
+-> printf du main
+-> value setexit code
+-> error $ else i++ continue
+-> first tester errors
+    -> a lot of ls
+    -> cd 1232
+    -> exit redir >
+    -> exit | exit write
+    -> exit with + or - and quotes
+-> second tester errors (choose it)
 -> convert char to env : to do
--> refactor code a minimum when to much
 -> free
 -> norme
--> basic tester
 -> protect syscalls
+-> first tester
+-> second tester
+-> my own tests
+-> manual tester
 -> put headers
 
 
