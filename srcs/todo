@@ -14,17 +14,12 @@
 -> free
 -> norme
 -> protect syscalls
+-> s tests
 -> first tester
 -> second tester
 -> my own tests
 -> manual tester
 -> put headers
-
-
-
-BUILTINS ERRORS
-- export the same variable doesn't crush the existing one
-- unset a previous existing cmds do not dispaly error
 
 TESTS :
 - no command
@@ -36,3 +31,4 @@ TESTS :
 - launch minishell in minishell
 - ctrl \ on a blocking command
 - cd .. on rm -r parent dir
+- unset a previous existing cmds do not dispaly error
