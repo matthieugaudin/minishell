@@ -37,6 +37,8 @@ fclean: clean
 	rm -f $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
+build: all clean
+
 re: fclean all
 
 .PHONY: all clean fclean re

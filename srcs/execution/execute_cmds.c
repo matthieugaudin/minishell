@@ -34,7 +34,14 @@ void	close_hdoc_fds(t_cmd *cmds, bool is_child, int index)
 
 void	handle_builtins(t_data *data, t_cmd *cmd)
 {
+	int	stdin_tmp;
+	int	stdout_tmp;
+
+	stdin_tmp = dup(0);
+	stdout_tmp = dup(1);
 	open_here_doc(cmd, data->env);
+	open_files(cmd, cmd->files);
+	redirect_fds(data, cmd);
 	if (sigint_flag != 1)
 	{
 		if (!ft_strcmp(cmd->args[0], "export"))
@@ -52,6 +59,10 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		if (!ft_strcmp(cmd->args[0], "exit"))
 			ft_exit();
 	}
+	dup2(stdin_tmp, 0);
+	dup2(stdout_tmp, 1);
+	close(stdin_tmp);
+	close(stdout_tmp);
 }
 
 bool	is_builtin(char *str)
