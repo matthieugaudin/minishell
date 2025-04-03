@@ -13,6 +13,8 @@ static int	ft_find_egal_pos(char *str)
 	{
 		if (str[i] == '=')
 			return (i);
+		if (str[i] == '+' && str[i + 1] == '=')
+			return (i);
 		if (!is_posix_std(str[i]))
 			return (-1);
 		i++;
@@ -54,6 +56,8 @@ static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 	name = ft_substr(arg, 0, i_egal);
 	if (!arg[i_egal + 1])
 		value = NULL;
+	if (arg[i_egal] == '+')
+		i_egal++;
 	value = ft_substr(arg, i_egal + 1, ft_strlen(arg) - i_egal - 1);
 	if (!name || !value)
 	{

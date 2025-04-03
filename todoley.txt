@@ -4,3 +4,4 @@ OK - Convert env in char **
 - Check export 'a=' or 'a=""' -> should be in env, but not 'c' (maybe should put '\0' in value)
 - Free env and export
 - Exit
+- export a + export a cree 2 exports a

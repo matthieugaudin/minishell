@@ -17,8 +17,10 @@ void	ft_update_env_node(t_env **env, t_env *new_node)
 	current = *env;
 	while (current)
 	{
-		if (new_node->value && ft_strcmp(new_node->name, current->name) == 0)
+		if (ft_strcmp(new_node->name, current->name) == 0)
 		{
+			if (!new_node->value)
+				return ;
 			free(current->value);
 			current->value = ft_strdup(new_node->value);
 			free_env_node(new_node);
