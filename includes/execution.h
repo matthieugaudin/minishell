@@ -23,7 +23,7 @@ typedef struct s_data
 
 /*==============EXEC==============*/
 void	execute_cmds(t_data *data, t_cmd *cmds, char **envp);
-void    open_here_doc(t_cmd *cmds, t_env *env);
+void	open_here_doc(t_cmd *cmds, t_env *env);
 void	open_files(t_cmd *cmd, t_file *files);
 void	set_exec_path(t_data *data, t_cmd *cmd);
 void	redirect_fds(t_data *data, t_cmd *cmds);
