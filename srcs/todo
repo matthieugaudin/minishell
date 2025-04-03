@@ -1,8 +1,9 @@
 
 
--> convert char to env
+-> exit builtin  : to test
+-> exit status in builtins : to do
+-> convert char to env : to do
 -> refactor code a minimum when to much
--> exit builtin
 -> free
 -> norme
 -> basic tester

@@ -2,9 +2,10 @@
 # define BUILTINS_H
 
 # include <linux/limits.h>
+# include <limits.h>
 # include "execution.h"
 
-void        ft_exit(void);
+void        ft_exit(char **args);
 int			ft_pwd(bool exit);
 int	        ft_echo(char **args, bool exit);
 int	        value(int status, bool to_exit);

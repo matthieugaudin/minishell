@@ -17,7 +17,7 @@ static void	execute_cmd(t_data *data, t_cmd *cmd, char **envp)
 	if (!ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(data, cmd->args, true);
 	if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit();
+		ft_exit(&cmd->args[1]);
 	else
 		execve(cmd->path, cmd->args, envp);
 }
@@ -57,7 +57,7 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		if (!ft_strcmp(cmd->args[0], "unset"))
 			ft_unset(data, cmd->args, false);
 		if (!ft_strcmp(cmd->args[0], "exit"))
-			ft_exit();
+			ft_exit(&cmd->args[1]);
 	}
 	dup2(stdin_tmp, 0);
 	dup2(stdout_tmp, 1);
