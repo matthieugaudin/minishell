@@ -33,22 +33,16 @@ void	ft_update_exp_node(t_env **exp, t_env *new_node)
 	if (!exp || !new_node)
 		return ;
 	if (*exp == NULL || ft_strcmp(new_node->name, (*exp)->name) < 0)
-	{
-		new_node->next = *exp;
-		*exp = new_node;
-		return ;
-	}
+		return (change_head(exp, new_node));
 	current = *exp;
-	while (current->next && ft_strcmp(new_node->name, current->next->name) >= 0)
-	{
-		if (new_node->value && ft_strcmp(new_node->name, current->name) == 0)
-		{
-			free(current->value);
-			current->value = ft_strdup(new_node->value);
-			free_env_node(new_node);
-			return ;
-		}
+	while (current->next && ft_strcmp(new_node->name, current->next->name) > 0)
 		current = current->next;
+	if (new_node->value && ft_strcmp(new_node->name, current->name) == 0)
+	{
+		free(current->value);
+		current->value = ft_strdup(new_node->value);
+		free_env_node(new_node);
+		return ;
 	}
 	new_node->next = current->next;
 	current->next = new_node;
