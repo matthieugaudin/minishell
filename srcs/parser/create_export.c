@@ -35,7 +35,7 @@ void	ft_update_exp_node(t_env **exp, t_env *new_node)
 	if (*exp == NULL || ft_strcmp(new_node->name, (*exp)->name) < 0)
 		return (change_head(exp, new_node));
 	current = *exp;
-	while (current->next && ft_strcmp(new_node->name, current->next->name) > 0)
+	while (current->next && ft_strcmp(new_node->name, current->next->name) >= 0)
 		current = current->next;
 	if (new_node->value && ft_strcmp(new_node->name, current->name) == 0)
 	{
