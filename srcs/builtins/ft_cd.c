@@ -61,7 +61,7 @@ static void	update_pwd(t_data *data)
 	}
 }
 
-int	ft_cd(t_data *data, char *args)
+int	ft_cd(t_data *data, char *args, bool exit)
 {
 	char	*curpath;
 
@@ -86,5 +86,5 @@ int	ft_cd(t_data *data, char *args)
 		return (1);
 	}
 	update_pwd(data);
-	return (0);
+	return (value(0, exit));
 }

@@ -1,11 +1,25 @@
 #include "../../includes/execution.h"
+#include "../../includes/builtins.h"
 
 static void	execute_cmd(t_data *data, t_cmd *cmd, char **envp)
 {
-	(void)data;
-	// check for builtins
 	// convert envp to char **
-	execve(cmd->path, cmd->args, envp);
+	if (!ft_strcmp(cmd->args[0], "export"))
+		ft_export(data, cmd->args, true);
+	if (!ft_strcmp(cmd->args[0], "env"))
+		ft_env(data->env, &cmd->args[0], true);
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		ft_cd(data, cmd->args[1], true);
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		ft_pwd(true);
+	if (!ft_strcmp(cmd->args[0], "echo"))
+		ft_echo(cmd->args, true);
+	if (!ft_strcmp(cmd->args[0], "unset"))
+		ft_unset(data, cmd->args, true);
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		ft_exit();
+	else
+		execve(cmd->path, cmd->args, envp);
 }
 
 void	close_hdoc_fds(t_cmd *cmds, bool is_child, int index)
@@ -16,6 +30,59 @@ void	close_hdoc_fds(t_cmd *cmds, bool is_child, int index)
 			close(cmds->fd_in);
 		cmds = cmds->next;
 	}
+}
+
+void	handle_builtins(t_data *data, t_cmd *cmd)
+{
+	int	stdin_tmp;
+	int	stdout_tmp;
+
+	stdin_tmp = dup(0);
+	stdout_tmp = dup(1);
+	open_here_doc(cmd, data->env);
+	open_files(cmd, cmd->files);
+	redirect_fds(data, cmd);
+	if (sigint_flag != 1)
+	{
+		if (!ft_strcmp(cmd->args[0], "export"))
+			ft_export(data, &cmd->args[1], false);
+		if (!ft_strcmp(cmd->args[0], "env"))
+			ft_env(data->env, &cmd->args[0], false);
+		if (!ft_strcmp(cmd->args[0], "cd"))
+			ft_cd(data, cmd->args[1], false);
+		if (!ft_strcmp(cmd->args[0], "pwd"))
+			ft_pwd(false);
+		if (!ft_strcmp(cmd->args[0], "echo"))
+			ft_echo(cmd->args, false);
+		if (!ft_strcmp(cmd->args[0], "unset"))
+			ft_unset(data, cmd->args, false);
+		if (!ft_strcmp(cmd->args[0], "exit"))
+			ft_exit();
+	}
+	dup2(stdin_tmp, 0);
+	dup2(stdout_tmp, 1);
+	close(stdin_tmp);
+	close(stdout_tmp);
+}
+
+bool	is_builtin(char *str)
+{
+	if (!ft_strcmp(str, "cd"))
+		return (true); 
+	else if (!ft_strcmp(str, "echo"))
+		return (true); 
+	else if (!ft_strcmp(str, "env"))
+		return (true); 
+	else if (!ft_strcmp(str, "exit"))
+		return (true); 
+	else if (!ft_strcmp(str, "export"))
+		return (true); 
+	else if (!ft_strcmp(str, "pwd"))
+		return (true); 
+	else if (!ft_strcmp(str, "unset"))
+		return (true); 
+	else
+		return (false);
 }
 
 void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
@@ -36,7 +103,8 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 			open_files(cmds, cmds->files);
 			if (cmds->args[0] != NULL)
 			{
-				set_exec_path(data, cmds);
+				if (!is_builtin(cmds->args[0]))
+					set_exec_path(data, cmds);
 				redirect_fds(data, cmds);
 				execute_cmd(data, cmds, envp);
 			}

@@ -87,7 +87,10 @@ int	main(int argc, char **argv, char **envp)
 				remove_quotes(token);
 				data->cmds = create_cmd(token);
 				create_pipes(data, data->cmds);
-				execute_cmds(data, data->cmds, envp);
+				if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
+					handle_builtins(data, data->cmds);
+				else
+					execute_cmds(data, data->cmds, envp);
 				free_tokens(token, false);
 				free_data(data);
 			}
