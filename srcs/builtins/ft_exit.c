@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-static bool	threshold_exceeded(char *str, int res, int sign, int i)
+static bool	threshold_exceeded(char *str, long long res, int sign, int i)
 {
 	if (((-res == (LLONG_MIN / 10) && str[i] > '8')
 		|| (-res < (LLONG_MIN / 10) && str[i]))
@@ -13,7 +13,7 @@ static bool	threshold_exceeded(char *str, int res, int sign, int i)
 
 static bool	is_overflow(char *str)
 {
-	long long	i;
+	int			i;
 	long long	res;
 	int			sign;
 
@@ -82,8 +82,3 @@ void    ft_exit(char **args)
 		exit(ft_atoi(args[0]));
 	}
 }
-
-// int main(void)
-// {
-// 	printf("%d", is_overflow("-9223372036854775808"));
-// }
