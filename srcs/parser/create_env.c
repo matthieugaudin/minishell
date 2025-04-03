@@ -77,9 +77,6 @@ t_env	*create_env(char **envp)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
 	env = NULL;
 	while (*envp)
 	{

@@ -30,7 +30,7 @@ void	child_signals(int sig)
 void	handle_signals(int mode)
 {
 	struct sigaction sa;
-	
+
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	if (mode == 0)
@@ -99,5 +99,19 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	free(data);
+	// free_env_exp(&data->env, &data->exp);
 	return (0);
 }
+
+// int main(int ac, char **av, char **envp)
+// {
+// 	t_data	*data;
+
+// 	(void)ac;
+// 	(void)av;
+// 	data = malloc(sizeof(t_data));
+// 	data->env = create_env(envp);
+// 	data->exp = create_export(data->env);
+// 	free_env_exp(&data->env, &data->exp);
+// 	free(data);
+// }

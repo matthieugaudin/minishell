@@ -54,7 +54,7 @@ static bool	is_numeric(char *str)
 	return (true);
 }
 
-void    ft_exit(char **args)
+void	ft_exit(char **args)
 {
 
 	if (!args[0])

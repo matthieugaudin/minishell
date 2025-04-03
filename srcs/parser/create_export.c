@@ -59,9 +59,6 @@ t_env	*create_export(t_env *env)
 
 	if (!env)
 		return (NULL);
-	exp = malloc(sizeof(t_env));
-	if (!exp)
-		return (NULL);
 	exp = NULL;
 	cur_env = env;
 	while (cur_env)
