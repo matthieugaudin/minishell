@@ -91,6 +91,11 @@ void	expand_tokens(t_token *node, t_env *env)
 				else if (!(node->prev && node->prev->type == HERE_DOC)
 					&& (is_posix_std(str[i + 1])))
 					expand_var(node, env, i + 1);
+				else
+				{
+					i++;
+					continue ;
+				}
 				str = node->value;
 				i = -1;
 			}

@@ -8,5 +8,8 @@ int	value(int status, bool to_exit)
 		exit(status);
 	}
 	else
-		return (status);
+	{
+		exit_code(status, true);
+		return (0);
+	}
 }

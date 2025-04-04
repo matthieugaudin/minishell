@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell> ");
 		if (!line)
 		{
-			printf("exit\n");
+			ft_putendl_fd("exit", 1);
 			// free data
 			exit(0);
 		}

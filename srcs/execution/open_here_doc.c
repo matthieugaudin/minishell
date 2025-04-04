@@ -100,6 +100,11 @@ static char	*expand_hdoc(t_env *env, char *line)
 				expand_digit(&line, i + 1);
 			else if (is_posix_std(line[i + 1]))
 				expand_line(env, &line, i + 1);
+			else
+			{
+				i++;
+				continue ;
+			}
 			i = -1;
 		}
 		i++;
