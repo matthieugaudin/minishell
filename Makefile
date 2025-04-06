@@ -1,5 +1,5 @@
 NAME = minishell
-CC = cc -g 
+CC = cc -g
 CCFLAGS = -Wall -Wextra -Werror
 
 LIBFT = libft.a
@@ -14,7 +14,7 @@ SRC =	srcs/main.c srcs/utils/is_space.c srcs/utils/is_redir.c srcs/utils/is_quot
 		srcs/execution/send_error.c srcs/execution/redirect_fds.c srcs/execution/wait_children.c srcs/execution/set_exec_path.c \
 		srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c \
 		srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c srcs/execution/free_data.c srcs/utils/exit_code.c srcs/utils/only_spaces.c \
-		srcs/builtins/value.c
+		srcs/builtins/value.c srcs/parser/free_env_exp.c
 
 OBJ = $(SRC:.c=.o)
 

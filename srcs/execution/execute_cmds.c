@@ -5,7 +5,7 @@ static void	execute_cmd(t_data *data, t_cmd *cmd, char **envp)
 {
 	// convert envp to char **
 	if (!ft_strcmp(cmd->args[0], "export"))
-		ft_export(data, cmd->args, true);
+		ft_export(data, &cmd->args[1], true);
 	if (!ft_strcmp(cmd->args[0], "env"))
 		ft_env(data->env, &cmd->args[0], true);
 	if (!ft_strcmp(cmd->args[0], "cd"))
@@ -68,19 +68,19 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 bool	is_builtin(char *str)
 {
 	if (!ft_strcmp(str, "cd"))
-		return (true); 
+		return (true);
 	else if (!ft_strcmp(str, "echo"))
-		return (true); 
+		return (true);
 	else if (!ft_strcmp(str, "env"))
-		return (true); 
+		return (true);
 	else if (!ft_strcmp(str, "exit"))
-		return (true); 
+		return (true);
 	else if (!ft_strcmp(str, "export"))
-		return (true); 
+		return (true);
 	else if (!ft_strcmp(str, "pwd"))
-		return (true); 
+		return (true);
 	else if (!ft_strcmp(str, "unset"))
-		return (true); 
+		return (true);
 	else
 		return (false);
 }

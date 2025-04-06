@@ -1,27 +1,33 @@
 #include "../../includes/parser.h"
 
-void ft_update_env_node(t_env **env, t_env *new_node)
+void	change_head(t_env **head, t_env *new_node)
+{
+	new_node->next = *head;
+	*head = new_node;
+}
+
+void	ft_update_env_node(t_env **env, t_env *new_node)
 {
 	t_env	*current;
 
 	if (!env || !new_node)
-		return;
+		return ;
 	if (*env == NULL)
-	{
-		new_node->next = *env;
-		*env = new_node;
-		return;
-	}
+		return (change_head(env, new_node));
 	current = *env;
-	while (current->next)
+	while (current)
 	{
-		if (new_node->value && strcmp(new_node->name, current->name) == 0)
+		if (ft_strcmp(new_node->name, current->name) == 0)
 		{
+			if (!new_node->value)
+				return ;
 			free(current->value);
 			current->value = ft_strdup(new_node->value);
 			free_env_node(new_node);
 			return ;
 		}
+		if (!current->next)
+			break ;
 		current = current->next;
 	}
 	new_node->next = current->next;
@@ -71,9 +77,6 @@ t_env	*create_env(char **envp)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
 	env = NULL;
 	while (*envp)
 	{
