@@ -35,5 +35,6 @@ void	handle_signals(int mode);
 void	handle_builtins(t_data *data, t_cmd *cmd);
 bool	is_builtin(char *str);
 void	handle_signals(int mode);
+void	free_all(t_data *data);
 
 #endif /* EXECUTION_H */

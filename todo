@@ -1,19 +1,17 @@
 
 
--> tests file (tester, own, manual)
 -> norme
 -> leaks
 -> protect syscalls
--> s tests
--> file tests
--> valgrind tests
+-> tests
+    -> tester
+    -> valgrind tester
+    -> manual tester
+    -> own
+    -> s
 -> put headers
 
 QUESTIONS
 -> free line
 -> utility of free_envp ? 
 -> unlink here_doc at the end
-
-<< l <<l cat ($USER$USE)
-$USER
-

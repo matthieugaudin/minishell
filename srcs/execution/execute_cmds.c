@@ -8,18 +8,18 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 	envp = convert_env_to_envp(data->env);
 	if (!ft_strcmp(cmd->args[0], "export"))
 		ft_export(data, &cmd->args[1], true);
-	if (!ft_strcmp(cmd->args[0], "env"))
+	else if (!ft_strcmp(cmd->args[0], "env"))
 		ft_env(data->env, &cmd->args[0], true);
-	if (!ft_strcmp(cmd->args[0], "cd"))
+	else if (!ft_strcmp(cmd->args[0], "cd"))
 		ft_cd(data, cmd->args[1], true);
-	if (!ft_strcmp(cmd->args[0], "pwd"))
+	else if (!ft_strcmp(cmd->args[0], "pwd"))
 		ft_pwd(true);
-	if (!ft_strcmp(cmd->args[0], "echo"))
+	else if (!ft_strcmp(cmd->args[0], "echo"))
 		ft_echo(cmd->args, true);
-	if (!ft_strcmp(cmd->args[0], "unset"))
+	else if (!ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(data, cmd->args, true);
-	if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit(&cmd->args[1]);
+	else if (!ft_strcmp(cmd->args[0], "exit"))
+		ft_exit(data,  &cmd->args[1], -1, -1);
 	else
 		execve(cmd->path, cmd->args, envp);
 }
@@ -48,18 +48,18 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 	{
 		if (!ft_strcmp(cmd->args[0], "export"))
 			ft_export(data, &cmd->args[1], false);
-		if (!ft_strcmp(cmd->args[0], "env"))
+		else if (!ft_strcmp(cmd->args[0], "env"))
 			ft_env(data->env, &cmd->args[0], false);
-		if (!ft_strcmp(cmd->args[0], "cd"))
+		else if (!ft_strcmp(cmd->args[0], "cd"))
 			ft_cd(data, cmd->args[1], false);
-		if (!ft_strcmp(cmd->args[0], "pwd"))
+		else if (!ft_strcmp(cmd->args[0], "pwd"))
 			ft_pwd(false);
-		if (!ft_strcmp(cmd->args[0], "echo"))
+		else if (!ft_strcmp(cmd->args[0], "echo"))
 			ft_echo(cmd->args, false);
-		if (!ft_strcmp(cmd->args[0], "unset"))
+		else if (!ft_strcmp(cmd->args[0], "unset"))
 			ft_unset(data, cmd->args, false);
-		if (!ft_strcmp(cmd->args[0], "exit"))
-			ft_exit(&cmd->args[1]);
+		else if (!ft_strcmp(cmd->args[0], "exit"))
+			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp);
 	}
 	dup2(stdin_tmp, 0);
 	dup2(stdout_tmp, 1);
