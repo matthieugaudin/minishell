@@ -4,6 +4,7 @@ void	open_files(t_cmd *cmd, t_file *files)
 {
 	int	fd;
 
+	fd = 0;
 	while (files)
 	{
 		if (files->type == INPUT)

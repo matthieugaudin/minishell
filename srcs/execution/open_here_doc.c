@@ -168,28 +168,30 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 	sigint_flag = 0;
     while (cmds)
     {
-        file_path = get_file_path();
-		while (access(file_path, F_OK) == 0)
-		{
-			free(file_path);
-			file_path = get_file_path();
-		}
 		files = cmds->files;
 		while (files)
 		{
 			if (files->type == HERE_DOC)
 			{
+				file_path = get_file_path();
+				while (access(file_path, F_OK) == 0)
+				{
+					free(file_path);
+					file_path = get_file_path();
+				}
 				fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				fill_here_doc(files, env, fd);
 				if (is_last_redir(files))
 				{
 					close(fd);
 					cmds->fd_in = open(file_path, O_RDONLY);
+					free(file_path);
 				}
 				else
 				{
 					close(fd);
 					unlink(file_path);
+					free(file_path);
 				}
 			}
 			files = files->next;

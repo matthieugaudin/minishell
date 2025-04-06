@@ -33,6 +33,7 @@ static void	expand_var(t_token *node, t_env *env, int start)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
 	ft_strlcat(res + start - 1 + value_len, node->value + start + name_len, remainder + 1);
 	free(node->value);
+	free(var_name);
 	node->value = res;
 }
 

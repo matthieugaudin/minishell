@@ -22,7 +22,7 @@ typedef struct s_data
 }	t_data;
 
 /*==============EXEC==============*/
-void	execute_cmds(t_data *data, t_cmd *cmds, char **envp);
+void	execute_cmds(t_data *data, t_cmd *cmds);
 void	open_here_doc(t_cmd *cmds, t_env *env);
 void	open_files(t_cmd *cmd, t_file *files);
 void	set_exec_path(t_data *data, t_cmd *cmd);
@@ -34,5 +34,6 @@ void	free_data(t_data *data);
 void	handle_signals(int mode);
 void	handle_builtins(t_data *data, t_cmd *cmd);
 bool	is_builtin(char *str);
+void	handle_signals(int mode);
 
 #endif /* EXECUTION_H */

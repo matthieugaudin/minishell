@@ -1,9 +1,11 @@
 #include "../../includes/execution.h"
 #include "../../includes/builtins.h"
 
-static void	execute_cmd(t_data *data, t_cmd *cmd, char **envp)
+static void	execute_cmd(t_data *data, t_cmd *cmd)
 {
-	// convert envp to char **
+	char **envp;
+
+	envp = convert_env_to_envp(data->env);
 	if (!ft_strcmp(cmd->args[0], "export"))
 		ft_export(data, &cmd->args[1], true);
 	if (!ft_strcmp(cmd->args[0], "env"))
@@ -85,7 +87,7 @@ bool	is_builtin(char *str)
 		return (false);
 }
 
-void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
+void	execute_cmds(t_data *data, t_cmd *cmds)
 {
 	pid_t	pid;
 	pid_t	last_pid;
@@ -106,7 +108,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds, char **envp)
 				if (!is_builtin(cmds->args[0]))
 					set_exec_path(data, cmds);
 				redirect_fds(data, cmds);
-				execute_cmd(data, cmds, envp);
+				execute_cmd(data, cmds);
 			}
 		}
 		if (cmds->index > 0)

@@ -31,6 +31,7 @@ static char	**get_paths(t_cmd *cmd, t_env *env)
 		ft_strlcpy(paths[i], tmp, ft_strlen(tmp) + 1);
 		ft_strlcat(paths[i] + ft_strlen(tmp), "/", 2);
 		ft_strlcat(paths[i] + ft_strlen(tmp), cmd->args[0], ft_strlen(cmd->args[0]) + 2);
+		free(tmp);
 		i++;
 	}
 	return (paths);
@@ -55,6 +56,13 @@ static char	*get_access_path(char **paths)
 		}
 		i++;
 	}
+	i = 0;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
 	return (access_path);
 }
 
@@ -78,6 +86,13 @@ static void	special_cases(t_cmd *cmd)
 	cmd->path = cmd->args[0];
 }
 
+void	free_all(t_data *data)
+{
+	free_data(data);
+	free_env_exp(&data->env, &data->exp);
+	free(data);
+}
+
 void	set_exec_path(t_data *data, t_cmd *cmd)
 {
 	char 	**paths;
@@ -93,6 +108,7 @@ void	set_exec_path(t_data *data, t_cmd *cmd)
         if (!cmd->path)
 		{
 			cmd_not_found(cmd->args[0]);
+			free_all(data);
 			exit (127);
 		}
     }

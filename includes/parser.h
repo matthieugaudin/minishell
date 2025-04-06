@@ -42,6 +42,7 @@ void	ft_update_env_node(t_env **env, t_env *new_node);
 void	ft_update_exp_node(t_env **exp, t_env *new_node);
 void	change_head(t_env **head, t_env *new_node);
 t_env	*ft_new_node(char *name, char *value);
+char	**convert_env_to_envp(t_env *env);
 
 /*==========EXEC DATA==========*/
 t_cmd	*create_cmd(t_token *tokens);
