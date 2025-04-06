@@ -43,6 +43,7 @@ void	process_line(t_data	*data, char *line)
 			free_data(data);
 		}
 		add_history(line);
+		free(line);
 	}
 }
 
