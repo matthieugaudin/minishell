@@ -4,7 +4,7 @@
 -> leaks
 -> protect syscalls
 -> tests
-    -> tester
+    -> tester : OK
     -> valgrind tester
     -> manual tester
     -> own
@@ -14,4 +14,4 @@
 QUESTIONS
 -> free line
 -> utility of free_envp ? 
--> unlink here_doc at the end
+-> unlink here_doc at the en

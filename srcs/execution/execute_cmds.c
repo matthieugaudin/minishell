@@ -19,7 +19,7 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(data, cmd->args, true);
 	else if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit(data,  &cmd->args[1], -1, -1);
+		ft_exit(data,  &cmd->args[1], -1, -1, true);
 	else
 		execve(cmd->path, cmd->args, envp);
 }
@@ -59,7 +59,7 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		else if (!ft_strcmp(cmd->args[0], "unset"))
 			ft_unset(data, cmd->args, false);
 		else if (!ft_strcmp(cmd->args[0], "exit"))
-			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp);
+			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp, false);
 	}
 	dup2(stdin_tmp, 0);
 	dup2(stdout_tmp, 1);
@@ -103,7 +103,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 		{
 			close_hdoc_fds(data->cmds, true, cmds->index);
 			open_files(cmds, cmds->files);
-			if (cmds->args[0] != NULL)
+			if (cmds->args[0])
 			{
 				if (!is_builtin(cmds->args[0]))
 					set_exec_path(data, cmds);

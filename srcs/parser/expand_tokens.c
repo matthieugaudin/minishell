@@ -90,12 +90,14 @@ void	expand_tokens(t_token *node, t_env *env)
 				else if (ft_isdigit(str[i + 1]))
 					expand_digit(node, i + 1);
 				else if (!(node->prev && node->prev->type == HERE_DOC)
-					&& (is_posix_std(str[i + 1])))
+					&& str[i + 1]
+					&& !(in_dbl_quotes(str, i) && (str[i + 1] == '\"' || str[i + 1] == '\''))
+					&& (is_posix_std(str[i + 1]) || (str[i + 1] == '\"' || str[i + 1] == '\'')))
 					expand_var(node, env, i + 1);
 				else
 				{
 					i++;
-					continue ;
+					continue;
 				}
 				str = node->value;
 				i = -1;

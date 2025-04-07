@@ -1,6 +1,17 @@
 
 TESTER : 
-- a lot of ls
+- (doley)
+- echo "exit_code ->$? user ->$USER home -> $HOME"
+- echo 'exit_code ->$? user ->$USER home -> $HOME'
+- echo -n e
+- echo -n -n -n e
+- echo -nnnnnnn e
+- echo -n e -n
+- echo -n e -n -n
+- echo -n e -nnnnnn
+-  echo -n -n e -n
+- echo -nnnnnnnnnnnn e -n
+- echo -nnnnnnnnnnnn e -n-n-n-n
 - unset HELLO=
 - unset  HELLO A- WORLD
 - unset  HELLO A-
@@ -8,38 +19,14 @@ TESTER :
 - cd wqerhqwer
 - cd 123123
 - cd "$PWD/file_tests"
-- exit +100
-- exit "+100"
-- exit "             +100"
--  exit "             100"
-- exit +"100"
-- exit -----------100
-- exit "---------------100"
--  exit "                     -100"
-- exit -"                100"
--  exit -"                ---------100"
- - exit 42 world
-- exit 1 9223372036854775807 q
-- exit 1 9223372036854775808 q
--  exit 1 -9223372036854775807 q
-- exit 1 -9223372036854775808 q
-- exit 1 -9223372036854775809 q
-- exit 1q -9223372036854775809 q
-- exit > "./outfiles/outfile"
-- .
-- ..
-- "$EMPTY"
+
+ 
+- (mgaudin)
 -  $EMPTY echo hi
-- echo $"$"
-- echo $'$'
--  echo '"$USER"'
--  echo $"HOME"
-- tout le reste sur l'expand
-
-
-
+- echo "$="
 
 MANUAL TESTS : 
+- a lot of ls | ls
 - see all functions used
 - << l <<l cat ($USER$USE)
 - $USER : ok
@@ -58,4 +45,3 @@ MANUAL TESTS :
 - cat Makfile | grep @
 - ls nonexisting | grep ok | ls 
 - ls | <a<a>c >b>b  |grep ok
-- a lot of ls | ls

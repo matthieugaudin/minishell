@@ -93,18 +93,37 @@ void	free_all(t_data *data)
 	free(data);
 }
 
+bool	is_executable(char *arg)
+{
+	int	i;
+
+	if (arg[0] != '.')
+		return (false);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] == '/')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 void	set_exec_path(t_data *data, t_cmd *cmd)
 {
 	char 	**paths;
 
-    if (ft_strncmp(cmd->args[0], "./", 2) == 0 || cmd->args[0][0] == '/')
+    if (is_executable(cmd->args[0]) || cmd->args[0][0] == '/')
     {
 		special_cases(cmd);
     }
     else
     {
-        paths = get_paths(cmd, data->env);
-        cmd->path = get_access_path(paths);
+		if (ft_strcmp(cmd->args[0], ".") && ft_strcmp(cmd->args[0], ".."))
+		{
+			paths = get_paths(cmd, data->env);
+			cmd->path = get_access_path(paths);
+		}
         if (!cmd->path)
 		{
 			cmd_not_found(cmd->args[0]);
