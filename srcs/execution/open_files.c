@@ -16,6 +16,7 @@ void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 		if (fd == -1)
 		{
 			send_error(files->name, errno);
+			close_pipes(data->cmds, data->pipes);
 			free_all(data);
 			exit(1);
 		}

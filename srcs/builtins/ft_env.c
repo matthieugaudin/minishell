@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-int	ft_env(t_env *env, char **args, bool exit)
+int	ft_env(t_data* data, t_env *env, char **args, bool exit)
 {
 	if (args && args[1])
 	{
@@ -19,7 +19,7 @@ int	ft_env(t_env *env, char **args, bool exit)
 			ft_putchar_fd('\n', 1);
 		env = env->next;
 	}
-	return (value(0, exit));
+	return (value(data, 0, exit));
 }
 
 // int main(void)

@@ -11,17 +11,22 @@ hdoc ctrl d
 hdoc ctrl c + cmd
 - /t
 <a>b
+cat -e Makfile <a>b | <a>b>a<a> | cat -e Makfile <a>b
 cat -e Makfile <a>b | <a>b>a<a>noperm | cat -e Makfile <a>b
 cat -e Makfile <a>b | <a>b>a<a<noperm | cat -e Makfile <a>b
 cat -e Makfile <a>b | <a>b<noperm>a<a | cat -e Makfile <a>b
 cat -e Makfile <a>b | <a>b<noperm>a<a>>l | cat -e Makfile <a>b
 cat -e Makfile <a>b | <a>b<<l<noperm>a<a | cat -e Makfile <a>b (ctr c/d + expand in here_doc)
+<out env > out | <<l cat -e >>a
+exit | exit 13
+env | unset PATH >out | export a >b
 <<a
+>>a
 <a
 >a
->>a
 /t
+
+./noexisting
+redir + ctrl
 cat + ctrl
-exit | exit 13
-env > out | <<l cat -e >>a
-env | unset PATH | export a >b
+sleep + ctrl

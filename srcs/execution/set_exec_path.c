@@ -92,6 +92,7 @@ void	free_all(t_data *data)
 	free_data(data);
 	free_env_exp(&data->env, &data->exp);
 	free(data);
+	rl_clear_history();
 }
 
 bool	is_executable(char *arg)

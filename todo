@@ -3,9 +3,10 @@
 -> protect syscalls
 -> leaks
     -> own tests : 
-    -> tester with valgrind : 
+    -> ndelhota tests : 
     -> manual tester tests : 
     -> s tests: 
+    -> tester with valgrind (retry): 
 -> norme
 -> see all functions used
 -> put headers

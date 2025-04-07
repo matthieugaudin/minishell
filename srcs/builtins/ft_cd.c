@@ -86,5 +86,5 @@ int	ft_cd(t_data *data, char *args, bool exit)
 		return (1);
 	}
 	update_pwd(data);
-	return (value(0, exit));
+	return (value(data, 0, exit));
 }

@@ -125,7 +125,7 @@ int ft_export(t_data *data, char **args, bool exit)
 			ft_update_env_exp(data, args[i], i_egal);
 		i++;
 	}
-	return (value(ret, exit));
+	return (value(data, ret, exit));
 }
 
 
