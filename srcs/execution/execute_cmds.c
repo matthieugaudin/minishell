@@ -8,18 +8,24 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 	envp = convert_env_to_envp(data->env);
 	if (!ft_strcmp(cmd->args[0], "export"))
 		ft_export(data, &cmd->args[1], true);
-	if (!ft_strcmp(cmd->args[0], "env"))
+	else if (!ft_strcmp(cmd->args[0], "env"))
 		ft_env(data->env, &cmd->args[0], true);
+<<<<<<< HEAD
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		ft_cd(data, &cmd->args[1], true);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
+=======
+	else if (!ft_strcmp(cmd->args[0], "cd"))
+		ft_cd(data, cmd->args[1], true);
+	else if (!ft_strcmp(cmd->args[0], "pwd"))
+>>>>>>> origin/mgaudin
 		ft_pwd(true);
-	if (!ft_strcmp(cmd->args[0], "echo"))
+	else if (!ft_strcmp(cmd->args[0], "echo"))
 		ft_echo(cmd->args, true);
-	if (!ft_strcmp(cmd->args[0], "unset"))
+	else if (!ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(data, cmd->args, true);
-	if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit(&cmd->args[1]);
+	else if (!ft_strcmp(cmd->args[0], "exit"))
+		ft_exit(data,  &cmd->args[1], -1, -1, true);
 	else
 		execve(cmd->path, cmd->args, envp);
 }
@@ -42,24 +48,24 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 	stdin_tmp = dup(0);
 	stdout_tmp = dup(1);
 	open_here_doc(cmd, data->env);
-	open_files(cmd, cmd->files);
+	open_files(data, cmd, cmd->files);
 	redirect_fds(data, cmd);
 	if (sigint_flag != 1)
 	{
 		if (!ft_strcmp(cmd->args[0], "export"))
 			ft_export(data, &cmd->args[1], false);
-		if (!ft_strcmp(cmd->args[0], "env"))
+		else if (!ft_strcmp(cmd->args[0], "env"))
 			ft_env(data->env, &cmd->args[0], false);
 		if (!ft_strcmp(cmd->args[0], "cd"))
 			ft_cd(data, &cmd->args[1], false);
 		if (!ft_strcmp(cmd->args[0], "pwd"))
 			ft_pwd(false);
-		if (!ft_strcmp(cmd->args[0], "echo"))
+		else if (!ft_strcmp(cmd->args[0], "echo"))
 			ft_echo(cmd->args, false);
-		if (!ft_strcmp(cmd->args[0], "unset"))
+		else if (!ft_strcmp(cmd->args[0], "unset"))
 			ft_unset(data, cmd->args, false);
-		if (!ft_strcmp(cmd->args[0], "exit"))
-			ft_exit(&cmd->args[1]);
+		else if (!ft_strcmp(cmd->args[0], "exit"))
+			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp, false);
 	}
 	dup2(stdin_tmp, 0);
 	dup2(stdout_tmp, 1);
@@ -92,6 +98,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 	pid_t	pid;
 	pid_t	last_pid;
 
+	last_pid = -1;
 	open_here_doc(cmds, data->env);
 	while (cmds && sigint_flag != 1)
 	{
@@ -102,8 +109,8 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 		if (pid == 0)
 		{
 			close_hdoc_fds(data->cmds, true, cmds->index);
-			open_files(cmds, cmds->files);
-			if (cmds->args[0] != NULL)
+			open_files(data, cmds, cmds->files);
+			if (cmds->args[0])
 			{
 				if (!is_builtin(cmds->args[0]))
 					set_exec_path(data, cmds);

@@ -43,9 +43,11 @@ static bool	is_numeric(char *str)
 	int	i;
 
 	i = 0;
+	while (isspace(str[i]))
+		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(*str) && !(*str == '-' && *(str + 1)))
+		if (!ft_isdigit(str[i]) && !((str[i] == '+' || str[i] == '-') && isdigit(str[i + 1])))
 			return (false);
 		i++;
 	}
@@ -54,30 +56,54 @@ static bool	is_numeric(char *str)
 	return (true);
 }
 
-void	ft_exit(char **args)
+void	ft_exit(t_data* data, char **args, int stdin, int stdout, bool to_exit)
 {
+	int code;
+
+	if (stdin != -1)
+	{
+		close(stdin);
+		close(stdout);
+	}
 	if (!args[0])
 	{
-		ft_putendl_fd("exit", 1);
+		if (!to_exit)
+			ft_putendl_fd("exit", 1);
+		free_all(data);
 		exit(exit_code(0, false));
 	}
 	else if (!is_numeric(args[0]))
 	{
-		ft_putendl_fd("exit", 1);
+		if (!to_exit)
+			ft_putendl_fd("exit", 2);
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args[0], 2);
-		ft_putendl_fd(": numeric argument required", 2);
+		ft_putendl_fd(": numeric argument required", 2 );
+		free_all(data);
 		exit(2);
 	}
 	else if (args[1])
 	{
-		ft_putendl_fd("exit", 1);
+		if (!to_exit)
+			ft_putendl_fd("exit", 2);
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		if (to_exit)
+		{
+			free_all(data);
+			exit(1);
+		}
 		exit_code(1, true);
 	}
 	else
 	{
-		ft_putendl_fd("exit", 1);
-		exit(ft_atoi(args[0]));
+		code = ft_atoi(args[0]);
+		if (!to_exit)
+			ft_putendl_fd("exit", 1);
+		free_all(data);
+		exit(code);
 	}
 }
+
+/*
+exit > "./outfiles/outfile"
+*/

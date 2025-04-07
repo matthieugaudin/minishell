@@ -9,6 +9,10 @@ void	free_data(t_data *data)
 	while (data->cmds)
 	{
 		i = 0;
+		if (data->cmds->fd_in != 0)
+			close(data->cmds->fd_in);
+		if (data->cmds->fd_out != 1)
+			close(data->cmds->fd_out);
 		while (data->cmds->args[i])
 		{
 			free(data->cmds->args[i]);
