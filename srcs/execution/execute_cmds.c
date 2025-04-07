@@ -51,19 +51,11 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		if (!ft_strcmp(cmd->args[0], "export"))
 			ft_export(data, &cmd->args[1], false);
 		else if (!ft_strcmp(cmd->args[0], "env"))
-<<<<<<< HEAD
-			ft_env(data->env, &cmd->args[0], false);
-		if (!ft_strcmp(cmd->args[0], "cd"))
-			ft_cd(data, &cmd->args[1], false);
-		if (!ft_strcmp(cmd->args[0], "pwd"))
-			ft_pwd(false);
-=======
 			ft_env(data, data->env, &cmd->args[0], false);
 		else if (!ft_strcmp(cmd->args[0], "cd"))
-			ft_cd(data, cmd->args[1], false);
+			ft_cd(data, &cmd->args[1], false);
 		else if (!ft_strcmp(cmd->args[0], "pwd"))
 			ft_pwd(data, false);
->>>>>>> origin/mgaudin
 		else if (!ft_strcmp(cmd->args[0], "echo"))
 			ft_echo(data, cmd->args, false);
 		else if (!ft_strcmp(cmd->args[0], "unset"))

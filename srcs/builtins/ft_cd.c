@@ -68,7 +68,7 @@ int	ft_cd(t_data *data, char **args, bool exit)
 	if (!args)
 		curpath = find_path(data->env, "HOME");
 	else if (args[1])
-		return (value(ft_cd_too_many_args(), exit));
+		return (value(data, ft_cd_too_many_args(), exit));
 	else if (ft_strcmp(args[0], "-") == 0)
 	{
 		curpath = find_path(data->env, "OLDPWD");
@@ -78,9 +78,9 @@ int	ft_cd(t_data *data, char **args, bool exit)
 	else
 		curpath = args[0];
 	if (!curpath)
-		return (value(1, exit));
+		return (value(data, 1, exit));
 	if (chdir(curpath) != 0)
-		return (value(ft_cd_error_path(curpath), exit));
+		return (value(data, ft_cd_error_path(curpath), exit));
 	update_pwd(data);
 	return (value(data, 0, exit));
 }
