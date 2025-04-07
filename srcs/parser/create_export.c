@@ -57,7 +57,7 @@ void	create_export(t_data *data)
 	t_env	*new_node;
 
 	if (!data->env)
-		return (NULL);
+		free_all(data);
 	data->exp = NULL;
 	cur_env = data->env;
 	while (cur_env)

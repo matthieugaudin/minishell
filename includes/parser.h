@@ -18,7 +18,7 @@ char	**convert_env_to_envp(t_env *env);
 
 /*==========EXEC DATA==========*/
 t_cmd	*create_cmd(t_token *tokens);
-t_env	*create_export(t_env *env);
+void	create_export(t_data *data);
 void	create_env(t_data *data, char **envp);
 
 /*============LINKED LIST===========*/

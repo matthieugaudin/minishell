@@ -85,7 +85,7 @@ void	create_env(t_data *data, char **envp)
 	data->env = NULL;
 	while (*envp)
 	{
-		if (!append_env_node(&data->env, *envp));
+		if (!append_env_node(&data->env, *envp))
 			free_all(data);
 		envp++;
 	}

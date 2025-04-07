@@ -17,7 +17,7 @@ t_data	*init_data(char **envp)
 	data->cmds = NULL;
 	data->tokens = NULL;
 	create_env(data, envp);
-	create_export(data->env);
+	create_export(data);
 	return (data);
 }
 

@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-static void	free_data(t_data *data)
+void	free_data(t_data *data)
 {
 	t_cmd	*tmp_cmd;
 	t_file	*tmp_file;
@@ -56,7 +56,7 @@ void	free_list(t_env **list)
 	}
 }
 
-static void	free_env_exp(t_env **env, t_env **exp)
+void	free_env_exp(t_env **env, t_env **exp)
 {
 	free_list(env);
 	free_list(exp);
