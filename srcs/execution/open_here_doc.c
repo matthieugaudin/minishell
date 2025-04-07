@@ -47,6 +47,7 @@ static void	expand_line(t_env *env, char **line, int start)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
 	ft_strlcat(res + start - 1 + value_len, *line + start + name_len, remainder + 1);
 	free(*line);
+	free(var_name);
 	*line = res;
 }
 
@@ -122,6 +123,7 @@ static void	hdoc_warning(char *limiter, int line)
 	ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
 	ft_putstr_fd(limiter, 2);
 	ft_putstr_fd("')\n", 2);
+	free(str_line);
 }
 
 static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
@@ -150,6 +152,7 @@ static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 		{
 			new = expand_hdoc(env, line);
 			write(here_doc, new, ft_strlen(new));
+			free(new);
 		}
 		else
 		{
@@ -157,6 +160,7 @@ static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 		}
 		write(here_doc, "\n", 1);
 	}
+	close(fd);
 }
 
 void    open_here_doc(t_cmd *cmds, t_env *env)

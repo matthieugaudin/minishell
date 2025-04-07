@@ -1,35 +1,8 @@
-
-TESTER : 
-- (doley)
-- echo "exit_code ->$? user ->$USER home -> $HOME"
-- echo 'exit_code ->$? user ->$USER home -> $HOME'
-- echo -n e
-- echo -n -n -n e
-- echo -nnnnnnn e
-- echo -n e -n
-- echo -n e -n -n
-- echo -n e -nnnnnn
--  echo -n -n e -n
-- echo -nnnnnnnnnnnn e -n
-- echo -nnnnnnnnnnnn e -n-n-n-n
-- unset HELLO=
-- unset  HELLO A- WORLD
-- unset  HELLO A-
-- cd $PWD hi
-- cd wqerhqwer
-- cd 123123
-- cd "$PWD/file_tests"
-
- 
-- (mgaudin)
--  $EMPTY echo hi
-- echo "$="
-
 MANUAL TESTS : 
-- a lot of ls | ls
 - see all functions used
-- << l <<l cat ($USER$USE)
-- $USER : ok
+- a single redir as <a >a <<a
+- hdoc ctrl d
+- hdoc ctrl c + cmd
 - $LSCOLORS / $PATH
 - /t
 - ./test
@@ -45,3 +18,18 @@ MANUAL TESTS :
 - cat Makfile | grep @
 - ls nonexisting | grep ok | ls 
 - ls | <a<a>c >b>b  |grep ok
+
+
+
+
+PASSED : 
+cmdnotfound
+>a>a>a>d cat -e Makfile >a>b>c
+>a>a>a>d cat -e Makfile >a>b>noperm
+>a>a>noperm>d cat -e Makfile >a>b>noperm
+>a>a>d cat -e Makfile >a>b<noperm
+<< l <<l cat ($USER$USE$)
+$USER
+hdoc ctrl d
+hdoc ctrl c + cmd
+>a>a>a>d <<l cat -e <<l Makfile >a>b>>c | >a>a>>a>d <<l'' cat -e Makfile >a>b>c | >a>a>>a>d cat -e Makfile >a><<l""b>c

@@ -1,6 +1,6 @@
 #include "../../includes/execution.h"
 
-void	open_files(t_cmd *cmd, t_file *files)
+void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 {
 	int	fd;
 
@@ -16,7 +16,7 @@ void	open_files(t_cmd *cmd, t_file *files)
 		if (fd == -1)
 		{
 			send_error(files->name, errno);
-			// free
+			free_all(data);
 			exit(1);
 		}
 		if (is_last_redir(files) && (files->type == OUTPUT || files->type == APPEND))

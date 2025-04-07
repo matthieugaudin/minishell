@@ -8,7 +8,7 @@ void	wait_children(t_data *data, pid_t last_pid)
 	cmds = data->cmds;
 	while (cmds)
 	{
-		if (wait(&status) == last_pid)
+		if (last_pid != -1 && wait(&status) == last_pid)
 		{
 			if (WIFEXITED(status))
 				exit_code(WEXITSTATUS(status), true);

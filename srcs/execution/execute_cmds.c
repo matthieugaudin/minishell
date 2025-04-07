@@ -42,7 +42,7 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 	stdin_tmp = dup(0);
 	stdout_tmp = dup(1);
 	open_here_doc(cmd, data->env);
-	open_files(cmd, cmd->files);
+	open_files(data, cmd, cmd->files);
 	redirect_fds(data, cmd);
 	if (sigint_flag != 1)
 	{
@@ -92,6 +92,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 	pid_t	pid;
 	pid_t	last_pid;
 
+	last_pid = -1;
 	open_here_doc(cmds, data->env);
 	while (cmds && sigint_flag != 1)
 	{
@@ -102,7 +103,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 		if (pid == 0)
 		{
 			close_hdoc_fds(data->cmds, true, cmds->index);
-			open_files(cmds, cmds->files);
+			open_files(data, cmds, cmds->files);
 			if (cmds->args[0])
 			{
 				if (!is_builtin(cmds->args[0]))

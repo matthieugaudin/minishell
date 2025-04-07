@@ -8,7 +8,12 @@ t_data	*init_data(char **envp)
 
 	rl_catch_signals = 0;
 	rl_outstream = stderr;
+	data = NULL;
 	data = malloc(sizeof(t_data));
+	data->env = NULL;
+	data->exp = NULL;
+	data->cmds = NULL;
+	// to exit
 	data->env = create_env(envp);
 	data->exp = create_export(data->env);
 	return (data);
@@ -34,12 +39,12 @@ void	process_line(t_data	*data, char *line)
 			expand_tokens(token, data->env);
 			remove_quotes(token);
 			data->cmds = create_cmd(token);
-			free_tokens(token, false);
 			create_pipes(data, data->cmds);
 			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
 				handle_builtins(data, data->cmds);
 			else
 				execute_cmds(data, data->cmds);
+			free_tokens(token, false);
 			free_data(data);
 		}
 		add_history(line);
