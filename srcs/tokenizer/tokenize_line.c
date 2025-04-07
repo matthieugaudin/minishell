@@ -37,7 +37,7 @@ static void	extract_token(char **s, int *len, int *i)
 	}
 }
 
-static bool	create_tokens(char *s, t_token **head)
+static bool	create_tokens(t_data *data, char *s, t_token **head)
 {
 	char	*value;
 	int		len;
@@ -54,16 +54,16 @@ static bool	create_tokens(char *s, t_token **head)
 			if (!value)
 			{
 				free_tokens(*head, true);
-				exit(1);
+				free_all(data);
 			}
 			ft_strlcpy(value, s - len, len + 1);
-			append_token_node(head, value);
+			append_token_node(data, head, value);
 		}
 	}
 	return (true);
 }
 
-t_token	*tokenize_line(char *s)
+t_token	*tokenize_line(t_data *data, char *s)
 {
 	t_token	*head;
 	char	quote;
@@ -82,6 +82,6 @@ t_token	*tokenize_line(char *s)
 		syntax_error(head, line);
 		return (NULL);
 	}
-	create_tokens(s, &head);
+	create_tokens(data, s, &head);
 	return (head);
 }

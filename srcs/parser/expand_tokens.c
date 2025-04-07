@@ -11,7 +11,7 @@ char	*get_var_value(t_env *env, char *var_name)
 	return (NULL);
 }
 
-static void	expand_var(t_token *node, t_env *env, int start)
+static void	expand_var(t_data *data, t_token *node, t_env *env, int start)
 {
 	char	*var_value;
 	char	*var_name;
@@ -21,13 +21,15 @@ static void	expand_var(t_token *node, t_env *env, int start)
 	int		remainder;
 	int		len;
 
-	var_name = get_env_name(node->value + start);
+	var_name = get_env_name(data, node->value + start);
 	var_value = get_var_value(env, var_name);
 	value_len = ft_strlen(var_value);
 	name_len = ft_strlen(var_name);
 	remainder = ft_strlen(node->value + start + ft_strlen(var_name));
 	len = (start - 1) + value_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		free_all(data);
 	ft_strlcpy(res, node->value, start);
 	if (var_value)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
@@ -37,7 +39,7 @@ static void	expand_var(t_token *node, t_env *env, int start)
 	node->value = res;
 }
 
-void	expand_exit(t_token *node, int start)
+static void	expand_exit(t_data *data, t_token *node, int start)
 {
 	char	*res;
 	char	*code;
@@ -46,10 +48,14 @@ void	expand_exit(t_token *node, int start)
 	int		len;
 
 	code = ft_itoa(exit_code(0, false));
+	if (!code)
+		free_all(data);
 	code_len = ft_strlen(code);
 	remainder = ft_strlen(node->value + start + 1);
 	len = (start - 1) + code_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		free_all(data);
 	ft_strlcpy(res, node->value, start);
 	ft_strlcat(res + start - 1, code, code_len + 1);
 	ft_strlcat(res + start - 1 + code_len, node->value + start + 1, remainder + 1);
@@ -57,7 +63,7 @@ void	expand_exit(t_token *node, int start)
 	node->value = res;
 }
 
-void	expand_digit(t_token *node, int start)
+static void	expand_digit(t_data *data, t_token *node, int start)
 {
 	char	*res;
 	int		remainder;
@@ -66,13 +72,15 @@ void	expand_digit(t_token *node, int start)
 	len = ft_strlen(node->value) - 2;
 	remainder = ft_strlen(node->value + start + 1);
 	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		free_all(data);
 	ft_strlcpy(res, node->value, start);
 	ft_strlcat(res + start - 1, node->value + start + 1, remainder + 1);
 	free(node->value);
 	node->value = res;
 }
 
-void	expand_tokens(t_token *node, t_env *env)
+void	expand_tokens(t_data *data, t_token *node, t_env *env)
 {
 	char	*str;
 	int		i;
@@ -86,14 +94,14 @@ void	expand_tokens(t_token *node, t_env *env)
 			if (str[i] == '$' && (!in_quotes(str, i) || in_dbl_quotes(str, i)))
 			{
 				if (str[i + 1] == '?')
-					expand_exit(node, i + 1);
+					expand_exit(data, node, i + 1);
 				else if (ft_isdigit(str[i + 1]))
-					expand_digit(node, i + 1);
+					expand_digit(data, node, i + 1);
 				else if (!(node->prev && node->prev->type == HERE_DOC)
 					&& str[i + 1]
 					&& !(in_dbl_quotes(str, i) && (str[i + 1] == '\"' || str[i + 1] == '\''))
 					&& (is_posix_std(str[i + 1]) || (str[i + 1] == '\"' || str[i + 1] == '\'')))
-					expand_var(node, env, i + 1);
+					expand_var(data, node, env, i + 1);
 				else
 				{
 					i++;

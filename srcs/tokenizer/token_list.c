@@ -44,7 +44,7 @@ void	set_token_prev(t_token **head, t_token *node)
 	}
 }
 
-void	append_token_node(t_token **head, char *line)
+void	append_token_node(t_data *data, t_token **head, char *line)
 {
 	t_token	*node;
 
@@ -53,7 +53,7 @@ void	append_token_node(t_token **head, char *line)
 	{
 		free(line);
 		free_tokens(*head, true);
-		exit(1);
+		free_all(data);
 	}
 	if (*head == NULL)
 		*head = node;

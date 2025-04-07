@@ -65,9 +65,9 @@ typedef struct s_data
 }	t_data;
 
 /*==============TOKENIZER==============*/
-t_token	*tokenize_line(char *s);
+t_token	*tokenize_line(t_data *data, char *s);
 void	set_token_type(t_token *node);
-void	append_token_node(t_token **head, char *line);
+void	append_token_node(t_data *data, t_token **head, char *line);
 void	set_token_prev(t_token **head, t_token *node);
 
 /*=============ERROR HANDLING=============*/

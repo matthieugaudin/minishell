@@ -34,14 +34,15 @@ void	process_line(t_data	*data, char *line)
 
 	if (!only_spaces(line))
 	{
-		data->tokens = tokenize_line(line);
+		data->tokens = tokenize_line(data, line);
 		if (data->tokens && parse_tokens(data->tokens))
 		{
-			expand_tokens(data->tokens, data->env);
-			remove_quotes(data->tokens);
-			data->cmds = create_cmd(data->tokens);
+			expand_tokens(data, data->tokens, data->env);
+			remove_quotes(data, data->tokens);
+			data->cmds = create_cmd(data, data->tokens);
 			free_tokens(data->tokens, false);
 			create_pipes(data, data->cmds);
+			// HERE LAST FREE//
 			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
 				handle_builtins(data, data->cmds);
 			else

@@ -43,7 +43,7 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 
 	stdin_tmp = dup(0);
 	stdout_tmp = dup(1);
-	open_here_doc(cmd, data->env);
+	open_here_doc(data, cmd, data->env);
 	open_files(data, cmd, cmd->files);
 	redirect_fds(data, cmd);
 	if (sigint_flag != 1)
@@ -97,7 +97,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 	pid_t	last_pid;
 
 	last_pid = -1;
-	open_here_doc(cmds, data->env);
+	open_here_doc(data, cmds, data->env);
 	while (cmds && sigint_flag != 1)
 	{
 		pid = fork();

@@ -20,17 +20,17 @@ static void	set_last_cmd_next(t_cmd **cmds, t_cmd *cmd)
 	}
 }
 
-static void	handle_files(t_token *tokens, t_cmd *cmd)
+static void	handle_files(t_data *data, t_token *tokens, t_cmd *cmd)
 {
 	t_file	*file;
 
 	if (tokens->prev->type == HERE_DOC)
 		cmd->is_here_doc = true;
-	file = new_file(tokens->value, tokens->prev->type, tokens->hdoc_quoted);
+	file = new_file(data, tokens->value, tokens->prev->type, tokens->hdoc_quoted);
 	add_file_back(&cmd->files, file);
 }
 
-static void	set_cmd_content(t_token **tokens, t_cmd *cmd)
+static void	set_cmd_content(t_data *data, t_token **tokens, t_cmd *cmd)
 {
 	int	i;
 
@@ -39,7 +39,7 @@ static void	set_cmd_content(t_token **tokens, t_cmd *cmd)
 	{
 		if ((*tokens)->type == FILE_T)
 		{
-			handle_files(*tokens, cmd);
+			handle_files(data, *tokens, cmd);
 		}
 		else if ((*tokens)->type == COMMAND)
 		{
@@ -50,7 +50,7 @@ static void	set_cmd_content(t_token **tokens, t_cmd *cmd)
 	}
 }
 
-static void	init_cmd_content(t_cmd *cmd, t_token *tokens, int index)
+static void	init_cmd_content(t_data *data, t_cmd *cmd, t_token *tokens, int index)
 {
 	int			nb_cmds;
 
@@ -65,10 +65,12 @@ static void	init_cmd_content(t_cmd *cmd, t_token *tokens, int index)
 	cmd->fd_out = 1;
 	cmd->index = index;
 	cmd->args = malloc(sizeof(char *) * (nb_cmds + 1));
+	if (!cmd->args)
+		free_all(data);
 	cmd->args[nb_cmds] = NULL;
 }
 
-t_cmd	*create_cmd(t_token *tokens)
+t_cmd	*create_cmd(t_data *data, t_token *tokens)
 {
 	t_cmd	*cmds;
 	t_cmd	*cmd;
@@ -80,8 +82,10 @@ t_cmd	*create_cmd(t_token *tokens)
 	while (tokens)
 	{
 		cmd = malloc(sizeof(t_cmd));
-		init_cmd_content(cmd, tokens, index);
-		set_cmd_content(&tokens, cmd);
+		if (!cmd)
+			free_all(data);
+		init_cmd_content(data, cmd, tokens, index);
+		set_cmd_content(data, &tokens, cmd);
 		set_last_cmd_next(&cmds, cmd);
 		if (tokens)
 			tokens = tokens->next;

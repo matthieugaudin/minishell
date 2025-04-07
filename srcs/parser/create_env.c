@@ -38,7 +38,7 @@ void	ft_update_env_node(t_env **env, t_env *new_node)
 /*
 Takes an environment variable from envp and returns its name.
 */
-char	*get_env_name(char *envp_str)
+char	*get_env_name(t_data *data, char *envp_str)
 {
 	char	*env_name;
 	int		i;
@@ -48,36 +48,36 @@ char	*get_env_name(char *envp_str)
 		i++;
 	env_name = malloc(sizeof(char) * (i + 1));
 	if (!env_name)
-		return (NULL);
+		free_all(data);
 	ft_strlcpy(env_name, envp_str, i + 1);
 	return (env_name);
 }
 
-static int	append_env_node(t_env **env, char *envp)
+static void	append_env_node(t_data *data, t_env **env, char *envp)
 {
 	t_env	*last_node;
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
 	if (!node)
-		return (0);
-	node->name = get_env_name(envp);
+		free_all(data);
+	node->name = get_env_name(data, envp);
 	if (!node->name)
-		return (0);
+		return ;
 	node->value = ft_strdup(getenv(node->name));
 	if (!node->value)
-		return (0);
+		free_all(data);
 	node->next = NULL;
 	if (*env == NULL)
 	{
 		*env = node;
-		return (1);
+		return ;
 	}
 	last_node = *env;
 	while (last_node->next)
 		last_node = last_node->next;
 	last_node->next = node;
-	return (1);
+	return ;
 }
 
 void	create_env(t_data *data, char **envp)
@@ -85,8 +85,7 @@ void	create_env(t_data *data, char **envp)
 	data->env = NULL;
 	while (*envp)
 	{
-		if (!append_env_node(&data->env, *envp))
-			free_all(data);
+		append_env_node(data, &data->env, *envp);
 		envp++;
 	}
 	return ;

@@ -25,7 +25,7 @@ static char    *get_file_path(void)
 	return (res);
 }
 
-static void	expand_line(t_env *env, char **line, int start)
+static void	expand_line(t_data *data, t_env *env, char **line, int start)
 {
 	char	*var_value;
 	char	*var_name;
@@ -35,13 +35,15 @@ static void	expand_line(t_env *env, char **line, int start)
 	int		remainder;
 	int		len;
 
-	var_name = get_env_name(*line + start);
+	var_name = get_env_name(data, *line + start);
 	var_value = get_var_value(env, var_name);
 	value_len = ft_strlen(var_value);
 	name_len = ft_strlen(var_name);
 	remainder = ft_strlen(*line + start + ft_strlen(var_name));
 	len = (start - 1) + value_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		free_all(data);
 	ft_strlcpy(res, *line, start);
 	if (var_value)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
@@ -86,7 +88,7 @@ static void	expand_digit(char **line, int start)
 	*line = res;
 }
 
-static char	*expand_hdoc(t_env *env, char *line)
+static char	*expand_hdoc(t_data *data, t_env *env, char *line)
 {
 	int	i;
 
@@ -100,7 +102,7 @@ static char	*expand_hdoc(t_env *env, char *line)
 			else if (ft_isdigit(line[i + 1]))
 				expand_digit(&line, i + 1);
 			else if (is_posix_std(line[i + 1]))
-				expand_line(env, &line, i + 1);
+				expand_line(data, env, &line, i + 1);
 			else
 			{
 				i++;
@@ -126,7 +128,7 @@ static void	hdoc_warning(char *limiter, int line)
 	free(str_line);
 }
 
-static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
+static void	fill_here_doc(t_data *data, t_file *file, t_env *env, int here_doc)
 {
 	char		*line;
 	char		*new;
@@ -150,7 +152,7 @@ static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 			break ;
 		if (file->expand)
 		{
-			new = expand_hdoc(env, line);
+			new = expand_hdoc(data, env, line);
 			write(here_doc, new, ft_strlen(new));
 			free(new);
 		}
@@ -163,7 +165,7 @@ static void	fill_here_doc(t_file *file, t_env *env, int here_doc)
 	close(fd);
 }
 
-void    open_here_doc(t_cmd *cmds, t_env *env)
+void    open_here_doc(t_data *data, t_cmd *cmds, t_env *env)
 {
     char	*file_path;
 	t_file	*files;
@@ -184,7 +186,7 @@ void    open_here_doc(t_cmd *cmds, t_env *env)
 					file_path = get_file_path();
 				}
 				fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				fill_here_doc(files, env, fd);
+				fill_here_doc(data, files, env, fd);
 				if (is_last_redir(files))
 					cmds->fd_in = open(file_path, O_RDONLY);
 				close(fd);

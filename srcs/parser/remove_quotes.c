@@ -49,7 +49,7 @@ static int	count_del_quotes(t_token *token)
 	return (nb_del);
 }
 
-void	remove_quotes(t_token *tokens)
+void	remove_quotes(t_data *data, t_token *tokens)
 {
 	int		to_remove;
 	int		value_len;
@@ -64,6 +64,8 @@ void	remove_quotes(t_token *tokens)
 			value_len = ft_strlen(tokens->value);
 			tmp = tokens->value;
 			tokens->value = malloc(sizeof(char) * (value_len - to_remove + 1));
+			if (!tokens->value)
+				free_all(data);
 			tokens->value[value_len - to_remove] = '\0';
 			fill_tkn_value(tokens->value, tmp);
 			free(tmp);

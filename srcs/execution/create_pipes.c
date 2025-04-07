@@ -12,10 +12,14 @@ void	create_pipes(t_data *data, t_cmd *cmds)
 		cmds = cmds->next;
 	}
 	data->pipes = malloc(sizeof(int *) * nb_pipes);
+	if (!data->pipes)
+		free_all(data);
 	i = 0;
 	while (i < nb_pipes)
 	{
 		data->pipes[i] = malloc(sizeof(int) * 2);
+		if (!data->pipes[i])
+			free_all(data);
 		pipe(data->pipes[i]);
 		i++;
 	}
