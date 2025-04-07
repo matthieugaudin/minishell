@@ -35,7 +35,7 @@ int	ft_unset(t_data *data, char **args, bool exit)
 	int		ret;
 
 	if (!args || !args[0])
-		return (value(0, exit));
+		return (value(data, 0, exit));
 	i = 0;
 	ret = 0;
 	while (args[i])
@@ -46,5 +46,5 @@ int	ft_unset(t_data *data, char **args, bool exit)
 			ft_check_and_remove(args[i], &data->exp);
 		i++;
 	}
-	return (value(ret, exit));
+	return (value(data, ret, exit));
 }

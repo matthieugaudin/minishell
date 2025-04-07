@@ -82,5 +82,5 @@ int	ft_cd(t_data *data, char **args, bool exit)
 	if (chdir(curpath) != 0)
 		return (value(ft_cd_error_path(curpath), exit));
 	update_pwd(data);
-	return (value(0, exit));
+	return (value(data, 0, exit));
 }

@@ -5,23 +5,25 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 {
 	char **envp;
 
-	envp = convert_env_to_envp(data->env);
 	if (!ft_strcmp(cmd->args[0], "export"))
 		ft_export(data, &cmd->args[1], true);
 	else if (!ft_strcmp(cmd->args[0], "env"))
-		ft_env(data->env, &cmd->args[0], true);
-	if (!ft_strcmp(cmd->args[0], "cd"))
+		ft_env(data, data->env, &cmd->args[0], true);
+	else if (!ft_strcmp(cmd->args[0], "cd"))
 		ft_cd(data, &cmd->args[1], true);
-	if (!ft_strcmp(cmd->args[0], "pwd"))
-		ft_pwd(true);
+	else if (!ft_strcmp(cmd->args[0], "pwd"))
+		ft_pwd(data, true);
 	else if (!ft_strcmp(cmd->args[0], "echo"))
-		ft_echo(cmd->args, true);
+		ft_echo(data, cmd->args, true);
 	else if (!ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(data, cmd->args, true);
 	else if (!ft_strcmp(cmd->args[0], "exit"))
 		ft_exit(data,  &cmd->args[1], -1, -1, true);
 	else
+	{
+		envp = convert_env_to_envp(data->env);
 		execve(cmd->path, cmd->args, envp);
+	}
 }
 
 void	close_hdoc_fds(t_cmd *cmds, bool is_child, int index)
@@ -49,13 +51,21 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		if (!ft_strcmp(cmd->args[0], "export"))
 			ft_export(data, &cmd->args[1], false);
 		else if (!ft_strcmp(cmd->args[0], "env"))
+<<<<<<< HEAD
 			ft_env(data->env, &cmd->args[0], false);
 		if (!ft_strcmp(cmd->args[0], "cd"))
 			ft_cd(data, &cmd->args[1], false);
 		if (!ft_strcmp(cmd->args[0], "pwd"))
 			ft_pwd(false);
+=======
+			ft_env(data, data->env, &cmd->args[0], false);
+		else if (!ft_strcmp(cmd->args[0], "cd"))
+			ft_cd(data, cmd->args[1], false);
+		else if (!ft_strcmp(cmd->args[0], "pwd"))
+			ft_pwd(data, false);
+>>>>>>> origin/mgaudin
 		else if (!ft_strcmp(cmd->args[0], "echo"))
-			ft_echo(cmd->args, false);
+			ft_echo(data, cmd->args, false);
 		else if (!ft_strcmp(cmd->args[0], "unset"))
 			ft_unset(data, cmd->args, false);
 		else if (!ft_strcmp(cmd->args[0], "exit"))
@@ -69,6 +79,8 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 
 bool	is_builtin(char *str)
 {
+	if (!str)
+		return (false);
 	if (!ft_strcmp(str, "cd"))
 		return (true);
 	else if (!ft_strcmp(str, "echo"))
@@ -119,5 +131,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 		cmds = cmds->next;
 	}
 	close_hdoc_fds(data->cmds, false, 0);
+	if (sigint_flag == 1)
+		close_pipes(data->cmds, data->pipes);
 	wait_children(data, last_pid);
 }

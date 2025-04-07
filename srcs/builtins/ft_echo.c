@@ -15,7 +15,7 @@ static bool	is_n_option(char *str)
 	return (str[i] == '\0');
 }
 
-int	ft_echo(char **args, bool exit)
+int	ft_echo(t_data* data, char **args, bool exit)
 {
 	size_t	i;
 	bool	is_n;
@@ -23,7 +23,7 @@ int	ft_echo(char **args, bool exit)
 	if (!args || !args[0])
 	{
 		ft_putstr_fd("\n", 1);
-		return (value(0, exit));
+		return (value(data, 0, exit));
 	}
 	i = 1;
 	is_n = false;
@@ -41,5 +41,5 @@ int	ft_echo(char **args, bool exit)
 	}
 	if (!is_n)
 		ft_putstr_fd("\n", 1);
-	return (value(0, exit));
+	return (value(data, 0, exit));
 }
