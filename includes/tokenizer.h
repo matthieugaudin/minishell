@@ -28,6 +28,42 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_file
+{
+	char			*name;
+	enum e_token	type;
+	bool			expand;
+	struct s_file	*next;
+}	t_file;
+
+typedef struct s_cmd
+{
+	char			**args;
+	char			*path;
+	bool			is_here_doc;
+	t_file			*files;
+	int				fd_in;
+	int				fd_out;
+	int				index;
+	struct s_cmd	*next;
+}	t_cmd;
+
+typedef struct s_data
+{
+	t_env	*env;
+	t_env	*exp;
+	t_cmd	*cmds;
+	t_token	*tokens;
+	int		**pipes;
+}	t_data;
+
 /*==============TOKENIZER==============*/
 t_token	*tokenize_line(char *s);
 void	set_token_type(t_token *node);

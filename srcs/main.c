@@ -13,6 +13,7 @@ t_data	*init_data(char **envp)
 	data->env = NULL;
 	data->exp = NULL;
 	data->cmds = NULL;
+	data->tokens = NULL;
 	// to exit
 	data->env = create_env(envp);
 	data->exp = create_export(data->env);
@@ -29,17 +30,16 @@ void	handle_shell_exit(t_data	*data)
 
 void	process_line(t_data	*data, char *line)
 {
-	t_token *token;
 
 	if (!only_spaces(line))
 	{
-		token = tokenize_line(line);
-		if (token && parse_tokens(token))
+		data->tokens = tokenize_line(line);
+		if (data->tokens && parse_tokens(data->tokens))
 		{
-			expand_tokens(token, data->env);
-			remove_quotes(token);
-			data->cmds = create_cmd(token);
-			free_tokens(token, false);
+			expand_tokens(data->tokens, data->env);
+			remove_quotes(data->tokens);
+			data->cmds = create_cmd(data->tokens);
+			free_tokens(data->tokens, false);
 			create_pipes(data, data->cmds);
 			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
 				handle_builtins(data, data->cmds);

@@ -13,14 +13,6 @@
 
 extern int sigint_flag;
 
-typedef struct s_data
-{
-	t_env	*env;
-	t_env	*exp;
-	t_cmd	*cmds;
-	int		**pipes;
-}	t_data;
-
 /*==============EXEC==============*/
 void	execute_cmds(t_data *data, t_cmd *cmds);
 void	open_here_doc(t_cmd *cmds, t_env *env);
