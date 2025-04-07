@@ -11,7 +11,7 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 	if (!ft_strcmp(cmd->args[0], "env"))
 		ft_env(data->env, &cmd->args[0], true);
 	if (!ft_strcmp(cmd->args[0], "cd"))
-		ft_cd(data, cmd->args[1], true);
+		ft_cd(data, &cmd->args[1], true);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
 		ft_pwd(true);
 	if (!ft_strcmp(cmd->args[0], "echo"))
@@ -51,7 +51,7 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		if (!ft_strcmp(cmd->args[0], "env"))
 			ft_env(data->env, &cmd->args[0], false);
 		if (!ft_strcmp(cmd->args[0], "cd"))
-			ft_cd(data, cmd->args[1], false);
+			ft_cd(data, &cmd->args[1], false);
 		if (!ft_strcmp(cmd->args[0], "pwd"))
 			ft_pwd(false);
 		if (!ft_strcmp(cmd->args[0], "echo"))

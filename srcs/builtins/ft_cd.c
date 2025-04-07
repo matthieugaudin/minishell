@@ -61,30 +61,26 @@ static void	update_pwd(t_data *data)
 	}
 }
 
-int	ft_cd(t_data *data, char *args, bool exit)
+int	ft_cd(t_data *data, char **args, bool exit)
 {
 	char	*curpath;
 
 	if (!args)
 		curpath = find_path(data->env, "HOME");
-	else if (ft_strcmp(args, "-") == 0)
+	else if (args[1])
+		return (value(ft_cd_too_many_args(), exit));
+	else if (ft_strcmp(args[0], "-") == 0)
 	{
 		curpath = find_path(data->env, "OLDPWD");
 		if (curpath)
 			ft_putendl_fd(curpath, 1);
 	}
 	else
-		curpath = args;
+		curpath = args[0];
 	if (!curpath)
-		return (1);
+		return (value(1, exit));
 	if (chdir(curpath) != 0)
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(curpath, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-		return (1);
-	}
+		return (value(ft_cd_error_path(curpath), exit));
 	update_pwd(data);
 	return (value(0, exit));
 }
