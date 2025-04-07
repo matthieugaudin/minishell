@@ -1,23 +1,5 @@
 #include "../../includes/builtins.h"
 
-// static bool is_valid_name(char *str)
-// {
-//     int	i;
-
-// 	i = 1;
-// 	if (!str || !*str)
-//         return (false);
-//     if (!ft_isalpha(str[0]) && str[0] != '_')
-//         return (false);
-//     while (str[i])
-//     {
-//         if (!is_posix_std(str[i]))
-//             return (false);
-//         i++;
-//     }
-//     return (true);
-// }
-
 static void	ft_check_and_remove(char *str, t_env **head)
 {
 	t_env *prev;
@@ -47,13 +29,6 @@ static void	ft_check_and_remove(char *str, t_env **head)
 	}
 }
 
-// static void	print_unset_error(char *str)
-// {
-// 	ft_putstr_fd("minishell: unset: '", 2);
-//     ft_putstr_fd(str, 2);
-// 	ft_putstr_fd("': not a valid identifier\n", 2);
-// }
-
 int	ft_unset(t_data *data, char **args, bool exit)
 {
 	size_t i;
@@ -65,18 +40,10 @@ int	ft_unset(t_data *data, char **args, bool exit)
 	ret = 0;
 	while (args[i])
 	{
-		// if (!is_valid_name(args[i]))
-		// {
-		// 	print_unset_error(args[i]);
-        //     ret = 1;
-		// }
-		// else
-		// {
-			if (data->env)
+		if (data->env)
 				ft_check_and_remove(args[i], &data->env);
-			if (data->exp)
+		if (data->exp)
 				ft_check_and_remove(args[i], &data->exp);
-		// }
 		i++;
 	}
 	return (value(ret, exit));
