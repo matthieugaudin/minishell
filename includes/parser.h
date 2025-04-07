@@ -10,7 +10,6 @@ void	remove_quotes(t_token *tokens);
 char	*get_var_value(t_env *env, char *var_name);
 char	*get_env_name(char *envp_str);
 void	free_env_node(t_env *node);
-void	free_env_exp(t_env **env, t_env **exp);
 void	ft_update_env_node(t_env **env, t_env *new_node);
 void	ft_update_exp_node(t_env **exp, t_env *new_node);
 void	change_head(t_env **head, t_env *new_node);
@@ -20,7 +19,7 @@ char	**convert_env_to_envp(t_env *env);
 /*==========EXEC DATA==========*/
 t_cmd	*create_cmd(t_token *tokens);
 t_env	*create_export(t_env *env);
-t_env	*create_env(char **envp);
+void	create_env(t_data *data, char **envp);
 
 /*============LINKED LIST===========*/
 t_file	*new_file(char *name, enum e_token type, bool hdoc_quotes);

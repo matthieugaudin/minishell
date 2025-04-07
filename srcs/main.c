@@ -10,13 +10,14 @@ t_data	*init_data(char **envp)
 	rl_outstream = stderr;
 	data = NULL;
 	data = malloc(sizeof(t_data));
+	if (!data)
+		free_all(data);
 	data->env = NULL;
 	data->exp = NULL;
 	data->cmds = NULL;
 	data->tokens = NULL;
-	// to exit
-	data->env = create_env(envp);
-	data->exp = create_export(data->env);
+	create_env(data, envp);
+	create_export(data->env);
 	return (data);
 }
 

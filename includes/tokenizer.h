@@ -86,5 +86,7 @@ bool	in_quotes(char *str, int j);
 bool	is_redir(enum e_token type);
 bool	in_dbl_quotes(char *str, int j);
 int		exit_code(int new_code, bool to_set);
+void	free_list(t_env **list);
+void	free_all(t_data *data);
 
 #endif /* TOKENIZER_H */

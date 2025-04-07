@@ -22,12 +22,10 @@ void	redirect_fds(t_data *data, t_cmd *cmds);
 void	wait_children(t_data *data, pid_t last_pid);
 void	send_error(char *arg, int errno_cpy);
 void	create_pipes(t_data *data, t_cmd *cmds);
-void	free_data(t_data *data);
 void	handle_signals(int mode);
 void	handle_builtins(t_data *data, t_cmd *cmd);
 bool	is_builtin(char *str);
 void	handle_signals(int mode);
-void	free_all(t_data *data);
 void	close_pipes(t_cmd *cmds, int **pipes);
 
 #endif /* EXECUTION_H */

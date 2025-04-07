@@ -1,6 +1,6 @@
-#include "../../includes/execution.h"
+#include "../../includes/builtins.h"
 
-void	free_data(t_data *data)
+static void	free_data(t_data *data)
 {
 	t_cmd	*tmp_cmd;
 	t_file	*tmp_file;
@@ -36,4 +36,38 @@ void	free_data(t_data *data)
 		free(tmp_cmd);
 	}
 	free(data->pipes);
+}
+
+void	free_list(t_env **list)
+{
+	t_env	*current;
+	t_env	*next;
+
+	if (list && *list)
+	{
+		current = *list;
+		while (current)
+		{
+			next = current->next;
+			free_env_node(current);
+			current = next;
+		}
+		*list = NULL;
+	}
+}
+
+static void	free_env_exp(t_env **env, t_env **exp)
+{
+	free_list(env);
+	free_list(exp);
+}
+
+void	free_all(t_data *data)
+{
+	close_pipes(data->cmds, data->pipes);
+	free_data(data);
+	free_env_exp(&data->env, &data->exp);
+	free(data);
+	rl_clear_history();
+	exit(EXIT_FAILURE);
 }

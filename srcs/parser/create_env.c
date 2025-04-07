@@ -47,41 +47,47 @@ char	*get_env_name(char *envp_str)
 	while (is_posix_std(envp_str[i]))
 		i++;
 	env_name = malloc(sizeof(char) * (i + 1));
+	if (!env_name)
+		return (NULL);
 	ft_strlcpy(env_name, envp_str, i + 1);
 	return (env_name);
 }
 
-static void	append_env_node(t_env **env, char *envp)
+static int	append_env_node(t_env **env, char *envp)
 {
 	t_env	*last_node;
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
 	if (!node)
-		return ;
+		return (0);
 	node->name = get_env_name(envp);
+	if (!node->name)
+		return (0);
 	node->value = ft_strdup(getenv(node->name));
+	if (!node->value)
+		return (0);
 	node->next = NULL;
 	if (*env == NULL)
 	{
 		*env = node;
-		return ;
+		return (1);
 	}
 	last_node = *env;
 	while (last_node->next)
 		last_node = last_node->next;
 	last_node->next = node;
+	return (1);
 }
 
-t_env	*create_env(char **envp)
+void	create_env(t_data *data, char **envp)
 {
-	t_env	*env;
-
-	env = NULL;
+	data->env = NULL;
 	while (*envp)
 	{
-		append_env_node(&env, *envp);
+		if (!append_env_node(&data->env, *envp));
+			free_all(data);
 		envp++;
 	}
-	return (env);
+	return ;
 }
