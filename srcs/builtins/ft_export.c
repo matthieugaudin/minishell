@@ -46,9 +46,7 @@ static void	ft_plus_option(t_env **env, t_env **exp, char *name, char *value)
 	ft_update_exp_node(exp, ft_new_node(name, value));
 }
 
-
-
-static int ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
+static int	ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 {
 	char	*name;
 	char	*value;
@@ -94,14 +92,7 @@ static void	display_export(t_env *exp)
 	}
 }
 
-static void	print_export_error(char *str)
-{
-	ft_putstr_fd("minishell: export: '", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("': not a valid identifier\n", 2);
-}
-
-int ft_export(t_data *data, char **args, bool exit)
+int	ft_export(t_data *data, char **args, bool exit)
 {
 	int	i;
 	int	i_egal;
@@ -127,42 +118,3 @@ int ft_export(t_data *data, char **args, bool exit)
 	}
 	return (value(ret, exit));
 }
-
-
-
-
-// void	print_data(t_env *env)
-// {
-// 	printf("#######\tENV\t#######\n\n");
-// 	while (env != NULL)
-// 	{
-// 		printf("%s=%s\n", env->name, env->value);
-// 		env = env->next;
-// 	}
-// }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_data	*data;
-// 	char	*args[] = {"salut=\"wow\"", "cava=wow", NULL};
-// 	char	*args_two[] = {"salut", "cava", NULL};
-
-// 	data = malloc(sizeof(t_data));
-// 	(void)argc;
-// 	(void)argv;
-// 	data->env = create_env(envp);
-// 	data->exp = create_export(data->env);
-
-// 	// ft_export(data, args);
-// 	// ft_export(data, NULL);
-// 	ft_export(data, args);
-// 	print_data(data->env);
-// 	printf("\n\n\n\n");
-// 	ft_export(data, NULL);
-// 	printf("\n\n\n\n");
-// 	ft_unset(data, args_two);
-// 	ft_export(data, NULL);
-// 	printf("\n\n\n\n");
-// 	print_data(data->env);
-// 	return (0);
-// }

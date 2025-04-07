@@ -3,9 +3,9 @@
 static bool	threshold_exceeded(char *str, long long res, int sign, int i)
 {
 	if (((-res == (LLONG_MIN / 10) && str[i] > '8')
-		|| (-res < (LLONG_MIN / 10) && str[i]))
+			|| (-res < (LLONG_MIN / 10) && str[i]))
 		|| (sign != -1 && ((res == (LLONG_MAX / 10)
-		&& str[i] > '7') || (res > (LLONG_MAX / 10) && str[i]))))
+					&& str[i] > '7') || (res > (LLONG_MAX / 10) && str[i]))))
 		return (true);
 	else
 		return (false);
@@ -56,7 +56,6 @@ static bool	is_numeric(char *str)
 
 void	ft_exit(char **args)
 {
-
 	if (!args[0])
 	{
 		ft_putendl_fd("exit", 1);
@@ -67,7 +66,7 @@ void	ft_exit(char **args)
 		ft_putendl_fd("exit", 1);
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args[0], 2);
-		ft_putendl_fd(": numeric argument required", 2 );
+		ft_putendl_fd(": numeric argument required", 2);
 		exit(2);
 	}
 	else if (args[1])

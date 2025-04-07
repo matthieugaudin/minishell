@@ -20,7 +20,7 @@ static char	*find_path(t_env *env, char *name)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(name, 2);
-		ft_putendl_fd(" not set", 2 );
+		ft_putendl_fd(" not set", 2);
 		return (NULL);
 	}
 	return (path);
