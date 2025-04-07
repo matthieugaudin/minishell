@@ -39,12 +39,12 @@ void	process_line(t_data	*data, char *line)
 			expand_tokens(token, data->env);
 			remove_quotes(token);
 			data->cmds = create_cmd(token);
+			free_tokens(token, false);
 			create_pipes(data, data->cmds);
 			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
 				handle_builtins(data, data->cmds);
 			else
 				execute_cmds(data, data->cmds);
-			free_tokens(token, false);
 			free_data(data);
 		}
 		add_history(line);

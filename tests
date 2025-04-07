@@ -1,26 +1,3 @@
-MANUAL TESTS : 
-- see all functions used
-- a single redir as <a >a <<a
-- hdoc ctrl d
-- hdoc ctrl c + cmd
-- $LSCOLORS / $PATH
-- /t
-- ./test
-- exit | exit 13
-- env | unset PATH | export a >b
-- cat + ctrl :  228 allocs, 82 frees
-- <Makefile<Makfile<tests cat -e >out| grep ok >out2
-- export a=$LD_PROLOAD, ENV
-- exoprt a=ok
-- export PATH=ok, ls 
-- unset PATH
-- <Makfil cat -e
-- cat Makfile | grep @
-- ls nonexisting | grep ok | ls 
-- ls | <a<a>c >b>b  |grep ok
-
-
-
 
 PASSED : 
 cmdnotfound
@@ -32,4 +9,19 @@ cmdnotfound
 $USER
 hdoc ctrl d
 hdoc ctrl c + cmd
->a>a>a>d <<l cat -e <<l Makfile >a>b>>c | >a>a>>a>d <<l'' cat -e Makfile >a>b>c | >a>a>>a>d cat -e Makfile >a><<l""b>c
+- /t
+<a>b
+cat -e Makfile <a>b | <a>b>a<a>noperm | cat -e Makfile <a>b
+cat -e Makfile <a>b | <a>b>a<a<noperm | cat -e Makfile <a>b
+cat -e Makfile <a>b | <a>b<noperm>a<a | cat -e Makfile <a>b
+cat -e Makfile <a>b | <a>b<noperm>a<a>>l | cat -e Makfile <a>b
+cat -e Makfile <a>b | <a>b<<l<noperm>a<a | cat -e Makfile <a>b (ctr c/d + expand in here_doc)
+<<a
+<a
+>a
+>>a
+/t
+cat + ctrl
+exit | exit 13
+env > out | <<l cat -e >>a
+env | unset PATH | export a >b

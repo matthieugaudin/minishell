@@ -1,18 +1,15 @@
 
 
--> norme
--> leaks
 -> protect syscalls
--> tests
-    -> tester : OK
-    -> valgrind tester
-    -> manual tester
-    -> own
-    -> s
+-> leaks
+    -> own tests : 
+    -> tester with valgrind : 
+    -> manual tester tests : 
+    -> s tests: 
+-> norme
+-> see all functions used
 -> put headers
 
 QUESTIONS
--> free line
 -> utility of free_envp ? 
--> unlink here_doc at the en
 -> call rl_clear_history in free all ?
