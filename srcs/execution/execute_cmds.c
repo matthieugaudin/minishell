@@ -10,15 +10,9 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 		ft_export(data, &cmd->args[1], true);
 	else if (!ft_strcmp(cmd->args[0], "env"))
 		ft_env(data->env, &cmd->args[0], true);
-<<<<<<< HEAD
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		ft_cd(data, &cmd->args[1], true);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
-=======
-	else if (!ft_strcmp(cmd->args[0], "cd"))
-		ft_cd(data, cmd->args[1], true);
-	else if (!ft_strcmp(cmd->args[0], "pwd"))
->>>>>>> origin/mgaudin
 		ft_pwd(true);
 	else if (!ft_strcmp(cmd->args[0], "echo"))
 		ft_echo(cmd->args, true);
