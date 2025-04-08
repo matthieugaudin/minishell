@@ -1,10 +1,11 @@
 #include "../../includes/execution.h"
 
-static void	cmd_not_found(char *arg)
+static void	cmd_not_found(t_data *data, char *arg)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putendl_fd(": command not found", 2);
+	free_all(data, 127);
 }
 
 static char	**get_paths(t_cmd *cmd, t_env *env)
@@ -106,6 +107,8 @@ void	set_exec_path(t_data *data, t_cmd *cmd)
 {
 	char 	**paths;
 
+	if (!ft_strcmp(cmd->args[0], ""))
+		cmd_not_found(data, cmd->args[0]);
     if (is_executable(cmd->args[0]) || cmd->args[0][0] == '/')
     {
 		special_cases(cmd);
@@ -118,9 +121,8 @@ void	set_exec_path(t_data *data, t_cmd *cmd)
 			cmd->path = get_access_path(paths);
 		}
         if (!cmd->path)
-		{
-			cmd_not_found(cmd->args[0]);
-			free_all(data, 127);
-		}
+			cmd_not_found(data, cmd->args[0]);
     }
 }
+
+//  export test="echo b" | $test
