@@ -10,8 +10,6 @@ void	ft_update_env_node(t_data *data, t_env **env, t_env *new_node)
 {
 	t_env	*current;
 
-	if (!env || !new_node)
-		return ;
 	if (*env == NULL)
 		return (change_head(env, new_node));
 	current = *env;
