@@ -7,7 +7,7 @@ int	ft_env(t_data* data, t_env *env, char **args, bool exit)
 		ft_putstr_fd("minishell: env: '", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putendl_fd("': No such file or directory", 2);
-		return (127);
+		return (value(data, 127, exit));
 	}
 	while (env)
 	{

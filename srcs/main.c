@@ -2,6 +2,35 @@
 
 int sigint_flag = 0;
 
+
+void	process_line(t_data	*data, char *line)
+{
+	
+	if (!only_spaces(line))
+	{
+		data->tokens = tokenize_line(data, line);
+		if (data->tokens && parse_tokens(data, data->tokens))
+		{
+			expand_tokens(data, data->tokens, data->env);
+			remove_quotes(data, data->tokens);
+			data->cmds = create_cmd(data, data->tokens);
+			create_pipes(data, data->cmds);
+			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
+				handle_builtins(data, data->cmds);
+			else
+				execute_cmds(data, data->cmds);
+			add_history(line);
+		}
+		free_all(data, -2);
+	}
+}
+
+void	handle_shell_exit(t_data	*data)
+{
+	ft_putendl_fd("exit", 1);
+	free_all(data, exit_code(0, false));
+}
+
 t_data	*init_data(char **envp)
 {
 	t_data	*data;
@@ -22,34 +51,6 @@ t_data	*init_data(char **envp)
 	return (data);
 }
 
-void	handle_shell_exit(t_data	*data)
-{
-	ft_putendl_fd("exit", 1);
-	free_all(data, exit_code(0, false));
-}
-
-void	process_line(t_data	*data, char *line)
-{
-
-	if (!only_spaces(line))
-	{
-		data->tokens = tokenize_line(data, line);
-		if (data->tokens && parse_tokens(data, data->tokens))
-		{
-			expand_tokens(data, data->tokens, data->env);
-			remove_quotes(data, data->tokens);
-			data->cmds = create_cmd(data, data->tokens);
-			create_pipes(data, data->cmds);
-			// HERE LAST FREE//
-			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
-				handle_builtins(data, data->cmds);
-			else
-				execute_cmds(data, data->cmds);
-			add_history(line);
-		}
-		free_all(data, -2);
-	}
-}
 
 int	main(int argc, char **argv, char **envp)
 {

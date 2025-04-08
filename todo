@@ -1,16 +1,15 @@
 
 
--> protect syscalls
-    -> malloc
-    -> dup2 / dup
--> leaks
-    -> own tests : 
-    -> manual tester tests : 
-    -> s tests: 
+-> protect dup/dup2/open/read/execve
 -> norme
+-> leaks
+    ->own
+    -> sub
+-> tests
+    -> exit last exit code
+    -> ls | ""
+    -> ctrl in minishell
+    -> env -i minishell
 -> see all functions used
 -> put headers
 -> remove -g
-
-QUESTIONS
--> utility of free_envp when execve fails

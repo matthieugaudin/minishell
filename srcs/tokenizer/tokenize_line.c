@@ -37,7 +37,7 @@ static void	extract_token(char **s, int *len, int *i)
 	}
 }
 
-static bool	create_tokens(t_data *data, char *s, t_token **head)
+static void	create_tokens(t_data *data, char *s, t_token **head)
 {
 	char	*value;
 	int		len;
@@ -57,16 +57,13 @@ static bool	create_tokens(t_data *data, char *s, t_token **head)
 			append_token_node(data, head, value);
 		}
 	}
-	return (true);
 }
 
 t_token	*tokenize_line(t_data *data, char *s)
 {
-	t_token	*head;
 	char	quote;
 	char	line;
 
-	head = NULL;
 	quote = check_quotes(s);
 	line = check_line(s, "<>&");
 	if (quote != '\0')
@@ -79,6 +76,6 @@ t_token	*tokenize_line(t_data *data, char *s)
 		syntax_error(data, line);
 		return (NULL);
 	}
-	create_tokens(data, s, &head);
-	return (head);
+	create_tokens(data, s, &data->tokens);
+	return (data->tokens);
 }

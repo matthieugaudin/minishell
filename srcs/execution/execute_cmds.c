@@ -21,7 +21,9 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 		ft_exit(data,  &cmd->args[1], -1, -1, true);
 	else
 	{
-		envp = convert_env_to_envp(data->env);
+		envp = convert_env_to_envp(data, data->env);
+		if (!envp)
+			free_all(data, EXIT_FAILURE);
 		execve(cmd->path, cmd->args, envp);
 	}
 }

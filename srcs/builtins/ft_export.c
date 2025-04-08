@@ -22,28 +22,30 @@ static int	ft_find_egal_pos(char *str)
 	return (0);
 }
 
-static void	ft_plus_option(t_env **env, t_env **exp, char *name, char *value)
+static void	ft_plus_option(t_data *data, char *name, char *value)
 {
 	t_env	*node;
 	char	*new_value;
 
-	if (!env || !exp || !name)
+	if (!data->env || !data->exp || !name)
 		return ;
-	node = *env;
+	node = data->env;
 	while (node)
 	{
 		if (!ft_strcmp(node->name, name))
 		{
 			new_value = ft_strjoin(node->value, value);
+			if (!new_value)
+				free_all(data, EXIT_FAILURE);
 			free(node->value);
 			node->value = new_value;
-			ft_update_exp_node(exp, ft_new_node(name, new_value));
+			ft_update_exp_node(&data->exp, ft_new_node(name, new_value));
 			return ;
 		}
 		node = node->next;
 	}
-	ft_update_env_node(env, ft_new_node(name, value));
-	ft_update_exp_node(exp, ft_new_node(name, value));
+	ft_update_env_node(data, &data->env, ft_new_node(name, value));
+	ft_update_exp_node(&data->exp, ft_new_node(name, value));
 }
 
 static int	ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
@@ -61,13 +63,13 @@ static int	ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 	{
 		free(name);
 		free(value);
-		return (1);
+		free_all(data, EXIT_FAILURE);
 	}
 	if (arg[i_egal - 1] == '+')
-		ft_plus_option(&data->env, &data->exp, name, value);
+		ft_plus_option(data, name, value);
 	else
 	{
-		ft_update_env_node(&data->env, ft_new_node(name, value));
+		ft_update_env_node(data, &data->env, ft_new_node(name, value));
 		ft_update_exp_node(&data->exp, ft_new_node(name, value));
 	}
 	free(name);

@@ -26,7 +26,7 @@ static char	*find_path(t_env *env, char *name)
 	return (path);
 }
 
-static void	update_pwd_var(t_env *list, char *name, char *value)
+static void	update_pwd_var(t_data *data, t_env *list, char *name, char *value)
 {
 	t_env	*current;
 
@@ -37,6 +37,8 @@ static void	update_pwd_var(t_env *list, char *name, char *value)
 		{
 			free(current->value);
 			current->value = ft_strdup(value);
+			if (!current->value)
+				free_all(data, EXIT_FAILURE);
 			return ;
 		}
 		current = current->next;
@@ -51,13 +53,13 @@ static void	update_pwd(t_data *data)
 	old_pwd = find_variable_value(data->env, "PWD");
 	if (old_pwd)
 	{
-		update_pwd_var(data->env, "OLDPWD", old_pwd);
-		update_pwd_var(data->exp, "OLDPWD", old_pwd);
+		update_pwd_var(data, data->env, "OLDPWD", old_pwd);
+		update_pwd_var(data, data->exp, "OLDPWD", old_pwd);
 	}
 	if (getcwd(new_pwd, PATH_MAX) != NULL)
 	{
-		update_pwd_var(data->env, "PWD", new_pwd);
-		update_pwd_var(data->exp, "PWD", new_pwd);
+		update_pwd_var(data, data->env, "PWD", new_pwd);
+		update_pwd_var(data, data->exp, "PWD", new_pwd);
 	}
 }
 

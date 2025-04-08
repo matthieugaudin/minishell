@@ -43,7 +43,7 @@ static char	*assign_envp_var(t_env	*current)
 	return (str);
 }
 
-char	**convert_env_to_envp(t_env *env)
+char	**convert_env_to_envp(t_data *data, t_env *env)
 {
 	int		i;
 	int		env_size;
@@ -53,7 +53,7 @@ char	**convert_env_to_envp(t_env *env)
 	env_size = find_env_size(env);
 	envp = malloc(sizeof(char *) * (env_size + 1));
 	if (!envp)
-		return (NULL);
+		free_all(data, EXIT_FAILURE);
 	i = -1;
 	current = env;
 	while (current && ++i < env_size)
@@ -64,7 +64,7 @@ char	**convert_env_to_envp(t_env *env)
 			while (--i >= 0)
 				free(envp[i]);
 			free(envp);
-			return (NULL);
+			free_all(data, EXIT_FAILURE);
 		}
 		current = current->next;
 	}

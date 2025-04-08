@@ -8,7 +8,7 @@ static void	cmd_not_found(t_data *data, char *arg)
 	free_all(data, 127);
 }
 
-static char	**get_paths(t_cmd *cmd, t_env *env)
+static char	**get_paths(t_data *data, t_cmd *cmd, t_env *env)
 {
 	char	**paths;
 	char	*tmp;
@@ -21,13 +21,21 @@ static char	**get_paths(t_cmd *cmd, t_env *env)
 		env = env->next;
 	}
 	if (!env)
-		return (NULL); // it segfault
+		return (NULL);
 	paths = ft_split(env->value, ':');
+	if (!paths)
+		free_all(data, EXIT_FAILURE);
 	i = 0;
 	while (paths[i])
 	{
 		tmp = paths[i];
 		paths[i] = malloc(sizeof(char) * (ft_strlen(paths[i]) + 1 + ft_strlen(cmd->args[0]) + 1));
+		if (!paths[i])
+		{
+			while (--i)
+				free(paths[i]);
+			free_all(data, EXIT_FAILURE);
+		}
 		paths[i][ft_strlen(tmp) + 1 + ft_strlen(cmd->args[0])] = '\0';
 		ft_strlcpy(paths[i], tmp, ft_strlen(tmp) + 1);
 		ft_strlcat(paths[i] + ft_strlen(tmp), "/", 2);
@@ -38,7 +46,7 @@ static char	**get_paths(t_cmd *cmd, t_env *env)
 	return (paths);
 }
 
-static char	*get_access_path(char **paths)
+static char	*get_access_path(t_data *data, char **paths)
 {
 	char	*access_path;
 	int		i;
@@ -53,6 +61,8 @@ static char	*get_access_path(char **paths)
 		if (access(paths[i], X_OK) == 0)
 		{
 			access_path = ft_strdup(paths[i]);
+			if (!access_path)
+				free_all(data, EXIT_FAILURE);
 			return (access_path);
 		}
 		i++;
@@ -117,12 +127,10 @@ void	set_exec_path(t_data *data, t_cmd *cmd)
     {
 		if (ft_strcmp(cmd->args[0], ".") && ft_strcmp(cmd->args[0], ".."))
 		{
-			paths = get_paths(cmd, data->env);
-			cmd->path = get_access_path(paths);
+			paths = get_paths(data, cmd, data->env);
+			cmd->path = get_access_path(data, paths);
 		}
         if (!cmd->path)
 			cmd_not_found(data, cmd->args[0]);
     }
 }
-
-//  export test="echo b" | $test

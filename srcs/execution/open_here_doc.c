@@ -56,7 +56,7 @@ static void	expand_line(t_data *data, t_env *env, char **line, int start)
 	*line = res;
 }
 
-static void	expand_exit(char **line, int start)
+static void	expand_exit(t_data *data, char **line, int start)
 {
 	char	*res;
 	char	*code;
@@ -65,10 +65,17 @@ static void	expand_exit(char **line, int start)
 	int		len;
 
 	code = ft_itoa(exit_code(0, false));
+	if (!code)
+		free_all(data, EXIT_FAILURE);
 	code_len = ft_strlen(code);
 	remainder = ft_strlen(*line + start + 1);
 	len = (start - 1) + code_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+	{
+		free(code);
+		free_all(data, EXIT_FAILURE);
+	}
 	ft_strlcpy(res, *line, start);
 	ft_strlcat(res + start - 1, code, code_len + 1);
 	ft_strlcat(res + start - 1 + code_len, *line + start + 1, remainder + 1);
@@ -76,7 +83,7 @@ static void	expand_exit(char **line, int start)
 	*line = res;
 }
 
-static void	expand_digit(char **line, int start)
+static void	expand_digit(t_data *data, char **line, int start)
 {
 	char	*res;
 	int		remainder;
@@ -85,6 +92,8 @@ static void	expand_digit(char **line, int start)
 	len = ft_strlen(*line) - 2;
 	remainder = ft_strlen(*line + start + 1);
 	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		free_all(data, EXIT_FAILURE);
 	ft_strlcpy(res, *line, start);
 	ft_strlcat(res + start - 1, *line + start + 1, remainder + 1);
 	free(*line);
@@ -101,9 +110,9 @@ static char	*expand_hdoc(t_data *data, t_env *env, char *line)
 		if (line[i] == '$')
 		{
 			if (line[i + 1] == '?')
-				expand_exit(&line, i + 1);
+				expand_exit(data, &line, i + 1);
 			else if (ft_isdigit(line[i + 1]))
-				expand_digit(&line, i + 1);
+				expand_digit(data, &line, i + 1);
 			else if (is_posix_std(line[i + 1]))
 				expand_line(data, env, &line, i + 1);
 			else
@@ -118,11 +127,13 @@ static char	*expand_hdoc(t_data *data, t_env *env, char *line)
 	return (line);
 }
 
-static void	hdoc_warning(char *limiter, int line)
+static void	hdoc_warning(t_data *data, char *limiter, int line)
 {
 	char *str_line;
 
 	str_line = ft_itoa(line);
+	if (!str_line)
+		free_all(data, EXIT_FAILURE);
 	ft_putstr_fd("minishell: warning: here-document at line ", 2);
 	ft_putstr_fd(str_line, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
@@ -148,7 +159,7 @@ static void	fill_here_doc(t_data *data, t_file *file, t_env *env, int here_doc)
 			dup2(fd, 0);
 			close(fd);
 			if (sigint_flag == 0)
-				hdoc_warning(file->name, i);
+				hdoc_warning(data,file->name, i);
 			break ;
 		}
 		if (ft_strcmp(line, file->name) == 0)
@@ -183,11 +194,8 @@ void    open_here_doc(t_data *data, t_cmd *cmds, t_env *env)
 			if (files->type == HERE_DOC)
 			{
 				file_path = get_file_path();
-				while (access(file_path, F_OK) == 0)
-				{
-					free(file_path);
-					file_path = get_file_path();
-				}
+				if (!file_path)
+					free_all(data, EXIT_FAILURE);
 				fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				fill_here_doc(data, files, env, fd);
 				if (is_last_redir(files))

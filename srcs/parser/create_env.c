@@ -6,7 +6,7 @@ void	change_head(t_env **head, t_env *new_node)
 	*head = new_node;
 }
 
-void	ft_update_env_node(t_env **env, t_env *new_node)
+void	ft_update_env_node(t_data *data, t_env **env, t_env *new_node)
 {
 	t_env	*current;
 
@@ -23,6 +23,8 @@ void	ft_update_env_node(t_env **env, t_env *new_node)
 				return ;
 			free(current->value);
 			current->value = ft_strdup(new_node->value);
+			if (!current->value)
+				free_all(data, EXIT_FAILURE);
 			free_env_node(new_node);
 			return ;
 		}
@@ -48,7 +50,7 @@ char	*get_env_name(t_data *data, char *envp_str)
 		i++;
 	env_name = malloc(sizeof(char) * (i + 1));
 	if (!env_name)
-		free_all(data, EXIT_FAILURE); // and the node ?
+		free_all(data, EXIT_FAILURE);
 	ft_strlcpy(env_name, envp_str, i + 1);
 	return (env_name);
 }
@@ -66,7 +68,7 @@ static void	append_env_node(t_data *data, t_env **env, char *envp)
 		return ;
 	node->value = ft_strdup(getenv(node->name));
 	if (!node->value)
-		free_all(data, EXIT_FAILURE); // and free node ?
+		free_all(data, EXIT_FAILURE);
 	node->next = NULL;
 	if (*env == NULL)
 	{
