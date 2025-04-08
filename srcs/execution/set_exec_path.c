@@ -77,7 +77,7 @@ static char	*get_access_path(t_data *data, char **paths)
 	return (access_path);
 }
 
-static void	special_cases(t_cmd *cmd)
+static void	special_cases(t_data *data, t_cmd *cmd)
 {
 	int	fd;
 
@@ -85,14 +85,15 @@ static void	special_cases(t_cmd *cmd)
 	if (fd != -1)
 	{
 		send_error(cmd->args[0], EISDIR);
-		exit (126);
+		close(fd);
+		free_all(data, 126);
 	}
 	if (access(cmd->args[0], X_OK) == -1)
 	{
 		send_error(cmd->args[0], -1);
 		if (errno == ENOTDIR || errno == EACCES)
-			exit (126);
-		exit (127);
+			free_all(data, 126);
+		free_all(data, 127);
 	}
 	cmd->path = cmd->args[0];
 }
@@ -121,7 +122,7 @@ void	set_exec_path(t_data *data, t_cmd *cmd)
 		cmd_not_found(data, cmd->args[0]);
     if (is_executable(cmd->args[0]) || cmd->args[0][0] == '/')
     {
-		special_cases(cmd);
+		special_cases(data, cmd);
     }
     else
     {
