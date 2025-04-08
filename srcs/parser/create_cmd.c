@@ -23,10 +23,14 @@ static void	set_last_cmd_next(t_cmd **cmds, t_cmd *cmd)
 static void	handle_files(t_data *data, t_token *tokens, t_cmd *cmd)
 {
 	t_file	*file;
+	char	*value;
 
 	if (tokens->prev->type == HERE_DOC)
 		cmd->is_here_doc = true;
-	file = new_file(data, tokens->value, tokens->prev->type, tokens->hdoc_quoted);
+	value = ft_strdup(tokens->value);
+	if (!value)
+		free_all(data, EXIT_FAILURE);
+	file = new_file(data, value, tokens->prev->type, tokens->hdoc_quoted);
 	add_file_back(&cmd->files, file);
 }
 
@@ -43,7 +47,9 @@ static void	set_cmd_content(t_data *data, t_token **tokens, t_cmd *cmd)
 		}
 		else if ((*tokens)->type == COMMAND)
 		{
-			cmd->args[i] = (*tokens)->value;
+			cmd->args[i] = ft_strdup((*tokens)->value);
+			if (!cmd->args[i])
+				free_all(data, EXIT_FAILURE);
 			i++;
 		}
 		*tokens = (*tokens)->next;
