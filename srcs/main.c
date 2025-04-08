@@ -15,6 +15,7 @@ t_data	*init_data(char **envp)
 	data->env = NULL;
 	data->exp = NULL;
 	data->cmds = NULL;
+	data->pipes = NULL;
 	data->tokens = NULL;
 	create_env(data, envp);
 	create_export(data);
