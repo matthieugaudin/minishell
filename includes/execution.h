@@ -25,7 +25,10 @@ void	create_pipes(t_data *data, t_cmd *cmds);
 void	handle_signals(int mode);
 void	handle_builtins(t_data *data, t_cmd *cmd);
 bool	is_builtin(char *str);
-void	handle_signals(int mode);
+void	handle_signasls(int mode);
 void	close_pipes(t_cmd *cmds, int **pipes);
+int	    s_dup(t_data *data, int fd);
+void	s_dup2(t_data *data, int fd, int fd2);
+int	    s_fork(t_data *data);
 
 #endif /* EXECUTION_H */

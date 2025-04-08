@@ -1,6 +1,5 @@
 
 
--> protect dup/dup2/open/read/execve
 -> norme
 -> leaks
     ->own
