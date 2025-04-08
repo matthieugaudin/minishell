@@ -12,7 +12,13 @@ static char    *get_file_path(void)
 	ft_memcpy(file_path, "/tmp/", 5);
 	ft_memcpy(alnum, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", sizeof(alnum) - 1);
 	fd = open("/dev/urandom", O_RDONLY);
-	read(fd, buffer, 20);
+	if (fd == -1)
+		return (NULL);
+	if (read(fd, buffer, 20) == -1)
+	{
+		close(fd);
+		return (NULL);
+	}
 	close(fd);
 	i = 0;
 	while (i < 20)
@@ -148,7 +154,7 @@ static void	fill_here_doc(t_data *data, t_file *file, t_env *env, int here_doc)
 	char		*new;
 	static int	i;
 
-	int fd = dup(0);
+	int fd = s_dup(data, 0);
 	handle_signals(1);
 	while (sigint_flag == 0)
 	{
@@ -156,7 +162,7 @@ static void	fill_here_doc(t_data *data, t_file *file, t_env *env, int here_doc)
 		i++;
 		if (!line)
 		{
-			dup2(fd, 0);
+			s_dup2(data, fd, 0);
 			close(fd);
 			if (sigint_flag == 0)
 				hdoc_warning(data,file->name, i);
@@ -197,9 +203,15 @@ void    open_here_doc(t_data *data, t_cmd *cmds, t_env *env)
 				if (!file_path)
 					free_all(data, EXIT_FAILURE);
 				fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (fd == -1)
+					free_all(data, EXIT_FAILURE);
 				fill_here_doc(data, files, env, fd);
 				if (is_last_redir(files))
+				{
 					cmds->fd_in = open(file_path, O_RDONLY);
+					if (cmds->fd_in == -1)
+						free_all(data, EXIT_FAILURE);
+				}
 				close(fd);
 				unlink(file_path);
 				free(file_path);

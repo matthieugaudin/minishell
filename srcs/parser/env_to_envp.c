@@ -1,19 +1,19 @@
 #include "../../includes/parser.h"
 
-// static void	free_envp(char **envp)
-// {
-// 	int	i;
+void	free_envp(char **envp)
+{
+	int	i;
 
-// 	i = 0;
-// 	if (!envp)
-// 		return;
-// 	while (envp[i])
-// 	{
-// 		free(envp[i]);
-// 		i++;
-// 	}
-// 	free(envp);
-// }
+	i = 0;
+	if (!envp)
+		return;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
+}
 
 static int	find_env_size(t_env *env)
 {

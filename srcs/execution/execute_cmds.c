@@ -24,7 +24,11 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 		envp = convert_env_to_envp(data, data->env);
 		if (!envp)
 			free_all(data, EXIT_FAILURE);
-		execve(cmd->path, cmd->args, envp);
+		if (execve(cmd->path, cmd->args, envp) == -1)
+		{
+			free_envp(envp);
+			free_all(data, EXIT_FAILURE);
+		}
 	}
 }
 
@@ -43,8 +47,8 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 	int	stdin_tmp;
 	int	stdout_tmp;
 
-	stdin_tmp = dup(0);
-	stdout_tmp = dup(1);
+	stdin_tmp = s_dup(data, 0);
+	stdout_tmp = s_dup(data, 1);
 	open_here_doc(data, cmd, data->env);
 	open_files(data, cmd, cmd->files);
 	redirect_fds(data, cmd);
@@ -65,8 +69,8 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 		else if (!ft_strcmp(cmd->args[0], "exit"))
 			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp, false);
 	}
-	dup2(stdin_tmp, 0);
-	dup2(stdout_tmp, 1);
+	s_dup2(data, stdin_tmp, 0);
+	s_dup2(data, stdout_tmp, 1);
 	close(stdin_tmp);
 	close(stdout_tmp);
 }
@@ -102,7 +106,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 	open_here_doc(data, cmds, data->env);
 	while (cmds && sigint_flag != 1)
 	{
-		pid = fork();
+		pid = s_fork(data);
 		handle_signals(2);
 		if (!cmds->next)
 			last_pid = pid;

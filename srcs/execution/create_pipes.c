@@ -20,7 +20,8 @@ void	create_pipes(t_data *data, t_cmd *cmds)
 		data->pipes[i] = malloc(sizeof(int) * 2);
 		if (!data->pipes[i])
 			free_all(data, EXIT_FAILURE);
-		pipe(data->pipes[i]);
+		if (pipe(data->pipes[i]) == -1)
+			free_all(data, EXIT_FAILURE);
 		i++;
 	}
 }
