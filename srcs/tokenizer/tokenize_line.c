@@ -52,10 +52,7 @@ static bool	create_tokens(t_data *data, char *s, t_token **head)
 		{
 			value = malloc((len + 1) * sizeof(char));
 			if (!value)
-			{
-				free_tokens(*head, true);
-				free_all(data);
-			}
+				free_all(data, EXIT_FAILURE);
 			ft_strlcpy(value, s - len, len + 1);
 			append_token_node(data, head, value);
 		}
@@ -74,12 +71,12 @@ t_token	*tokenize_line(t_data *data, char *s)
 	line = check_line(s, "<>&");
 	if (quote != '\0')
 	{
-		syntax_error(head, quote);
+		syntax_error(data, quote);
 		return (NULL);
 	}
 	else if (line != '\0')
 	{
-		syntax_error(head, line);
+		syntax_error(data, line);
 		return (NULL);
 	}
 	create_tokens(data, s, &head);

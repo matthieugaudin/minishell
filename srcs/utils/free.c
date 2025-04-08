@@ -36,6 +36,7 @@ void	free_data(t_data *data)
 		free(tmp_cmd);
 	}
 	free(data->pipes);
+	data->pipes = NULL;
 }
 
 void	free_list(t_env **list)
@@ -62,12 +63,23 @@ void	free_env_exp(t_env **env, t_env **exp)
 	free_list(exp);
 }
 
-void	free_all(t_data *data)
+void	free_all(t_data *data, int status)
 {
-	close_pipes(data->cmds, data->pipes);
+	if (status != -2)
+	{
+		close_pipes(data->cmds, data->pipes);
+		free_env_exp(&data->env, &data->exp);
+	}
+	free(data->line);
+	data->line = NULL;
+	free_tokens(data->tokens);
+	data->tokens = NULL;
 	free_data(data);
-	free_env_exp(&data->env, &data->exp);
-	free(data);
-	rl_clear_history();
-	exit(EXIT_FAILURE);
+	if (status != -2)
+	{
+		free(data);
+		data = NULL;
+		rl_clear_history();
+		exit(status);
+	}
 }

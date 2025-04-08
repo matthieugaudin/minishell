@@ -66,7 +66,7 @@ static void	init_cmd_content(t_data *data, t_cmd *cmd, t_token *tokens, int inde
 	cmd->index = index;
 	cmd->args = malloc(sizeof(char *) * (nb_cmds + 1));
 	if (!cmd->args)
-		free_all(data);
+		free_all(data, EXIT_FAILURE);
 	cmd->args[nb_cmds] = NULL;
 }
 
@@ -83,7 +83,7 @@ t_cmd	*create_cmd(t_data *data, t_token *tokens)
 	{
 		cmd = malloc(sizeof(t_cmd));
 		if (!cmd)
-			free_all(data);
+			free_all(data, EXIT_FAILURE);
 		init_cmd_content(data, cmd, tokens, index);
 		set_cmd_content(data, &tokens, cmd);
 		set_last_cmd_next(&cmds, cmd);

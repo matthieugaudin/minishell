@@ -4,7 +4,7 @@
 # include "tokenizer.h"
 
 /*==============PARSER==============*/
-bool	parse_tokens(t_token *token);
+bool    parse_tokens(t_data *data, t_token *token);
 void	expand_tokens(t_data *data, t_token *node, t_env *env);
 void	remove_quotes(t_data *data, t_token *tokens);
 char	*get_var_value(t_env *env, char *var_name);

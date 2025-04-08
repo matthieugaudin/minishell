@@ -6,7 +6,7 @@ t_file	*new_file(t_data *data, char *name, enum e_token type, bool hdoc_quotes)
 
 	new = malloc(sizeof(t_file));
 	if (!new)
-		free_all(data);
+		free_all(data, EXIT_FAILURE);
 	new->name = name;
 	new->type = type;
 	new->expand = !hdoc_quotes;

@@ -57,7 +57,7 @@ void	create_export(t_data *data)
 	t_env	*new_node;
 
 	if (!data->env)
-		free_all(data);
+		free_all(data, EXIT_FAILURE);
 	data->exp = NULL;
 	cur_env = data->env;
 	while (cur_env)
@@ -66,7 +66,7 @@ void	create_export(t_data *data)
 		{
 			new_node = ft_new_node(cur_env->name, cur_env->value);
 			if (!new_node)
-				free_all(data);
+				free_all(data, EXIT_FAILURE);
 			ft_update_exp_node(&data->exp, new_node);
 		}
 		cur_env = cur_env->next;

@@ -120,8 +120,7 @@ void	set_exec_path(t_data *data, t_cmd *cmd)
         if (!cmd->path)
 		{
 			cmd_not_found(cmd->args[0]);
-			free_all(data);
-			exit (127);
+			free_all(data, 127);
 		}
     }
 }

@@ -48,7 +48,7 @@ char	*get_env_name(t_data *data, char *envp_str)
 		i++;
 	env_name = malloc(sizeof(char) * (i + 1));
 	if (!env_name)
-		free_all(data);
+		free_all(data, EXIT_FAILURE); // and the node ?
 	ft_strlcpy(env_name, envp_str, i + 1);
 	return (env_name);
 }
@@ -60,13 +60,13 @@ static void	append_env_node(t_data *data, t_env **env, char *envp)
 
 	node = malloc(sizeof(t_env));
 	if (!node)
-		free_all(data);
+		free_all(data, EXIT_FAILURE);
 	node->name = get_env_name(data, envp);
 	if (!node->name)
 		return ;
 	node->value = ft_strdup(getenv(node->name));
 	if (!node->value)
-		free_all(data);
+		free_all(data, EXIT_FAILURE); // and free node ?
 	node->next = NULL;
 	if (*env == NULL)
 	{

@@ -2,7 +2,7 @@
 
 void	close_pipes(t_cmd *cmds, int **pipes)
 {
-	while (cmds->next)
+	while (cmds && cmds->next)
 	{
 		close(pipes[cmds->index][0]);
 		close(pipes[cmds->index][1]);

@@ -11,7 +11,7 @@ t_data	*init_data(char **envp)
 	data = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
-		free_all(data);
+		exit(EXIT_FAILURE);
 	data->env = NULL;
 	data->exp = NULL;
 	data->cmds = NULL;
@@ -24,9 +24,7 @@ t_data	*init_data(char **envp)
 void	handle_shell_exit(t_data	*data)
 {
 	ft_putendl_fd("exit", 1);
-	free_env_exp(&data->env, &data->exp);
-	free(data);
-	exit(exit_code(0, false));
+	free_all(data, exit_code(0, false));
 }
 
 void	process_line(t_data	*data, char *line)
@@ -35,29 +33,26 @@ void	process_line(t_data	*data, char *line)
 	if (!only_spaces(line))
 	{
 		data->tokens = tokenize_line(data, line);
-		if (data->tokens && parse_tokens(data->tokens))
+		if (data->tokens && parse_tokens(data, data->tokens))
 		{
 			expand_tokens(data, data->tokens, data->env);
 			remove_quotes(data, data->tokens);
 			data->cmds = create_cmd(data, data->tokens);
-			free_tokens(data->tokens, false);
 			create_pipes(data, data->cmds);
 			// HERE LAST FREE//
 			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
 				handle_builtins(data, data->cmds);
 			else
 				execute_cmds(data, data->cmds);
-			free_data(data);
+			add_history(line);
 		}
-		add_history(line);
-		free(line);
+		free_all(data, -2);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	char	*line;
 
 	(void)argc;
 	(void)argv;
@@ -65,13 +60,10 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		handle_signals(0);
-		line = readline("minishell> ");
-		if (!line)
+		data->line = readline("minishell> ");
+		if (!data->line)
 			handle_shell_exit(data);
-		process_line(data, line);
+		process_line(data, data->line);
 	}
-	rl_clear_history();
-	free_env_exp(&data->env, &data->exp);
-	free(data);
-	return (0);
+	free_all(data, 0);
 }

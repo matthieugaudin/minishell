@@ -61,6 +61,7 @@ typedef struct s_data
 	t_env	*exp;
 	t_cmd	*cmds;
 	t_token	*tokens;
+	char	*line;
 	int		**pipes;
 }	t_data;
 
@@ -71,8 +72,8 @@ void	append_token_node(t_data *data, t_token **head, char *line);
 void	set_token_prev(t_token **head, t_token *node);
 
 /*=============ERROR HANDLING=============*/
-void	syntax_error(t_token *tokens, char c);
-void	free_tokens(t_token *tokens, bool alloc_err);
+void	syntax_error(t_data *data, char c);
+void	free_tokens(t_token *tokens);
 
 /*===============CHECKS===============*/
 char	check_quotes(char *str);
@@ -87,7 +88,7 @@ bool	is_redir(enum e_token type);
 bool	in_dbl_quotes(char *str, int j);
 int		exit_code(int new_code, bool to_set);
 void	free_list(t_env **list);
-void	free_all(t_data *data);
+void	free_all(t_data *data, int status);
 void	free_env_exp(t_env **env, t_env **exp);
 void	free_data(t_data *data);
 

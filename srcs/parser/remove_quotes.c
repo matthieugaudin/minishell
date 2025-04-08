@@ -65,7 +65,7 @@ void	remove_quotes(t_data *data, t_token *tokens)
 			tmp = tokens->value;
 			tokens->value = malloc(sizeof(char) * (value_len - to_remove + 1));
 			if (!tokens->value)
-				free_all(data);
+				free_all(data, EXIT_FAILURE);
 			tokens->value[value_len - to_remove] = '\0';
 			fill_tkn_value(tokens->value, tmp);
 			free(tmp);

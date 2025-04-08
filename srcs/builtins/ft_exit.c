@@ -69,8 +69,7 @@ void	ft_exit(t_data* data, char **args, int stdin, int stdout, bool to_exit)
 	{
 		if (!to_exit)
 			ft_putendl_fd("exit", 1);
-		free_all(data);
-		exit(exit_code(0, false));
+		free_all(data, exit_code(0, false));
 	}
 	else if (!is_numeric(args[0]))
 	{
@@ -79,8 +78,7 @@ void	ft_exit(t_data* data, char **args, int stdin, int stdout, bool to_exit)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args[0], 2);
 		ft_putendl_fd(": numeric argument required", 2 );
-		free_all(data);
-		exit(2);
+		free_all(data, 2);
 	}
 	else if (args[1])
 	{
@@ -88,10 +86,7 @@ void	ft_exit(t_data* data, char **args, int stdin, int stdout, bool to_exit)
 			ft_putendl_fd("exit", 2);
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		if (to_exit)
-		{
-			free_all(data);
-			exit(1);
-		}
+			free_all(data, 1);
 		exit_code(1, true);
 	}
 	else
@@ -99,8 +94,7 @@ void	ft_exit(t_data* data, char **args, int stdin, int stdout, bool to_exit)
 		code = ft_atoi(args[0]);
 		if (!to_exit)
 			ft_putendl_fd("exit", 1);
-		free_all(data);
-		exit(code);
+		free_all(data, code);
 	}
 }
 

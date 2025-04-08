@@ -16,9 +16,7 @@ void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 		if (fd == -1)
 		{
 			send_error(files->name, errno);
-			close_pipes(data->cmds, data->pipes);
-			free_all(data);
-			exit(1);
+			free_all(data, 1);
 		}
 		if (is_last_redir(files) && (files->type == OUTPUT || files->type == APPEND))
 			cmd->fd_out = fd;

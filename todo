@@ -1,16 +1,16 @@
 
 
 -> protect syscalls
+    -> malloc
+    -> dup2 / dup
 -> leaks
     -> own tests : 
-    -> ndelhota tests : 
     -> manual tester tests : 
     -> s tests: 
-    -> tester with valgrind (retry): 
 -> norme
 -> see all functions used
 -> put headers
+-> remove -g
 
 QUESTIONS
--> utility of free_envp ? 
--> call rl_clear_history in free all ?
+-> utility of free_envp when execve fails

@@ -1,6 +1,6 @@
 #include "../../includes/tokenizer.h"
 
-void	free_tokens(t_token *tokens, bool alloc_err)
+void	free_tokens(t_token *tokens)
 {
 	t_token *tmp;
 
@@ -12,6 +12,4 @@ void	free_tokens(t_token *tokens, bool alloc_err)
 		tokens = tokens->next;
 		free(tmp);
 	}
-	if (alloc_err)
-		perror("Memory allocation failed");
 }

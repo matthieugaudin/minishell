@@ -29,7 +29,10 @@ static void	expand_var(t_data *data, t_token *node, t_env *env, int start)
 	len = (start - 1) + value_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
-		free_all(data);
+	{
+		free(var_name);
+		free_all(data, EXIT_FAILURE);
+	}
 	ft_strlcpy(res, node->value, start);
 	if (var_value)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
@@ -49,13 +52,16 @@ static void	expand_exit(t_data *data, t_token *node, int start)
 
 	code = ft_itoa(exit_code(0, false));
 	if (!code)
-		free_all(data);
+		free_all(data, EXIT_FAILURE);
 	code_len = ft_strlen(code);
 	remainder = ft_strlen(node->value + start + 1);
 	len = (start - 1) + code_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
-		free_all(data);
+	{
+		free(code);
+		free_all(data, EXIT_FAILURE);
+	}
 	ft_strlcpy(res, node->value, start);
 	ft_strlcat(res + start - 1, code, code_len + 1);
 	ft_strlcat(res + start - 1 + code_len, node->value + start + 1, remainder + 1);
@@ -73,7 +79,7 @@ static void	expand_digit(t_data *data, t_token *node, int start)
 	remainder = ft_strlen(node->value + start + 1);
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
-		free_all(data);
+		free_all(data, EXIT_FAILURE);
 	ft_strlcpy(res, node->value, start);
 	ft_strlcat(res + start - 1, node->value + start + 1, remainder + 1);
 	free(node->value);

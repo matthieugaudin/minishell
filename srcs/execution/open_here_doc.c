@@ -43,7 +43,10 @@ static void	expand_line(t_data *data, t_env *env, char **line, int start)
 	len = (start - 1) + value_len + remainder;
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
-		free_all(data);
+	{
+		free(var_name);
+		free_all(data, EXIT_FAILURE);
+	}
 	ft_strlcpy(res, *line, start);
 	if (var_value)
 		ft_strlcat(res + start - 1, var_value, value_len + 1);
