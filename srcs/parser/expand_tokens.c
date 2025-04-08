@@ -67,6 +67,7 @@ static void	expand_exit(t_data *data, t_token *node, int start)
 	ft_strlcat(res + start - 1 + code_len, node->value + start + 1, remainder + 1);
 	free(node->value);
 	node->value = res;
+	free(code);
 }
 
 static void	expand_digit(t_data *data, t_token *node, int start)

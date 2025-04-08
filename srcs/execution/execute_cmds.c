@@ -121,6 +121,7 @@ void	execute_cmds(t_data *data, t_cmd *cmds)
 				redirect_fds(data, cmds);
 				execute_cmd(data, cmds);
 			}
+			free_all(data, exit_code(0, false));
 		}
 		if (cmds->index > 0)
 			close(data->pipes[cmds->index - 1][0]);

@@ -46,7 +46,10 @@ t_data	*init_data(char **envp)
 	data->cmds = NULL;
 	data->pipes = NULL;
 	data->tokens = NULL;
-	create_env(data, envp);
+	if (*envp)
+		create_env(data, envp);
+	else
+		ft_update_env_node(data, &data->env, ft_new_node(data, "PWD", getcwd(NULL, 0)));
 	create_export(data);
 	return (data);
 }

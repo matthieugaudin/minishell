@@ -1,14 +1,10 @@
 
-
+-> export OLDPWD a nul
+-> checker les errerus malloc sur env -i
+-> unset toutes les variables
 -> norme
--> leaks
-    ->own
-    -> sub
--> tests
-    -> exit last exit code
-    -> ls | ""
-    -> ctrl in minishell
-    -> env -i minishell
 -> see all functions used
 -> put headers
 -> remove -g
+-> launch the tester
+-> do sheet correction
