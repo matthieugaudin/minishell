@@ -44,7 +44,7 @@ t_env *ft_new_node(t_data *data, char *name, char *value)
 	return (new);
 }
 
-void ft_update_exp_node(t_env **exp, t_env *new_node)
+void ft_update_exp_node(t_data *data, t_env **exp, t_env *new_node)
 {
 	t_env *current;
 
@@ -61,6 +61,8 @@ void ft_update_exp_node(t_env **exp, t_env *new_node)
 			return;
 		free(current->value);
 		current->value = ft_strdup(new_node->value);
+		if (!current->value)
+			free_all(data, EXIT_FAILURE);
 		free_env_node(new_node);
 		return;
 	}
@@ -85,7 +87,7 @@ void create_export(t_data *data)
 			new_node = ft_new_node(data, cur_env->name, cur_env->value);
 			if (!new_node)
 				free_all(data, EXIT_FAILURE);
-			ft_update_exp_node(&data->exp, new_node);
+			ft_update_exp_node(data, &data->exp, new_node);
 		}
 		cur_env = cur_env->next;
 	}

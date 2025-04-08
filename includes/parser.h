@@ -11,7 +11,7 @@ char	*get_var_value(t_env *env, char *var_name);
 char	*get_env_name(t_data *data, char *envp_str);
 void	free_env_node(t_env *node);
 void	ft_update_env_node(t_data *data, t_env **env, t_env *new_node);
-void	ft_update_exp_node(t_env **exp, t_env *new_node);
+void	ft_update_exp_node(t_data *data, t_env **exp, t_env *new_node);
 void	change_head(t_env **head, t_env *new_node);
 t_env	*ft_new_node(t_data *data, char *name, char *value);
 char	**convert_env_to_envp(t_data *data, t_env *env);

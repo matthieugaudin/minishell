@@ -39,13 +39,13 @@ static void	ft_plus_option(t_data *data, char *name, char *value)
 				free_all(data, EXIT_FAILURE);
 			free(node->value);
 			node->value = new_value;
-			ft_update_exp_node(&data->exp, ft_new_node(data, name, new_value));
+			ft_update_exp_node(data, &data->exp, ft_new_node(data, name, new_value));
 			return ;
 		}
 		node = node->next;
 	}
 	ft_update_env_node(data, &data->env, ft_new_node(data, name, value));
-	ft_update_exp_node(&data->exp, ft_new_node(data, name, value));
+	ft_update_exp_node(data, &data->exp, ft_new_node(data, name, value));
 }
 
 static int	ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
@@ -70,7 +70,7 @@ static int	ft_update_env_exp(t_data *data, char *arg, size_t i_egal)
 	else
 	{
 		ft_update_env_node(data, &data->env, ft_new_node(data, name, value));
-		ft_update_exp_node(&data->exp, ft_new_node(data, name, value));
+		ft_update_exp_node(data, &data->exp, ft_new_node(data, name, value));
 	}
 	free(name);
 	free(value);
@@ -113,7 +113,7 @@ int	ft_export(t_data *data, char **args, bool exit)
 			ret = 1;
 		}
 		else if (i_egal == 0)
-			ft_update_exp_node(&data->exp, ft_new_node(data, args[i], NULL));
+			ft_update_exp_node(data, &data->exp, ft_new_node(data, args[i], NULL));
 		else
 			ft_update_env_exp(data, args[i], i_egal);
 		i++;
