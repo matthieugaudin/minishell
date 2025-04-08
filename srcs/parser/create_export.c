@@ -1,6 +1,6 @@
 #include "../../includes/parser.h"
 
-void	free_env_node(t_env *node)
+void free_env_node(t_env *node)
 {
 	if (!node)
 		return;
@@ -9,29 +9,47 @@ void	free_env_node(t_env *node)
 	free(node);
 }
 
-t_env	*ft_new_node(char *name, char *value)
+static void handle_value(t_data *data, t_env *new, char *value)
 {
-	t_env	*new;
+	new->value = ft_strdup(value);
+	if (!new->value)
+	{
+		free(new->name);
+		free(new);
+		free_all(data, EXIT_FAILURE);
+	}
+}
+
+t_env *ft_new_node(t_data *data, char *name, char *value)
+{
+	t_env *new;
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		return (NULL);
+		free_all(data, EXIT_FAILURE);
 	new->name = NULL;
 	new->value = NULL;
 	if (name)
+	{
 		new->name = ft_strdup(name);
+		if (!new->name)
+		{
+			free(new);
+			free_all(data, EXIT_FAILURE);
+		}
+	}
 	if (value)
-		new->value= ft_strdup(value);
+		handle_value(data, new, value);
 	new->next = NULL;
 	return (new);
 }
 
-void	ft_update_exp_node(t_env **exp, t_env *new_node)
+void ft_update_exp_node(t_env **exp, t_env *new_node)
 {
-	t_env	*current;
+	t_env *current;
 
 	if (!exp || !new_node)
-		return ;
+		return;
 	if (*exp == NULL || ft_strcmp(new_node->name, (*exp)->name) < 0)
 		return (change_head(exp, new_node));
 	current = *exp;
@@ -40,21 +58,21 @@ void	ft_update_exp_node(t_env **exp, t_env *new_node)
 	if (ft_strcmp(new_node->name, current->name) == 0)
 	{
 		if (!new_node->value)
-			return ;
+			return;
 		free(current->value);
 		current->value = ft_strdup(new_node->value);
 		free_env_node(new_node);
-		return ;
+		return;
 	}
 	new_node->next = current->next;
 	current->next = new_node;
-	return ;
+	return;
 }
 
-void	create_export(t_data *data)
+void create_export(t_data *data)
 {
-	t_env	*cur_env;
-	t_env	*new_node;
+	t_env *cur_env;
+	t_env *new_node;
 
 	if (!data->env)
 		free_all(data, EXIT_FAILURE);
@@ -64,12 +82,12 @@ void	create_export(t_data *data)
 	{
 		if (ft_strcmp(cur_env->name, "_") != 0)
 		{
-			new_node = ft_new_node(cur_env->name, cur_env->value);
+			new_node = ft_new_node(data, cur_env->name, cur_env->value);
 			if (!new_node)
 				free_all(data, EXIT_FAILURE);
 			ft_update_exp_node(&data->exp, new_node);
 		}
 		cur_env = cur_env->next;
 	}
-	return ;
+	return;
 }
