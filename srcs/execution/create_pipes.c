@@ -6,11 +6,11 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:18 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:31:19 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/09 18:38:40 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../../includes/builtins.h"
 
 static void	close_failure(t_cmd *cmds, int **pipes, int j)
 {

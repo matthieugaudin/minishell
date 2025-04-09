@@ -6,13 +6,13 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:32:42 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:32:43 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/09 18:37:38 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-static void	free_cmd_content(t_cmd *cmd)
+void	free_cmd_content(t_cmd *cmd)
 {
 	int		i;
 	t_file	*tmp_file;
