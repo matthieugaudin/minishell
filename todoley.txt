@@ -1,6 +1,0 @@
-OK - Check env variable that shouldn't be in export (ex : '_:')
-OK - Convert env in char **
-OK - Add "+=" to export
-OK - Check export 'a=' or 'a=""' -> should be in env, but not 'c' (maybe should put '\0' in value)
-- Free env and export
-OK - export a + export a cree 2 exports a
