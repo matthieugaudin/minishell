@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/09 18:33:24 by mgaudin           #+#    #+#             */
+/*   Updated: 2025/04/09 18:33:25 by mgaudin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
@@ -5,7 +17,7 @@
 # include <limits.h>
 # include "execution.h"
 
-void	ft_exit(t_data* data, char **args, bool to_exit);
+void	ft_exit(t_data *data, char **args, bool to_exit);
 int		ft_pwd(t_data *data, bool exit);
 int		ft_echo(t_data *data, char **args, bool exit);
 int		value(t_data *data, int status, bool to_exit);

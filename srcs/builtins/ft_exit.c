@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/09 18:30:58 by mgaudin           #+#    #+#             */
+/*   Updated: 2025/04/09 18:30:59 by mgaudin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/builtins.h"
 
 static bool	threshold_exceeded(char *str, long long res, int sign, int i)
@@ -47,7 +59,8 @@ static bool	is_numeric(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]) && !((str[i] == '+' || str[i] == '-') && isdigit(str[i + 1])))
+		if (!ft_isdigit(str[i]) && !((str[i] == '+'
+					|| str[i] == '-') && isdigit(str[i + 1])))
 			return (false);
 		i++;
 	}
@@ -56,17 +69,17 @@ static bool	is_numeric(char *str)
 	return (true);
 }
 
-static void	handle_numeric(t_data* data, char **args, bool to_exit)
+static void	handle_numeric(t_data *data, char **args, bool to_exit)
 {
 	if (!to_exit)
 		ft_putendl_fd("exit", 2);
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(args[0], 2);
-	ft_putendl_fd(": numeric argument required", 2 );
+	ft_putendl_fd(": numeric argument required", 2);
 	free_all(data, 2);
 }
 
-static void	handle_too_many(t_data* data, bool to_exit)
+static void	handle_too_many(t_data *data, bool to_exit)
 {
 	if (!to_exit)
 		ft_putendl_fd("exit", 2);
@@ -76,9 +89,9 @@ static void	handle_too_many(t_data* data, bool to_exit)
 	exit_code(1, true);
 }
 
-void	ft_exit(t_data* data, char **args, bool to_exit)
+void	ft_exit(t_data *data, char **args, bool to_exit)
 {
-	int code;
+	int	code;
 
 	if (!args[0])
 	{

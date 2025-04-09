@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_pipes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/09 18:31:18 by mgaudin           #+#    #+#             */
+/*   Updated: 2025/04/09 18:31:19 by mgaudin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/execution.h"
 
 static void	close_failure(t_cmd *cmds, int **pipes, int j)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < j)
@@ -38,18 +50,14 @@ static void	free_data_pipe(t_data *data, int j)
 	data->pipes = NULL;
 }
 
-
 static void	pipe_failure(t_data *data, int i)
 {
 	close_failure(data->cmds, data->pipes, i);
-	// free_all(data, -2);
-
 	free(data->line);
 	data->line = NULL;
 	free_tokens(data->tokens);
 	data->tokens = NULL;
 	free_data_pipe(data, i);
-
 	free_env_exp(&data->env, &data->exp);
 	free(data);
 	data = NULL;
