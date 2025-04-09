@@ -1,34 +1,37 @@
 #include "../../includes/builtins.h"
 
+static void	free_cmd_content(t_cmd *cmd)
+{
+	int		i;
+	t_file	*tmp_file;
+
+	i = 0;
+	while (cmd->args[i])
+		free(cmd->args[i++]);
+	free(cmd->args);
+	cmd->args = NULL;
+	free(cmd->path);
+	cmd->path = NULL;
+	while (cmd->files)
+	{
+		tmp_file = cmd->files;
+		cmd->files = cmd->files->next;
+		free(tmp_file->name);
+		free(tmp_file);
+	}
+}
+
 void	free_data(t_data *data)
 {
 	t_cmd	*tmp_cmd;
-	t_file	*tmp_file;
-	int		i;
 
 	while (data->cmds)
 	{
-		i = 0;
 		if (data->cmds->fd_in != 0)
 			close(data->cmds->fd_in);
 		if (data->cmds->fd_out != 1)
 			close(data->cmds->fd_out);
-		while (data->cmds->args[i])
-		{
-			free(data->cmds->args[i]);
-			i++;
-		}
-		free(data->cmds->args);
-		data->cmds->args = NULL;
-		free(data->cmds->path);
-		data->cmds->path = NULL;
-		while (data->cmds->files)
-		{
-			tmp_file = data->cmds->files;
-			data->cmds->files = data->cmds->files->next;
-			free(tmp_file->name);
-			free(tmp_file);
-		}
+		free_cmd_content(data->cmds);
 		if (data->cmds->next)
 			free(data->pipes[data->cmds->index]);
 		tmp_cmd = data->cmds;

@@ -2,7 +2,7 @@
 
 int	g_sigint_flag = 0;
 
-void	process_line(t_data	*data, char *line)
+static void	process_line(t_data	*data, char *line)
 {
 	if (!only_spaces(line))
 	{
@@ -24,13 +24,13 @@ void	process_line(t_data	*data, char *line)
 	}
 }
 
-void	handle_shell_exit(t_data	*data)
+static void	handle_shell_exit(t_data	*data)
 {
 	ft_putendl_fd("exit", 1);
 	free_all(data, exit_code(0, false));
 }
 
-void	handle_env_exp(t_data *data, char **envp)
+static void	handle_env_exp(t_data *data, char **envp)
 {
 	char	*cwd;
 	t_env	*new_node;
@@ -50,7 +50,7 @@ void	handle_env_exp(t_data *data, char **envp)
 	create_export(data);
 }
 
-t_data	*init_data(char **envp)
+static t_data	*init_data(char **envp)
 {
 	t_data	*data;
 
