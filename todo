@@ -2,22 +2,14 @@
 
 
 -> normer le code
-    -> parser
     -> exit
-    -> 2-3 tricky cases
--> tests malloc and leaks on env -i
--> export OLDPWD a nul
--> checker les errerus malloc sur env -i
--> PATH=directory1/directory2
--> PATH=lol
--> unset toutes les variables
--> stderrre rl outstream
 -> lot of ls
+-> stderrre rl outstream
+-> launch the tester
+-> look at leaks
 -> see all functions used
 -> put headers
 -> remove -g
--> launch the tester
--> do sheet correction
 
 
 

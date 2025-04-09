@@ -67,7 +67,7 @@ int	ft_cd(t_data *data, char **args, bool exit)
 {
 	char	*curpath;
 
-	if (!args)
+	if (!args || !args[0])
 		curpath = find_path(data->env, "HOME");
 	else if (args[1])
 		return (value(data, ft_cd_too_many_args(), exit));

@@ -67,8 +67,8 @@ static char	*get_access_path(t_data *data, char **paths)
 		}
 		i++;
 	}
-	i = 0;
-	while (paths[i++])
+	i = -1;
+	while (paths[++i])
 		free(paths[i]);
 	free(paths);
 	return (access_path);

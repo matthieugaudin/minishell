@@ -21,6 +21,8 @@ static void	handle_null_line(t_data *data, t_file *file, int fd, int i)
 	close(fd);
 	if (g_sigint_flag == 0)
 		hdoc_warning(data, file->name, i);
+	else if (g_sigint_flag == 1)
+		exit_code(130, true);
 }
 
 static char	*expand_hdoc(t_data *data, t_env *env, char *line)

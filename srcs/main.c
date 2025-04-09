@@ -1,4 +1,4 @@
-#include "../includes/execution.h"
+#include "../includes/builtins.h"
 
 int	g_sigint_flag = 0;
 
@@ -6,6 +6,7 @@ static void	process_line(t_data	*data, char *line)
 {
 	if (!only_spaces(line))
 	{
+		add_history(line);
 		data->tokens = tokenize_line(data, line);
 		if (data->tokens && parse_tokens(data, data->tokens))
 		{
@@ -18,7 +19,6 @@ static void	process_line(t_data	*data, char *line)
 				handle_builtins(data, data->cmds);
 			else
 				execute_cmds(data, data->cmds);
-			add_history(line);
 		}
 		free_all(data, -2);
 	}
