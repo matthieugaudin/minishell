@@ -18,7 +18,8 @@ void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 			send_error(files->name, errno);
 			free_all(data, 1);
 		}
-		if (is_last_redir(files) && (files->type == OUTPUT || files->type == APPEND))
+		if (is_last_redir(files)
+			&& (files->type == OUTPUT || files->type == APPEND))
 			cmd->fd_out = fd;
 		else if (is_last_redir(files) && files->type == INPUT)
 			cmd->fd_in = fd;
@@ -27,5 +28,3 @@ void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 		files = files->next;
 	}
 }
-
-// <<lim cat 

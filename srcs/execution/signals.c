@@ -13,7 +13,7 @@ static void	handle_sigint(int sig)
 static void	hdoc_sigint(int sig)
 {
 	(void)sig;
-	sigint_flag = 1;
+	g_sigint_flag = 1;
 	write(1, "^C", 2);
 	close(0);
 }
@@ -27,7 +27,7 @@ static void	child_signals(int sig)
 
 void	handle_signals(int mode)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);

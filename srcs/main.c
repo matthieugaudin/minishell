@@ -1,11 +1,9 @@
 #include "../includes/execution.h"
 
-int sigint_flag = 0;
-
+int	g_sigint_flag = 0;
 
 void	process_line(t_data	*data, char *line)
 {
-	
 	if (!only_spaces(line))
 	{
 		data->tokens = tokenize_line(data, line);
@@ -15,7 +13,8 @@ void	process_line(t_data	*data, char *line)
 			remove_quotes(data, data->tokens);
 			data->cmds = create_cmd(data, data->tokens);
 			create_pipes(data, data->cmds);
-			if (data->cmds->index == 0 && !data->cmds->next && is_builtin(data->cmds->args[0]))
+			if (data->cmds->index == 0 && !data->cmds->next
+				&& is_builtin(data->cmds->args[0]))
 				handle_builtins(data, data->cmds);
 			else
 				execute_cmds(data, data->cmds);
@@ -29,6 +28,26 @@ void	handle_shell_exit(t_data	*data)
 {
 	ft_putendl_fd("exit", 1);
 	free_all(data, exit_code(0, false));
+}
+
+void	handle_env_exp(t_data *data, char **envp)
+{
+	char	*cwd;
+	t_env	*new_node;
+
+	if (*envp)
+	{
+		create_env(data, envp);
+	}
+	else
+	{
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			free_all(data, EXIT_FAILURE);
+		new_node = ft_new_node(data, "PWD", cwd);
+		ft_update_env_node(data, &data->env, new_node);
+	}
+	create_export(data);
 }
 
 t_data	*init_data(char **envp)
@@ -46,14 +65,9 @@ t_data	*init_data(char **envp)
 	data->cmds = NULL;
 	data->pipes = NULL;
 	data->tokens = NULL;
-	if (*envp)
-		create_env(data, envp);
-	else
-		ft_update_env_node(data, &data->env, ft_new_node(data, "PWD", getcwd(NULL, 0)));
-	create_export(data);
+	handle_env_exp(data, envp);
 	return (data);
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -15,7 +15,8 @@ SRC =	srcs/main.c srcs/utils/is_space.c srcs/utils/is_redir.c srcs/utils/is_quot
 		srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c srcs/builtins/ft_exit.c srcs/builtins/ft_export.c \
 		srcs/builtins/ft_pwd.c srcs/builtins/ft_unset.c srcs/utils/exit_code.c srcs/utils/only_spaces.c srcs/utils/free.c \
 		srcs/builtins/value.c srcs/execution/signals.c srcs/parser/env_to_envp.c srcs/builtins/error_messages.c \
-		srcs/execution/s_syscalls.c
+		srcs/execution/s_syscalls.c srcs/execution/get_file_path.c srcs/execution/expand_hdoc.c srcs/execution/fill_here_doc.c \
+		srcs/utils/is_builtin.c srcs/execution/close_hdoc_fds.c srcs/execution/handle_builtins.c
 
 OBJ = $(SRC:.c=.o)
 

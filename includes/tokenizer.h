@@ -65,6 +65,15 @@ typedef struct s_data
 	int		**pipes;
 }	t_data;
 
+typedef struct s_expand_data
+{
+	t_data	*data;
+	char	*line;
+	char	*var_value;
+	char	*var_name;
+	int		start;
+}	t_expand_data;
+
 /*==============TOKENIZER==============*/
 t_token	*tokenize_line(t_data *data, char *s);
 void	set_token_type(t_token *node);

@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-int	ft_pwd(t_data* data, bool exit)
+int	ft_pwd(t_data *data, bool exit)
 {
 	char	*path;
 

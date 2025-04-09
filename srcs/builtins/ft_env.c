@@ -1,6 +1,6 @@
 #include "../../includes/builtins.h"
 
-int	ft_env(t_data* data, t_env *env, char **args, bool exit)
+int	ft_env(t_data *data, t_env *env, char **args, bool exit)
 {
 	if (args && args[1])
 	{

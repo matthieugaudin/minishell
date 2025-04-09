@@ -1,10 +1,24 @@
 
+
+
+-> normer le code
+-> tests malloc and leaks on env -i
 -> export OLDPWD a nul
 -> checker les errerus malloc sur env -i
+-> PATH=directory1/directory2
+-> PATH=lol
 -> unset toutes les variables
--> norme
+-> stderrre rl outstream
+-> lot of ls
 -> see all functions used
 -> put headers
 -> remove -g
 -> launch the tester
 -> do sheet correction
+
+
+
+
+QUESTIONS
+-> handle_env_exp ndew node malloc portection
+-> bug on exit

@@ -15,7 +15,7 @@ static bool	is_n_option(char *str)
 	return (str[i] == '\0');
 }
 
-int	ft_echo(t_data* data, char **args, bool exit)
+int	ft_echo(t_data *data, char **args, bool exit)
 {
 	size_t	i;
 	bool	is_n;

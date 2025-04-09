@@ -1,0 +1,40 @@
+#include "../../includes/builtins.h"
+
+static void	check_builtins(t_data *data, t_cmd *cmd,
+	int stdin_tmp, int stdout_tmp)
+{
+	if (g_sigint_flag != 1)
+	{
+		if (!ft_strcmp(cmd->args[0], "export"))
+			ft_export(data, &cmd->args[1], false);
+		else if (!ft_strcmp(cmd->args[0], "env"))
+			ft_env(data, data->env, &cmd->args[0], false);
+		else if (!ft_strcmp(cmd->args[0], "cd"))
+			ft_cd(data, &cmd->args[1], false);
+		else if (!ft_strcmp(cmd->args[0], "pwd"))
+			ft_pwd(data, false);
+		else if (!ft_strcmp(cmd->args[0], "echo"))
+			ft_echo(data, cmd->args, false);
+		else if (!ft_strcmp(cmd->args[0], "unset"))
+			ft_unset(data, cmd->args, false);
+		else if (!ft_strcmp(cmd->args[0], "exit"))
+			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp, false);
+	}
+}
+
+void	handle_builtins(t_data *data, t_cmd *cmd)
+{
+	int	stdin_tmp;
+	int	stdout_tmp;
+
+	stdin_tmp = s_dup(data, 0);
+	stdout_tmp = s_dup(data, 1);
+	open_here_doc(data, cmd);
+	open_files(data, cmd, cmd->files);
+	redirect_fds(data, cmd);
+	check_builtins(data, cmd, stdin_tmp, stdout_tmp);
+	s_dup2(data, stdin_tmp, 0);
+	s_dup2(data, stdout_tmp, 1);
+	close(stdin_tmp);
+	close(stdout_tmp);
+}

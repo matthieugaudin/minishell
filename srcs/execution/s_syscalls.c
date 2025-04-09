@@ -8,7 +8,7 @@ void	s_dup2(t_data *data, int fd, int fd2)
 
 int	s_dup(t_data *data, int fd)
 {
-	int fd_cpy;
+	int	fd_cpy;
 
 	fd_cpy = dup(fd);
 	if (fd_cpy == -1)

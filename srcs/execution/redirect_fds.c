@@ -20,7 +20,7 @@ void	redirect_fds(t_data *data, t_cmd *cmd)
 		close(cmd->fd_in);
 	}
 	if (cmd->fd_out == 1 && cmd->next)
-		s_dup2(data, data->pipes[cmd->index][1], 1); 
+		s_dup2(data, data->pipes[cmd->index][1], 1);
 	else if (cmd->fd_out != 1)
 	{
 		s_dup2(data, cmd->fd_out, 1);
