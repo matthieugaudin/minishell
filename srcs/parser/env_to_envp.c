@@ -6,7 +6,7 @@ void	free_envp(char **envp)
 
 	i = 0;
 	if (!envp)
-		return;
+		return ;
 	while (envp[i])
 	{
 		free(envp[i]);

@@ -56,7 +56,8 @@ static void	set_cmd_content(t_data *data, t_token **tokens, t_cmd *cmd)
 	}
 }
 
-static void	init_cmd_content(t_data *data, t_cmd *cmd, t_token *tokens, int index)
+static void	init_cmd_content(t_data *data, t_cmd *cmd,
+	t_token *tokens, int index)
 {
 	int			nb_cmds;
 

@@ -16,6 +16,7 @@ void	change_head(t_env **head, t_env *new_node);
 t_env	*ft_new_node(t_data *data, char *name, char *value);
 char	**convert_env_to_envp(t_data *data, t_env *env);
 void	free_envp(char **envp);
+void	expand_digit_tkn(t_data *data, t_token *node, int start);
 
 /*==========EXEC DATA==========*/
 t_cmd	*create_cmd(t_data *data, t_token *tokens);

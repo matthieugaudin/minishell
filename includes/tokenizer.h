@@ -79,6 +79,7 @@ t_token	*tokenize_line(t_data *data, char *s);
 void	set_token_type(t_token *node);
 void	append_token_node(t_data *data, t_token **head, char *line);
 void	set_token_prev(t_token **head, t_token *node);
+int		get_total_len(t_expand_data exp);
 
 /*=============ERROR HANDLING=============*/
 void	syntax_error(t_data *data, char c);

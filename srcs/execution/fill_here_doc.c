@@ -20,7 +20,7 @@ static void	handle_null_line(t_data *data, t_file *file, int fd, int i)
 	s_dup2(data, fd, 0);
 	close(fd);
 	if (g_sigint_flag == 0)
-		hdoc_warning(data,file->name, i);
+		hdoc_warning(data, file->name, i);
 }
 
 static char	*expand_hdoc(t_data *data, t_env *env, char *line)

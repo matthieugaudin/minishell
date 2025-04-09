@@ -17,7 +17,7 @@ SRC =	srcs/main.c srcs/utils/is_space.c srcs/utils/is_redir.c srcs/utils/is_quot
 		srcs/builtins/value.c srcs/execution/signals.c srcs/parser/env_to_envp.c srcs/builtins/error_messages.c \
 		srcs/execution/s_syscalls.c srcs/execution/get_file_path.c srcs/execution/expand_hdoc.c srcs/execution/fill_here_doc.c \
 		srcs/utils/is_builtin.c srcs/execution/close_hdoc_fds.c srcs/execution/handle_builtins.c srcs/utils/is_executable.c \
-		srcs/execution/cmd_not_found.c
+		srcs/execution/cmd_not_found.c srcs/parser/expand_digit_tkn.c srcs/utils/get_var_value.c
 
 OBJ = $(SRC:.c=.o)
 

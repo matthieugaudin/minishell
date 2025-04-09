@@ -11,7 +11,9 @@ static void	fill_tkn_value(char *value, char *tmp)
 	quote = '\0';
 	while (tmp[i])
 	{
-		if (!(!in_quotes(tmp, i) && (tmp[i] == '\'' || tmp[i] == '\"')) && !(in_quotes(tmp, i) && tmp[i] == quote))
+		if (!(!in_quotes(tmp, i)
+				&& (tmp[i] == '\'' || tmp[i] == '\"'))
+			&& !(in_quotes(tmp, i) && tmp[i] == quote))
 		{
 			value[j] = tmp[i];
 			j++;

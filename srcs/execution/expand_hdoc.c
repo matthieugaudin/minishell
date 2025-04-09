@@ -13,7 +13,7 @@ static t_expand_data	create_expand_data(t_data *data,
 	return (res);
 }
 
-static int	get_total_len(t_expand_data exp)
+int	get_total_len(t_expand_data exp)
 {
 	int		value_len;
 	int		name_len;

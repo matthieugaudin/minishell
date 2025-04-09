@@ -1,15 +1,15 @@
 #include "../../includes/parser.h"
 
-void free_env_node(t_env *node)
+void	free_env_node(t_env *node)
 {
 	if (!node)
-		return;
+		return ;
 	free(node->name);
 	free(node->value);
 	free(node);
 }
 
-static void handle_value(t_data *data, t_env *new, char *value)
+static void	handle_value(t_data *data, t_env *new, char *value)
 {
 	new->value = ft_strdup(value);
 	if (!new->value)
@@ -20,9 +20,9 @@ static void handle_value(t_data *data, t_env *new, char *value)
 	}
 }
 
-t_env *ft_new_node(t_data *data, char *name, char *value)
+t_env	*ft_new_node(t_data *data, char *name, char *value)
 {
-	t_env *new;
+	t_env	*new;
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
@@ -44,12 +44,12 @@ t_env *ft_new_node(t_data *data, char *name, char *value)
 	return (new);
 }
 
-void ft_update_exp_node(t_data *data, t_env **exp, t_env *new_node)
+void	ft_update_exp_node(t_data *data, t_env **exp, t_env *new_node)
 {
-	t_env *current;
+	t_env	*current;
 
 	if (!exp || !new_node)
-		return;
+		return ;
 	if (*exp == NULL || ft_strcmp(new_node->name, (*exp)->name) < 0)
 		return (change_head(exp, new_node));
 	current = *exp;
@@ -58,23 +58,23 @@ void ft_update_exp_node(t_data *data, t_env **exp, t_env *new_node)
 	if (ft_strcmp(new_node->name, current->name) == 0)
 	{
 		if (!new_node->value)
-			return;
+			return ;
 		free(current->value);
 		current->value = ft_strdup(new_node->value);
 		if (!current->value)
 			free_all(data, EXIT_FAILURE);
 		free_env_node(new_node);
-		return;
+		return ;
 	}
 	new_node->next = current->next;
 	current->next = new_node;
-	return;
+	return ;
 }
 
-void create_export(t_data *data)
+void	create_export(t_data *data)
 {
-	t_env *cur_env;
-	t_env *new_node;
+	t_env	*cur_env;
+	t_env	*new_node;
 
 	if (!data->env)
 		free_all(data, EXIT_FAILURE);
@@ -91,5 +91,5 @@ void create_export(t_data *data)
 		}
 		cur_env = cur_env->next;
 	}
-	return;
+	return ;
 }
