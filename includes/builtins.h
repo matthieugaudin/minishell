@@ -5,7 +5,7 @@
 # include <limits.h>
 # include "execution.h"
 
-void	ft_exit(t_data *data, char **args, int stdin, int stdout, bool to_exit);
+void	ft_exit(t_data* data, char **args, bool to_exit);
 int		ft_pwd(t_data *data, bool exit);
 int		ft_echo(t_data *data, char **args, bool exit);
 int		value(t_data *data, int status, bool to_exit);

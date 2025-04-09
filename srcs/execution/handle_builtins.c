@@ -18,7 +18,11 @@ static void	check_builtins(t_data *data, t_cmd *cmd,
 		else if (!ft_strcmp(cmd->args[0], "unset"))
 			ft_unset(data, cmd->args, false);
 		else if (!ft_strcmp(cmd->args[0], "exit"))
-			ft_exit(data, &cmd->args[1], stdin_tmp, stdout_tmp, false);
+		{
+			close(stdin_tmp);
+			close(stdout_tmp);
+			ft_exit(data, &cmd->args[1], false);
+		}
 	}
 }
 

@@ -29,7 +29,7 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 	else if (!ft_strcmp(cmd->args[0], "unset"))
 		ft_unset(data, cmd->args, true);
 	else if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit(data, &cmd->args[1], -1, -1, true);
+		ft_exit(data, &cmd->args[1], true);
 	else
 		ft_execve(data, cmd);
 }
