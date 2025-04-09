@@ -2,6 +2,9 @@
 
 
 -> normer le code
+    -> parser
+    -> exit
+    -> 2-3 tricky cases
 -> tests malloc and leaks on env -i
 -> export OLDPWD a nul
 -> checker les errerus malloc sur env -i

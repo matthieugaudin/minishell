@@ -11,7 +11,7 @@
 # include <fcntl.h>
 # include "parser.h"
 
-extern int g_sigint_flag;
+extern int	g_sigint_flag;
 
 /*==============EXEC==============*/
 void	execute_cmds(t_data *data, t_cmd *cmds);
@@ -28,9 +28,9 @@ bool	is_builtin(char *str);
 bool	is_executable(char *arg);
 void	handle_signals(int mode);
 void	close_pipes(t_cmd *cmds, int **pipes);
-int	    s_dup(t_data *data, int fd);
+int		s_dup(t_data *data, int fd);
 void	s_dup2(t_data *data, int fd, int fd2);
-int	    s_fork(t_data *data);
+int		s_fork(t_data *data);
 char	*get_file_path(void);
 void	expand_line(t_data *data, t_env *env, char **line, int start);
 void	expand_digit(t_data *data, char **line, int start);
