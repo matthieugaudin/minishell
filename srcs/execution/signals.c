@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: doley <doley@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:50 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:31:51 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:06:44 by doley            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	handle_sigint(int sig)
 	(void)sig;
 	write(1, "^C", 2);
 	write(1, "\n", 2);
+	exit_code(130, true);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

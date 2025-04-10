@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_export.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: doley <doley@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:32:02 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:32:03 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/10 11:58:03 by doley            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_update_exp_node(t_data *data, t_env **exp, t_env *new_node)
 	if (ft_strcmp(new_node->name, current->name) == 0)
 	{
 		if (!new_node->value)
-			return ;
+			return (free_env_node(new_node));
 		free(current->value);
 		current->value = ft_strdup(new_node->value);
 		if (!current->value)

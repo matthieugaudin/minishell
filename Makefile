@@ -1,5 +1,5 @@
 NAME = minishell
-CC = cc -g
+CC = cc
 CCFLAGS = -Wall -Wextra -Werror
 
 LIBFT = libft.a
@@ -27,7 +27,7 @@ OBJ = $(SRC:.c=.o)
 all: $(LIBFT) $(NAME)
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) bonus
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJ)
 		$(CC) $(CCFLAGS) $(OBJ) -o $(NAME) $(LIBFT_DIR)/$(LIBFT) -lreadline
