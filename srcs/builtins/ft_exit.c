@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:30:58 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:36:22 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 12:59:31 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	is_overflow(char *str)
 	return (false);
 }
 
-static bool	is_numeric(char *str)
+bool	is_numeric(char *str)
 {
 	int	i;
 
