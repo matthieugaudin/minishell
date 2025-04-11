@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:32 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:31:33 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 10:45:18 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ void	handle_builtins(t_data *data, t_cmd *cmd)
 	stdin_tmp = s_dup(data, 0);
 	stdout_tmp = s_dup(data, 1);
 	open_here_doc(data, cmd);
-	open_files(data, cmd, cmd->files);
-	redirect_fds(data, cmd);
-	check_builtins(data, cmd, stdin_tmp, stdout_tmp);
+	if (open_files(data, cmd, cmd->files, true))
+	{
+		redirect_fds(data, cmd);
+		check_builtins(data, cmd, stdin_tmp, stdout_tmp);
+	}
 	s_dup2(data, stdin_tmp, 0);
 	s_dup2(data, stdout_tmp, 1);
 	close(stdin_tmp);

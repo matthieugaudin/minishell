@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:21 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:31:22 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 10:39:27 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	execute_cmd(t_data *data, t_cmd *cmd)
 static void	handle_child_proc(t_data *data, t_cmd *cmds)
 {
 	close_hdoc_fds(data->cmds, true, cmds->index);
-	open_files(data, cmds, cmds->files);
+	open_files(data, cmds, cmds->files, false);
 	if (cmds->args[0])
 	{
 		if (!is_builtin(cmds->args[0]))

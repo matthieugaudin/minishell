@@ -6,13 +6,26 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:34 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:31:35 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 10:47:43 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-void	open_files(t_data *data, t_cmd *cmd, t_file *files)
+bool	handle_error(t_data *data, t_file *files, int fd, bool parent)
+{
+	if (fd == -1)
+	{
+		send_error(files->name, errno);
+		if (!parent)
+			free_all(data, 1);
+		free_all(data, -2);
+		return (false);
+	}
+	return (true);
+}
+
+bool	open_files(t_data *data, t_cmd *cmd, t_file *files, bool parent)
 {
 	int	fd;
 
@@ -25,11 +38,8 @@ void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 			fd = open(files->name, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 		else if (files->type == APPEND)
 			fd = open(files->name, O_RDWR | O_CREAT | O_APPEND, 0664);
-		if (fd == -1)
-		{
-			send_error(files->name, errno);
-			free_all(data, 1);
-		}
+		if (!handle_error(data, files, fd, parent))
+			return (false);
 		if (is_last_redir(files)
 			&& (files->type == OUTPUT || files->type == APPEND))
 			cmd->fd_out = fd;
@@ -39,4 +49,5 @@ void	open_files(t_data *data, t_cmd *cmd, t_file *files)
 			close(fd);
 		files = files->next;
 	}
+	return (true);
 }

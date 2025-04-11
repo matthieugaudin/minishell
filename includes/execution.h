@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:33:26 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/09 18:33:27 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 10:41:50 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ extern int	g_sigint_flag;
 /*==============EXEC==============*/
 void	execute_cmds(t_data *data, t_cmd *cmds);
 void	open_here_doc(t_data *data, t_cmd *cmds);
-void	open_files(t_data *data, t_cmd *cmd, t_file *files);
+bool	open_files(t_data *data, t_cmd *cmd, t_file *files, bool parent);
 void	set_exec_path(t_data *data, t_cmd *cmd);
 void	redirect_fds(t_data *data, t_cmd *cmds);
 void	wait_children(t_data *data, pid_t last_pid);
 void	send_error(char *arg, int errno_cpy);
 void	create_pipes(t_data *data, t_cmd *cmds);
-void	handle_builtins(t_data *data, t_cmd *cmd);
 bool	is_builtin(char *str);
 bool	is_executable(char *arg);
 void	handle_signals(int mode);
