@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:34 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/11 10:47:43 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 12:30:44 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool	handle_error(t_data *data, t_file *files, int fd, bool parent)
 		send_error(files->name, errno);
 		if (!parent)
 			free_all(data, 1);
+		exit_code(1, true);
 		free_all(data, -2);
 		return (false);
 	}

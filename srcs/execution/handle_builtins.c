@@ -6,7 +6,7 @@
 /*   By: mgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 18:31:32 by mgaudin           #+#    #+#             */
-/*   Updated: 2025/04/11 10:45:18 by mgaudin          ###   ########.fr       */
+/*   Updated: 2025/04/11 12:25:01 by mgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ static void	check_builtins(t_data *data, t_cmd *cmd,
 			ft_unset(data, cmd->args, false);
 		else if (!ft_strcmp(cmd->args[0], "exit"))
 		{
-			close(stdin_tmp);
-			close(stdout_tmp);
+			if (!cmd->args[2])
+			{
+				close(stdin_tmp);
+				close(stdout_tmp);
+			}
 			ft_exit(data, &cmd->args[1], false);
 		}
 	}
