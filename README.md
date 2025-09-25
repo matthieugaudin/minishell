@@ -7,7 +7,7 @@ It reproduces basic features of a UNIX shell following bash behvior.
 ## Installation
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/minishell.git
+git clone https://github.com/minishell/minishell.git
 cd minishell
 ```
 2/3
