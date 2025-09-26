@@ -72,3 +72,7 @@ exit
 - Run builtins directly, or fork/exec for other commands
 - Handle signals (Ctrl-C, Ctrl-D, Ctrl-\) like Bash
 - Free memory and exit cleanly when the user quits
+
+## Conclusion
+
+This project taught me a lot about how a shell works, including parsing, command execution, redirections, and signal handling. The main challenge was ensuring no memory leaks while handling dynamic data structures and multiple processes. If you have any questions or need more details, feel free to contact me.
