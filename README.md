@@ -1,7 +1,7 @@
 ## Project Overview
 
 Minishell is a simplified shell built in C as part of the 42 curriculum.
-It reproduces basic features of a UNIX shell following bash behvior.
+It reproduces basic features of a UNIX shell following bash behavior.
 
 
 ## Project Structure
@@ -37,7 +37,7 @@ minishell
 git clone https://github.com/matthieugaudin/minishell.git
 cd minishell
 ```
-2. Complie the project
+2. Compile the project
 ```bash
 make
 ```
