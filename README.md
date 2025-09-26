@@ -62,3 +62,13 @@ echo hello | nonexistentcmd
 ```bash
 exit
 ```
+## How Minishell Works
+
+- Load environment variables (or create a minimal one)
+- Show the prompt minishell> and wait for input
+- Tokenize and parse the line into commands
+- Expand variables and remove quotes
+- Create command structures and pipes if needed
+- Run builtins directly, or fork/exec for other commands
+- Handle signals (Ctrl-C, Ctrl-D, Ctrl-\) like Bash
+- Free memory and exit cleanly when the user quits
