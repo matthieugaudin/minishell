@@ -37,6 +37,7 @@ minishell
 git clone https://github.com/matthieugaudin/minishell.git
 cd minishell
 ```
+
 2. Compile the project
 ```bash
 make
@@ -62,6 +63,8 @@ echo hello | nonexistentcmd
 ```bash
 exit
 ```
+
+
 ## How Minishell Works
 
 - Load environment variables (or create a minimal one)
